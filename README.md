@@ -1,33 +1,37 @@
 # www.passportjs.org
 
-The [passportjs.org](http://passportjs.org/) website.
+[passportjs.org](http://passportjs.org/) の Web サイトの非公式日本語訳。
 
-## Usage
 
-#### Build
+## 使い方
 
-This is a static website generated using [Kerouac](https://github.com/jaredhanson/kerouac):
+#### ビルド
+
+このサイトは、[Kerouac](https://github.com/jaredhanson/kerouac) を使って静的な
+Web ページを生成している。
 
     $ npm install
     $ make site
     
-#### Preview
+#### プレビュー
 
-Once generated, the site can be previewed locally by running the server:
+一度生成したあと、ローカルでサーバーを実行することでプレビューが見られる：
 
     $ node server.js
     
-and navigating to: [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
+[http://127.0.0.1:3000/](http://127.0.0.1:3000/) で閲覧可能。
 
-#### Publish
+#### 発行
 
     $ make publish
 
-## Credits
+## クレジット
 
 - [Jared Hanson](http://github.com/jaredhanson)
+- OrgaChem (Translator)
+- emon (Translator)
 
-## License
+## ライセンス
 
 [Creative Commons Attribution-ShareAlike 3.0](http://creativecommons.org/licenses/by-sa/3.0/)
 
