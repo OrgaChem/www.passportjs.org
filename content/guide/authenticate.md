@@ -1,15 +1,13 @@
 ---
 layout: 'guide'
-title: 'Authenticate'
+title: '認証'
 ---
 
-### Authenticate
+### 認証
 
-Authenticating requests is as simple as calling `passport.authenticate()` and
-specifying which strategy to employ.  `authenticate()`'s function signature is
-standard [Connect](http://www.senchalabs.org/connect/) middleware, which makes it
-convenient to use as route middleware in [Express](http://expressjs.com/)
-applications.
+認証リクエストは `passport.authenticate()` の呼び出しに使いたい認証ストラテジーを指定するだけです。
+`authenticate()`によって返される関数は [Connect](http://www.senchalabs.org/connect/) 標準に準拠しているので、
+[Express](http://expressjs.com/) アプリケーションの route ミドルウェアとして簡単に利用できます。
 
 ```javascript
 app.post('/login',
