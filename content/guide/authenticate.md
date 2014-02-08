@@ -5,7 +5,7 @@ title: '認証'
 
 ### 認証
 
-認証リクエストは `passport.authenticate()` の呼び出しに使いたい認証ストラテジーを指定するだけです。
+認証リクエストは `passport.authenticate()` の呼び出し時に使いたい認証ストラテジーを指定するだけです。
 `authenticate()`によって返される関数は [Connect](http://www.senchalabs.org/connect/) 標準に準拠しているので、
 [Express](http://expressjs.com/) アプリケーションの route ミドルウェアとして簡単に利用できます。
 
@@ -13,23 +13,21 @@ title: '認証'
 app.post('/login',
   passport.authenticate('local'),
   function(req, res) {
-    // If this function gets called, authentication was successful.
-    // `req.user` contains the authenticated user.
+	// 認証に施工すると、この関数が呼び出される。
+	// 認証されたユーザは `req.user` に含まれている。
     res.redirect('/users/' + req.user.username);
   });
 ```
 
-By default, if authentication fails, Passport will respond with a
-`401 Unauthorized` status, and any additional route handlers will not be
-invoked.  If authentication succeeds, the next handler will be invoked and the
-`req.user` property will be set to the authenticated user.
+Passport は、認証に失敗したとき `401 Unauthorized` ステータスを返し、その他の route ハンドラーは実行しません。
+認証に成功したときは、次のハンドラーを実行し、 `req.user` プロパティに認証されたユーザをセットします。
 
-Note: Strategies must be configured prior to using them in a route.  Continue
-reading the chapter on [configuration](/guide/configure/) for details.
+注：ストラテジーは route が使われる前に設定されていなければなりません。
+詳細は[設定](/guide/configure/)の章で確認できます。
 
-#### Redirects
+#### リダイレクト
 
-A redirect is commonly issued after authenticating a request.
+リダイレクトは、一般的にリクエストの認証後におこなわれます。
 
 ```javascript
 app.post('/login',
@@ -37,15 +35,12 @@ app.post('/login',
                                    failureRedirect: '/login' }));
 ```
 
-In this case, the redirect options override the default behavior.  Upon
-successful authentication, the user will be redirected to the home page.  If
-authentication fails, the user will be redirected back to the login page for
-another attempt.
+このケースでは、リダイレクトオプションはデフォルトの振る舞いをオーバーライドしています。
+認証が成功するとユーザはホームページにリダイレクトされ、認証が失敗するとユーザはもう一度認証をおこなうためにログインページに戻るようリダイレクトされます。
 
-#### Flash Messages
+#### フラッシュメッセージ
 
-Redirects are often combined with flash messages in order to display status
-information to the user.
+リダイレクトの後で、ステータス情報を表示するためのフラッシュメッセージを表示することがよくあります。
 
 ```javascript
 app.post('/login',
@@ -55,37 +50,32 @@ app.post('/login',
 );
 ```
 
-Setting the `failureFlash` option to `true` instructs Passport to flash an
-`error` message using the message given by the strategy's verify callback, if
-any.  This is often the best approach, because the verify callback can make the
-most accurate determination of why authentication failed.
+`failureFlash` オプションを `true` にセットすると、Passport はストラテジーの検証用のコールバックが生成したメッセージを `error` メッセージとして表示します。
+この方法を使うと、検証用のコールバックは認証が失敗した理由について正確に判断することができます。これは多くの場合にもっとも優れたアプローチです。
 
-Alternatively, the flash message can be set specifically.
+あるいは、フラッシュメッセージを任意に指定することもできます。
 
 ```javascript
-passport.authenticate('local', { failureFlash: 'Invalid username or password.' });
+passport.authenticate('local', { failureFlash: 'ユーザー名かパスワードが間違っています。' });
 ```
 
-A `successFlash` option is available which flashes a `success` message when
-authentication succeeds.
+また、認証成功時の `success` メッセージは `successFlash` オプションによって指定できます。
 
 ```javascript
-passport.authenticate('local', { successFlash: 'Welcome!' });
+passport.authenticate('local', { successFlash: 'ようこそ！' });
 ```
 
-Note: Using flash messages requires a `req.flash()` function.  Express 2.x
-provided this functionality, however it was removed from Express 3.x.  Use of
-[connect-flash](https://github.com/jaredhanson/connect-flash) middleware is
-recommended to provide this functionality when using Express 3.x.
+注：フラッシュメッセージを使うためには、 `req.flash()` 関数が必要です。
+この関数はExpress 2.x までは提供されていましたが、Express 3.x からは取り除かれています。
+Express 3.x では、[connect-flash](https://github.com/jaredhanson/connect-flash) ミドルウェアを使うことでこの機能を利用することができます。
 
-#### Disable Sessions
+#### セッションを無効化
 
-After successful authentication, Passport will establish a persistent login
-session.  This is useful for the common scenario of users accessing a web
-application via a browser.  However, in some cases, session support is not
-necessary.  For example, API servers typically require credentials to be
-supplied with each request.  When this is the case, session support can be
-safely disabled by setting the `session` option to `false`.
+認証が成功した際、Passport は継続的なログインセッションを確立します。
+これはユーザがブラウザから Web アプリケーションにアクセスするといったシナリオで役に立ちます。
+しかし、それ以外の場合はセッションのサポートは必要ありません。
+たとえば、API サーバーはリクエスト毎に認証情報を要求するのが一般的ですから、このような場合にセッションのサポートは必要ありません。
+このような場合では `seeeion` オプションを `false` にすることでセッションサポートを無効にできます。
 
 ```javascript
 app.get('/api/users/me',
@@ -95,11 +85,9 @@ app.get('/api/users/me',
   });
 ```
 
-#### Custom Callback
+#### カスタムコールバック
 
-If the built-in options are not sufficient for handling an authentication
-request, a custom callback can be provided to allow the application to handle
-success or failure.
+ビルトインオプションが認証リクエストを処理するのに十分でない場合は、カスタムコールバックによって成功・失敗を処理できます。
 
 ```javascript
 app.get('/login', function(req, res, next) {
@@ -114,15 +102,11 @@ app.get('/login', function(req, res, next) {
 });
 ```
 
-In this example, note that `authenticate()` is called from within the route
-handler, rather than being used as route middleware.  This gives the callback
-access to the `req` and `res` objects through closure.
+この例では、`authenticate()` は route ミドルウェアで使われずに route ハンドラーから呼ばれています。
+こうすることで、コールバックのクロージャ内で `req` と `res` オブジェクトにアクセスできています。
 
-If authentication failed, `user` will be set to `false`.  If an exception
-occurred, `err` will be set.  An optional `info` argument will be passed,
-containing additional details provided by the strategy's verify callback.
+もし認証が失敗したときは、 `user` は `false` にセットされます。
+例外が発生したときは `err` がセットされます。また、ストラテジーの検証用コールバックに追加で情報を渡すときには `into` パラメータを利用できます（省略可能）。
 
-The callback can use the arguments supplied to handle the authentication result
-as desired.  Note that when using a custom callback, it becomes the
-application's responsibility to establish a session (by calling `req.login()`)
-and send a response.
+このコールバックには必要な認証結果が引数として渡されます。
+ただし、カスタムコールバックを使うときは、アプリケーションがセッション確立（`req.login()`を呼び出すことによる）およびレスポンスの送信をおこなう必要があります。
