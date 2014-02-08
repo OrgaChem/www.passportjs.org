@@ -1,23 +1,21 @@
 ---
 layout: 'guide'
-title: 'Authorize'
+title: '権限付与'
 ---
 
-### Authorize
+### 権限付与
 
-An application may need to incorporate information from multiple third-party
-services.  In this case, the application will request the user to "connect", for
-example, both their Facebook and Twitter accounts.
+アプリケーションが複数のサードパーティからの情報を必要とする場合がよくあります。
+このようなとき、アプリケーションはユーザに Facebook や Twitter などのアカウント
+との“連携”を要求することになるでしょう。
 
-When this occurs, a user will already be authenticated with the application, and
-any subsequent third-party accounts merely need to be authorized and associated
-with the user.  Because authentication and authorization in this situation are
-similar, Passport provides a means to accommodate both.
+このとき、ユーザはすでにアプリケーションから認証されていて、かつサードパーティの
+アカウントからの許可・連携のみが必要な状況です。このような認証・権限付与の場合
+にも Passport を使うことができます。
 
-Authorization is performed by calling `passport.authorize()`.  If authorization
-is granted, the result provided by the strategy's verify callback will be
-assigned to `req.account`.  The existing login session and `req.user` will be
-unaffected.
+権限付与は `passport.authorize()` の呼び出しによって動作します。もし権限付与の
+申請が承諾されれば、ストラテジーの検証用コールバックの `req.account` に結果が
+セットされます。このとき、ログインセッションや `req.user` に影響は及びません。
 
 ```javascript
 app.get('/connect/twitter',
@@ -30,7 +28,7 @@ app.get('/connect/twitter/callback',
     var user = req.user;
     var account = req.account;
     
-    // Associate the Twitter account with the logged-in user.
+    // ログイン済のユーザと Twitter アカウントを連携する。
     account.userId = user.id;
     account.save(function(err) {
       if (err) { return self.error(err); }
@@ -40,16 +38,16 @@ app.get('/connect/twitter/callback',
 );
 ```
 
-In the callback route, you can see the use of both `req.user` and `req.account`.
-The newly connected account is associated with the logged-in user and saved to
-the database.
+route のコールバックでは、`req.user` と `req.account` のどちらも利用可能です。
+新しく連携されたアカウントはログインユーザと紐づけられてデータベースに保存
+されます。
 
-#### Configuration
+#### 設定
 
-Strategies used for authorization are the same as those used for authentication.
-However, an application may want to offer both authentication and authorization
-with the same third-party service.  In this case, a _named strategy_ can be
-used, by overriding the strategy's default name in the call to `use()`.
+権限付与のストラテジーは、認証で用いたストラテジーと同じものです。
+しかし、アプリケーションがサードパーティの認証と権限付与のどちらも必要とする
+場合もあるでしょう。この場合では、_名前付きストラテジー_を使うことで `use()` の
+呼び出し時のデフォルトの名前をオーバーライドすることができます。
 
 ```javascript
 passport.use('twitter-authz', new TwitterStrategy({
@@ -73,19 +71,19 @@ passport.use('twitter-authz', new TwitterStrategy({
 ));
 ```
 
-In the above example, you can see that the `twitter-authz` strategy is finding
-or creating an `Account` instance to store Twitter account information.  The
-result will be assigned to `req.account`, allowing the route handler to
-associate the account with the authenticated user.
+上の例では、`twitter-authz` ストラテジーが Twitter のアカウント情報を保存する
+ために `Account` インスタンスを確認または作成していることがわかります。この
+結果は `req.account` に代入されているので、route ハンドラーは認証済のユーザを
+連携させることができます。
 
-### Association in Verify Callback
+### 検証用コールバック内での連携
 
-One downside to the approach described above is that it requires two instances
-of the same strategy and supporting routes.
+このアプローチのデメリットは ストラテジー・route サポートが同じ2つのインスタンス
+が必要なことです。
 
-To avoid this, set the strategy's `passReqToCallback` option to `true`.  With
-this option enabled, `req` will be passed as the *first* argument to the verify
-callback.
+これを避けるためには `passReqToCallback` オプションを `true` にセットして
+ください。このオプションが有効になると、 *第一*引数として `req` が検証用
+コールバックに渡されるようになります。
 
 ```javascript
 passport.use(new TwitterStrategy({
@@ -96,19 +94,19 @@ passport.use(new TwitterStrategy({
   },
   function(req, token, tokenSecret, profile, done) {
     if (!req.user) {
-      // Not logged-in. Authenticate based on Twitter account.
+	  // ログインしていない場合。Twitter アカウントを基にして認証される。
     } else {
-      // Logged in. Associate Twitter account with user.  Preserve the login
-      // state by supplying the existing user after association.
+      // ログインしている場合。Twitter アカウントはこのユーザと連携される。
+      // 連携後も既存のユーザーが渡されるのでログイン状態は変わらない。
       // return done(null, req.user);
     }
   }
 ));
 ```
 
-With `req` passed as an argument, the verify callback can use the state of the
-request to tailor the authentication process, handling both authentication and
-authorization using a single strategy instance and set of routes.  For
-example, if a user is already logged in, the newly "connected" account can be
-associated.  Any additional application-specific properties set on `req`,
-including `req.session`, can be used as well.
+検証用コールバックに `req` が引数として渡されると、認証プロセスの組み立てや、
+ひとつのストラテジーインスタンスによる認証・権限付与の処理、routes のセットの
+ために、リクエストの状態を使うことができます。
+たとえば、ユーザが既にログインしている場合でも、新しい連携アカウントを紐づける
+ことができます。また、`req` にセットされたアプリケーション特有のプロパティ（
+`req.session` を含む）も利用できます。
