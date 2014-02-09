@@ -22,8 +22,8 @@ $ npm install passport-twitter
 Twitter 認証を使う前に [Twitter Developers](https://dev.twitter.com/) で
 アプリケーションを登録しておく必要があります。登録が終わると、アプリケーション
 にコンシューマーキーとコンシューマーシークレットが発行されます。アプリケーション
-側ではコールバックURLを実装しておいてください。このURL、アクセスが許可された後に
-ユーザーがリダイレクトされるページです。
+側ではコールバックURLを実装しておいてください。このURLはアクセスが許可された後に
+ユーザーがリダイレクトされるページを示す必要があります。
 
 ```javascript
 var passport = require('passport')
@@ -59,17 +59,17 @@ Twitter 認証には2つのルーティングが必要です。最初のルー�
 //   /auth/twitter/callback
 app.get('/auth/twitter', passport.authenticate('twitter'));
 
-// ユーザーが許可すると、Twitter はユーザーをこの URL にリダイレクトします。
-// この認証プロセスは最後に、アクセストークンの取得をおこないます。
+// ユーザーが許可を確認すると、Twitter はユーザーをこの URL にリダイレクトさせます。
+// この認証プロセスの最後に、アクセストークンの取得をおこないます。
 // この取得が成功すればユーザーはログインしたことになります。取得に失敗したとき
-// は、認証も失敗したとみなします。
+// は、認証が失敗したとみなされます。
 app.get('/auth/twitter/callback', 
   passport.authenticate('twitter', { successRedirect: '/',
                                      failureRedirect: '/login' }));
 ```
 
-注意: このコールバックルーティングの URL は、ストラテジーの設定時に
-`callbackURL` オプションで指定されたものです。
+<small>注意: このコールバックルーティングの URL は、ストラテジーの設定時に
+`callbackURL` オプションで指定されたものです。</small>
 
 #### Link
 
