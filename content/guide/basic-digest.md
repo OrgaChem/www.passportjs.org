@@ -5,32 +5,28 @@ title: 'Basic & Digest'
 
 ### Basic & Digest
 
-Along with defining HTTP's authentication framework, [RFC 2617](http://tools.ietf.org/html/rfc2617)
-also defined the Basic and Digest authentications schemes.  These two schemes
-both use usernames and passwords as credentials to authenticate users, and are
-often used to protect API endpoints.
+HTTPの認証フレームワークを規定すると共に、[RFC 2617](http://tools.ietf.org/html/rfc2617) には、
+Basic、Digest認証の枠組みが策定されています。これらの2つの枠組みは、
+ユーザーIDとパスワードをユーザー認証のために使用し、またAPIのエンドポイントを保護するためにも使用されます。
 
-It should be noted that relying on username and password creditials can have
-adverse security impacts, especially in scenarios where there is not a high
-degree of trust between the server and client.  In these situations, it is
-recommended to use an authorization framework such as [OAuth 2.0](/guide/oauth2-api/).
+<small>注意:このようなユーザIDとパスワードに依存する認証は、
+セキュリティの観点から言えば問題があり、特に信頼性が求められるクライアントサーバ間の通信には使用しないでください．
+このような状況では、[OAuth 2.0](/guide/oauth2-api/)のようなフレームワークが推奨されています。</small>
 
-Support for Basic and Digest schemes is provided by the [passport-http](https://github.com/jaredhanson/passport-http)
-module.
+Basic認証、またDigest認証は、[passport-http](https://github.com/jaredhanson/passport-http)モジュールで提供されています。
 
-#### Install
+#### インストール
 
 ```bash
 $ npm install passport-http
 ```
 
-### Basic
+### Basic認証
 
-The Basic scheme uses a username and password to authenticate a user.  These
-credentials are transported in plain text, so it is advised to use HTTPS when
-implementing this scheme.
+Basic認証はユーザIDとパスワードを用いてユーザー認証を行います。
+この認証方式では平文で情報が送信されるため、HTTPSの使用が推奨されています。
 
-#### Configuration
+#### 設定方法
 
 ```javascript
 passport.use(new BasicStrategy(
@@ -45,10 +41,10 @@ passport.use(new BasicStrategy(
 ));
 ```
 
-The verify callback for Basic authentication accepts `username` and `password`
-arguments.
+Basic認証のための検証用コールバックは、ユーザIDとパスワードの引数を受け動作します。
 
-#### Protect Endpoints
+
+#### エンドポイントの保護
 
 ```javascript
 app.get('/api/me', 
@@ -58,16 +54,16 @@ app.get('/api/me',
   });
 ```
 
-Specify `passport.authenticate()` with the `basic` strategy to protect API
-endpoints.  Sessions are not typically needed by APIs, so they can be disabled.
+`basic`をストラテジーに指定し`passport.authenticate()'を使用することでAPIエンドポイントを保護することができます。
+APIの利用にセッション管理は必要とされないことが多いので、セッションの無効化も可能です。
 
-### Digest
+### Digest認証
 
-The Digest scheme uses a username and password to authenticate a user.  Its
-primary benefit over Basic is that it uses a challenge-response paradigm to
-avoid sending the password in the clear.
+Digest認証ははユーザIDとパスワードを用いてユーザー認証を行います。
+この認証方式がBasic認証より優れた点は、平文でのパスワード送信をさけるため、
+チャレンジ/レスポンス認証を採用しているところにあります。
 
-#### Configuration
+#### 設定方法
 
 ```javascript
 passport.use(new DigestStrategy({ qop: 'auth' },
@@ -85,15 +81,14 @@ passport.use(new DigestStrategy({ qop: 'auth' },
 ));
 ```
 
-The Digest strategy utilizes two callbacks, the second of which is optional.
+上記のDigest認証では2つのコールバックが引数に指定していますが、2つ目は省略可能です。
 
-The first callback, known as the "secret callback" accepts the username and
-calls `done` supplying a user and the corresponding secret password.  The
-password is used to compute a hash, and authentication fails if it does not
-match that contained in the request.
+１つ目のコールバック（シークレットコールバックと呼ばれるもの）は、ユーザIDと`done`を引数にとります。
+`done`には、ユーザIDとパスワード（平文）を指定してください。
+指定されたユーザID、パスワードからハッシュ値が計算されサーバからリクエストされるものと合致するか検証されます。
 
-The second "validate callback" accepts nonce related params, which can be
-checked to avoid replay attacks.
+2つ目のコールバックは、検証用コールバックであり、リプレイアタック等の脅威を避けるために
+サーバから受け取るランダムな文字列（nonce）の検証が可能です。
 
 #### Protect Endpoints
 
@@ -105,5 +100,5 @@ app.get('/api/me',
   });
 ```
 
-Specify `passport.authenticate()` with the `digest` strategy to protect API
-endpoints.  Sessions are not typically needed by APIs, so they can be disabled.
+`digest`をストラテジーに指定し`passport.authenticate()'を使用することでAPIエンドポイントを保護することができます。
+APIの利用にセッション管理は必要とされないことが多いので、セッションの無効化も可能です。
