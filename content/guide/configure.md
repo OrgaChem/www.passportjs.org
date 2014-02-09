@@ -3,26 +3,26 @@ layout: 'guide'
 title: 'Configure'
 ---
 
-### Configure
+### 設定項目
 
-Three pieces need to be configured to use Passport for authentication:
+Passportを認証に用いるためには、以下の3つの項目を設定する必要があります:
 
- 1. Authentication strategies
- 2. Application middleware
- 3. Sessions (_optional_)
+ 1. 認証用ストラテジーの選択
+ 2. アプリケーションミドルウェア 
+ 3. セッション管理(_省略可_)
 
-#### Strategies
+#### ストラテジーに関する設定
 
-Passport uses what are termed _strategies_ to authenticate requests.  Strategies
-range from verifying a username and password, delegated authentication using [OAuth](http://oauth.net/)
-or federated authentication using [OpenID](http://openid.net/).
+Passportは認証のために_ストラテジー_と呼ばれるものを認証に使用します。
+ストラテジーは、ユーザーIDとパスワード用いた検証から、[OAuth](http://oauth.net/)を用いた権限委譲認証もしくは、
+分散認証システムである[OpenID](http://openid.net/)を用いた認証に対応しています。
 
-Before asking Passport to authenticate a request, the strategy (or strategies)
-used by an application must be configured.
+Passportを用いて認証を行う前に、必ず１つ、もしくは複数のストラテジーに関する設定が必要になります。
 
-Strategies, and their configuration, are supplied via the `use()` function.  For
-example, the following uses the `LocalStrategy` for username/password
-authentication.
+ストラテジー、そしてそれらの設定は `use()` 関数にて提供されます。
+以下に、 `LocalStrategy` でのユーザーID、パスワードを用いた認証の例を示します。
+
+
 
 ```javascript
 var passport = require('passport')
@@ -44,62 +44,61 @@ passport.use(new LocalStrategy(
 ));
 ```
 
-##### Verify Callback
+##### 検証用コールバックに関する設定
 
-This example introduces an important concept.  Strategies require what is known
-as a _verify callback_.  The purpose of a verify callback is to find the user
-that possesses a set of credentials.
+この例では重要なコンセプトが示されています。ストラテジーは_検証用コールバック_(verify callback)と呼ばれるものを必要とします。
+検証用コールバックの目的は、認証情報を照合し、ユーザーを特定することにあります。
 
-When Passport authenticates a request, it parses the credentials contained in
-the request.  It then invokes the verify callback with those credentials as
-arguments, in this case `username` and `password`.  If the credentials are
-valid, the verify callback invokes `done` to supply Passport with the user that
-authenticated.
+
+
+認証がリクエストされると、Passportはリクエストに含まれる認証情報を解析します。
+上記の例では、ユーザーIDとパスワードが認証情報として検証用コールバックの引数に指定されます。
+認証情報が正しい場合、検証用コールバックは `done` を実行し、Passportに認証済のユーザー情報を返します。
 
 ```javascript
 return done(null, user);
 ```
 
-If the credentials are not valid (for example, if the password is incorrect),
-`done` should be invoked with `false` instead of a user to indicate an
-authentication failure.
+上記の例において、パスワードが不正であるような、認証情報に誤りがある場合は、
+`false` を引数に指定し `done` を実行します。これにより認証情報が失敗した、ということを
+Passportに通知します。
 
 ```javascript
 return done(null, false);
 ```
 
-An additional info message can be supplied to indicate the reason for the
-failure.  This is useful for displaying a flash message prompting the user to
-try again.
+認証が失敗した原因を詳細にメッセージとして通知することも可能です。
+この機能は、フラッシュメッセージとしてユーザーに再度認証を促す場合に
+役立ちます。
 
 ```javascript
 return done(null, false, { message: 'Incorrect password.' });
 ```
 
-Finally, if an exception occurred while verifying the credentials (for example,
-if the database is not available), `done` should be invoked with an error, in
-conventional Node style.
+最後に、認証中にデータベースが機能していない場合のような例外が発生した際は、
+Nodeの慣用的な表現にてerror情報を指定し `done` を実行することで通知可能です。
 
 ```javascript
 return done(err);
 ```
 
-Note that it is important to distinguish the two failure cases that can occur.
-The latter is a server exception, in which `err` is set to a non-`null` value.
-Authentication failures are natural conditions, in which the server is operating
-normally.  Ensure that `err` remains `null`, and use the final argument to pass
-additional details.
+この2つのエラーがどのような場合に発生するのか、両者を明確に区別しておくことが必要です。
+後者はサーバ側での例外であり、この例外が発生した際には `err` に `null` 以外の値がセットされます。
+認証時の例外は、認証に失敗したことによるもので、正常な動作により引き起こされる例外なので、サーバ側の
+例外とは明確に異なります。この場合は、`err` が `null` であることは保障され、詳細なメッセージを追加する目的で
+引数の最後のパラメータを使用する事が出来ます。
 
-By delegating in this manner, the verify callback keeps Passport database
-agnostic.  Applications are free to choose how user information is stored,
-without any assumptions imposed by the authentication layer.
+このようにストラテジーに処理を委譲することで、検証用コールバックは、Passportデータベースを非依存型に保ちます。
+これによりアプリケーションは、認証レイヤーでの様々な前提条件にとらわれず、
+ユーザー情報をどのように格納するか自由に選択できます。
 
-#### Middleware
 
-In a [Connect](http://senchalabs.github.com/connect/) or
-[Express](http://expressjs.com/)-based application, `passport.initialize()`
-middleware is required to initialize Passport.  If your application uses
-persistent login sessions, `passport.session()` middleware must also be used.
+#### ミドルウェアの設定
+
+[Connect](http://senchalabs.github.com/connect/) or [Express](http://expressjs.com/)を基盤にしたアプリケーションでは、
+`passport.initialize()` を用いてPassportの初期化を行うことが必要になります。
+アプリケーションでログイン後のセッション管理を行う場合には、
+`passport.session()` の記述も必要になります。
 
 ```javascript
 app.configure(function() {
@@ -113,22 +112,20 @@ app.configure(function() {
 });
 ```
 
-Note that enabling session support is entirely optional, though it is
-recommended for most applications.  If enabled, be sure to use `express.session()`
-*before*  `passport.session()` to ensure that the login session is restored in
-the correct order.
+セッションのサポートは基本的にオプションとして省略可能ではありますが、殆どのアプリケーションで
+推奨されています。もしセッションのサポート機能を有効にする場合は、
+正しい順番でログインセッションを処理できるように、
+`passport.session()` *の前に* `express.session()` を記述してください。
 
-#### Sessions
+#### セッション管理に関する設定
 
-In a typical web application, the credentials used to authenticate a user will
-only be transmitted during the login request.  If authentication succeeds, a
-session will be established and maintained via a cookie set in the user's
-browser.
+現在Web上にあるアプリケーションの殆どは、都度認証を行うのではなく、
+認証情報をログインリクエストのときのみ送信し、認証が成功した場合は、ブラウザ上のクッキーを利用することで、
+セッションを確立・維持する作りになっています。
 
-Each subsequent request will not contain credentials, but rather the unique
-cookie that identifies the session.  In order to support login sessions,
-Passport will serialize and deserialize `user` instances to and from the
-session.
+ログイン後のリクエストそれぞれが認証情報を含んでいるのではなく、ユニークなクッキーによって、
+セッションの管理を行います。セッションのサポートのために、パスポートは `user` インスタンスを
+シリアライズ/デシリアライズしてセッション情報として管理しています。
 
 ```javascript
 passport.serializeUser(function(user, done) {
@@ -142,11 +139,8 @@ passport.deserializeUser(function(id, done) {
 });
 ```
 
-In this example, only the user ID is serialized to the session, keeping the
-amount of data stored within the session small.  When subsequent requests are
-received, this ID is used to find the user, which will be restored to
-`req.user`.
+この例では、`userID` をシリアライズしてセッションに埋め込み、データをコンパクトにしています。
+リクエストを受け取ると、IDからユーザーを特定し、`req.user` 内に格納します。
 
-The serialization and deserialization logic is supplied by the application,
-allowing the application to choose an appropriate database and/or object mapper,
-without imposition by the authentication layer.
+上記のシリアライズ、デシリアライズ内の動作はアプリケーションによって定義されるため、
+アプリケーションでは認証レイヤーでの制限無しに、適切なデーターベースやオブジェクトマッパーを選択可能です。
