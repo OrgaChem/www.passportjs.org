@@ -1,21 +1,21 @@
 ---
 layout: 'guide'
-title: 'Username & Password'
+title: 'ユーザーID & パスワード'
 ---
 
-### Username & Password
+### ユーザーID & パスワード
 
-The most widely used way for websites to authenticate users is via a username
-and password.  Support for this mechanism is provided by the [passport-local](https://github.com/jaredhanson/passport-local)
-module.
+多くの Web サイトの認証に、ユーザーID/パスワード認証が使われています。この認証
+メカニズムは [passport-local](https://github.com/jaredhanson/passport-local)
+モジュールによって提供されています。
 
-#### Install
+#### インストール
 
 ```bash
 $ npm install passport-local
 ```
 
-#### Configuration
+#### 設定
 
 ```javascript
 var passport = require('passport')
@@ -37,13 +37,13 @@ passport.use(new LocalStrategy(
 ));
 ```
 
-The verify callback for local authentication accepts `username` and `password`
-arguments, which are submitted to the application via a login form.
+ローカルの認証に検証用コールバックには、アプリケーションのログインフォームに
+よって送信されてきた `username` と `password` が引数として与えられています。
 
-#### Form
+#### フォーム
 
-A form is placed on a web page, allowing the user to enter their credentials and
-log in.
+ユーザーは Web ページ上のフォームから認証情報を入力できます。
+
 
 ```xml
 <form action="/login" method="post">
@@ -61,10 +61,11 @@ log in.
 </form>
 ```
 
-#### Route
+#### ルート
 
-The login form is submitted to the server via the `POST` method.  Using
-`authenticate()` with the `local` strategy will handle the login request.
+ログインフォームの内容は `POST` メソッドでサーバーに送信されます。
+`local` ストラテジーでログイン要求を処理するためには、`authenticate()` を
+使います。
 
 ```javascript
 app.post('/login',
@@ -74,15 +75,15 @@ app.post('/login',
 );
 ```
 
-Setting the `failureFlash` option to `true` instructs Passport to flash an
-`error` message using the `message` option set by the verify callback above.
-This is helpful when prompting the user to try again.
+検証用コールバック内で指定した `message` オプションで `error` メッセージなどを
+フラッシュメッセージとして表示するには、`failureFlash` オプションを `true` に
+してください。
 
-#### Parameters
+#### パラメーター
 
-By default, `LocalStrategy` expects to find credentials in parameters named
-`username` and `password`.  If your site prefers to name these fields
-differently, options are available to change the defaults.
+`LocalStrategy` は認証情報を `username` と `password` の2つのパラメータ名で確認
+しています。別のフィールド名を使っている場合は、確認するパラメータ名を変更して
+ください。
 
     passport.use(new LocalStrategy({
         usernameField: 'email',

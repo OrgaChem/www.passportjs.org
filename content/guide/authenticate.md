@@ -16,17 +16,17 @@ app.post('/login',
   passport.authenticate('local'),
   function(req, res) {
 	// 認証に施工すると、この関数が呼び出される。
-	// 認証されたユーザは `req.user` に含まれている。
+	// 認証されたユーザーは `req.user` に含まれている。
     res.redirect('/users/' + req.user.username);
   });
 ```
 
 Passport は、認証に失敗したとき `401 Unauthorized` ステータスを返し、その他の
 route ハンドラーは実行しません。認証に成功したときは、次のハンドラーを実行し、
-`req.user` プロパティに認証されたユーザをセットします。
+`req.user` プロパティに認証されたユーザーをセットします。
 
-注：ストラテジーは route が使われる前に設定されていなければなりません。
-詳細は[設定](/guide/configure/)の章で確認できます。
+<small>注意: ストラテジーは route が使われる前に設定されていなければなりません。
+詳細は[設定](/guide/configure/)の章で確認できます。</small>
 
 #### リダイレクト
 
@@ -39,8 +39,8 @@ app.post('/login',
 ```
 
 このケースでは、リダイレクトオプションはデフォルトの振る舞いをオーバーライド
-しています。認証が成功するとユーザはホームページにリダイレクトされ、認証が失敗
-するとユーザはもう一度認証をおこなうためにログインページに戻るようリダイレクト
+しています。認証が成功するとユーザーはホームページにリダイレクトされ、認証が失敗
+するとユーザーはもう一度認証をおこなうためにログインページに戻るようリダイレクト
 されます。
 
 #### フラッシュメッセージ
@@ -64,7 +64,7 @@ app.post('/login',
 あるいは、フラッシュメッセージを任意に指定することもできます。
 
 ```javascript
-passport.authenticate('local', { failureFlash: 'ユーザー名かパスワードが間違っています。' });
+passport.authenticate('local', { failureFlash: 'ユーザーIDかパスワードが間違っています。' });
 ```
 
 また、認証成功時の `success` メッセージは `successFlash` オプションによって指定
@@ -74,7 +74,7 @@ passport.authenticate('local', { failureFlash: 'ユーザー名かパスワー�
 passport.authenticate('local', { successFlash: 'ようこそ！' });
 ```
 
-注：フラッシュメッセージを使うためには、 `req.flash()` 関数が必要です。
+注意: フラッシュメッセージを使うためには、`req.flash()` 関数が必要です。
 この関数はExpress 2.x までは提供されていましたが、Express 3.x からは取り除かれて
 います。
 Express 3.x では、[connect-flash](https://github.com/jaredhanson/connect-flash)
@@ -83,7 +83,7 @@ Express 3.x では、[connect-flash](https://github.com/jaredhanson/connect-flas
 #### セッションを無効化
 
 認証が成功した際、Passport は継続的なログインセッションを確立します。
-これはユーザがブラウザから Web アプリケーションにアクセスするといったシナリオで
+これはユーザーがブラウザから Web アプリケーションにアクセスするといったシナリオで
 役に立ちます。しかし、それ以外の場合はセッションのサポートは必要ありません。
 たとえば、API サーバーはリクエスト毎に認証情報を要求するのが一般的ですから、
 このような場合にセッションのサポートは必要ありません。このような場合では
@@ -125,5 +125,5 @@ app.get('/login', function(req, res, next) {
 （省略可能）。
 
 このコールバックには必要な認証結果が引数として渡されます。ただし、カスタム
-コールバックを使うときは、アプリケーションがセッション確立（`req.login()`を
+コールバックを使うときは、アプリケーションセッション確立（`req.login()`を
 呼び出すことによる）およびレスポンスの送信をおこなう必要があります。
