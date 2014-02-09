@@ -5,25 +5,26 @@ title: 'Facebook'
 
 ### Facebook
 
-The Facebook strategy allows users to log in to a web application using their
-Facebook account.  Internally, Facebook authentication works using OAuth 2.0.
+ユーザーの Facebook アカウントを使ってログインするには、Facebook ストラテジーを使用します。
+この認証には、OAuth2.0 を使用しています。
 
-Support for Facebook is implemented by the [passport-facebook](https://github.com/jaredhanson/passport-facebook)
-module.
+Facebook のサポートは [passport-facebook](https://github.com/jaredhanson/passport-facebook)によって
+実装されています。
 
-#### Install
+#### インストール
 
 ```bash
 $ npm install passport-facebook
 ```
 
-#### Configuration
+#### 設定方法
 
-In order to use Facebook authentication, you must first create an app at
-[Facebook Developers](https://developers.facebook.com/).  When created, an
-app is assigned an App ID and App Secret.  Your application must also implement
-a redirect URL, to which Facebook will redirect users after they have approved
-access for your application.
+Facebook 認証を行う前に、[Facebook Developers](https://developers.facebook.com/) にて
+アプリケーションを登録する必要があります。
+登録が完了すると、アプリケーションIDとアプリケーションシークレットが発行されます。
+アプリケーション側ではリダイレクト用のURLを実装してください。このURLは、アクセスが許可された後に
+ユーザーがリダイレクトされるページです。
+
 
 ```javascript
 var passport = require('passport')
@@ -43,42 +44,41 @@ passport.use(new FacebookStrategy({
 ));
 ```
 
-The verify callback for Facebook authentication accepts `accessToken`,
-`refreshToken`, and `profile` arguments.  `profile` will contain user profile
-information provided by Facebook; refer to [User Profile](/guide/profile/)
-for additional information.
+Facebook 認証のための検証用コールバック内では引数である `accessToken` と `refreshtoken`、
+`profile` が利用できます。`profile` は Facebook 上のユーザープロフィール情報
+です（詳細は[ユーザープロフィール](/guide/profile/)を参照してください）。
 
-Note: For security reasons, the redirection URL must reside on the same host
-that is registered with Facebook.
+注意:セキュリティ上の理由で、リダイレクト用のURLは Facebook に登録したものと同じホストである
+必要があります。
 
-#### Routes
+#### ルーティング
 
-Two routes are required for Facebook authentication.  The first route redirects
-the user to Facebook.  The second route is the URL to which Facebook will
-redirect the user after they have logged in.
+Facebook 認証には2つのルーティングが必要です。最初のルーティングでは 
+ユーザーを Facebook へリダイレクトさせます。次のルーティングでは、
+Facebook ログインの後でユーザーをリダイレクトさせます。
 
 ```javascript
-// Redirect the user to Facebook for authentication.  When complete,
-// Facebook will redirect the user back to the application at
+// 認証のためにユーザーを Facebook へリダイレクトさせます。認証が完了すると、
+// ユーザーをアプリケーション上の以下のURLへとリダイレクトして戻します。
 //     /auth/facebook/callback
 app.get('/auth/facebook', passport.authenticate('facebook'));
 
-// Facebook will redirect the user to this URL after approval.  Finish the
-// authentication process by attempting to obtain an access token.  If
-// access was granted, the user will be logged in.  Otherwise,
-// authentication has failed.
+// ユーザーが許可すると、Facebook はユーザーをこのURLへリダイレクトします。
+// アクセストークンの取得によって認証プロセスは完了します。
+// 取得が成功すればユーザーはログインしたことになります。取得が失敗した場合は、
+// 認証も失敗したとみなされます。
 app.get('/auth/facebook/callback', 
   passport.authenticate('facebook', { successRedirect: '/',
                                       failureRedirect: '/login' }));
 ```
 
-Note that the URL of the callback route matches that of the `callbackURL` option
-specified when configuring the strategy.
+注意: このコールバックルーティングの URL は、ストラテジーの設定時に
+`callbackURL` オプションで指定されたものです。
 
-#### Permissions
+#### アプリケーションの求めるアクセス許可
 
-If your application needs extended permissions, they can be requested by setting
-the `scope` option.
+アプリケーションがユーザーへさらに特定のアクセス許可を求める場合は、
+`scope` オプションの設定が必要になります。
 
 ```javascript
 app.get('/auth/facebook',
@@ -86,7 +86,7 @@ app.get('/auth/facebook',
 );
 ```
 
-Multiple permissions can be specified as an array.
+複数のアクセス許可を指定する場合は、配列を用いて指定します。
 
 ```javascript
 app.get('/auth/facebook',
@@ -96,8 +96,7 @@ app.get('/auth/facebook',
 
 #### Link
 
-A link or button can be placed on a web page, allowing one-click login with
-Facebook.
+Facebook 用の1-クリックサインインはリンクかボタンによって実現できます。
 
 ```xml
 <a href="/auth/facebook">Login with Facebook</a>
