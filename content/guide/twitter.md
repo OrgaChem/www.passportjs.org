@@ -5,25 +5,25 @@ title: 'Twitter'
 
 ### Twitter
 
-The Twitter strategy allows users to sign in to a web application using their
-Twitter account.  Internally, Twitter authentication works using OAuth 1.0a.
+ユーザーの Twitter アカウントを使ってログインするには、Twitter ストラテジーを
+使います。この認証には OAuth 1.0a を使っています。
 
-Support for Twitter is implemented by the [passport-twitter](https://github.com/jaredhanson/passport-twitter)
-module.
+Twitter サポートは [passport-twitter](https://github.com/jaredhanson/passport-twitter)
+によって実装されています。
 
-#### Install
+#### インストール
 
 ```bash
 $ npm install passport-twitter
 ```
 
-#### Configuration
+#### 設定方法
 
-In order to use Twitter authentication, you must first create an application at
-[Twitter Developers](https://dev.twitter.com/).  When created, an application is
-assigned a consumer key and consumer secret.  Your application must also
-implement a callback URL, to which Twitter will redirect users after they have
-approved access for your application.
+Twitter 認証を使う前に [Twitter Developers](https://dev.twitter.com/) で
+アプリケーションを登録しておく必要があります。登録が終わると、アプリケーション
+にコンシューマーキーとコンシューマーシークレットが発行されます。アプリケーション
+側ではコールバックURLを実装しておいてください。このURL、アクセスが許可された後に
+ユーザーがリダイレクトされるページです。
 
 ```javascript
 var passport = require('passport')
@@ -43,39 +43,37 @@ passport.use(new TwitterStrategy({
 ));
 ```
 
-The verify callback for Twitter authentication accepts `token`, `tokenSecret`,
-and `profile` arguments.  `profile` will contain user profile information
-provided by Twitter; refer to [User Profile](/guide/profile/) for additional
-information.
+Twitter 認証のための検証用コールバック内では引数である `token` と `tokenSecret`、
+`profile` が利用できます。`profile` は Twitter 上のユーザープロフィール情報
+です（詳細は[ユーザープロフィール](/guide/profile/)を参照してください）。
 
-#### Routes
+#### ルーティング
 
-Two routes are required for Twitter authentication.  The first route initiates
-an OAuth transaction and redirects the user to Twitter.  The second route is the
-URL to which Twitter will redirect the user after they have signed in.
+Twitter 認証には2つのルーティングが必要です。最初のルーティングでは OAuth
+トランザクションを開始し、ユーザーを Twitter へリダイレクトさせます。次の
+ルーティングでは Twitter サインインの後でユーザーをリダイレクトさせます。
 
 ```javascript
-// Redirect the user to Twitter for authentication.  When complete, Twitter
-// will redirect the user back to the application at
+// 認証のために Twitter へリダイレクトさせます。認証が完了すると、Twitter は
+// ユーザーをアプリケーションへとリダイレクトして戻します。
 //   /auth/twitter/callback
 app.get('/auth/twitter', passport.authenticate('twitter'));
 
-// Twitter will redirect the user to this URL after approval.  Finish the
-// authentication process by attempting to obtain an access token.  If
-// access was granted, the user will be logged in.  Otherwise,
-// authentication has failed.
+// ユーザーが許可すると、Twitter はユーザーをこの URL にリダイレクトします。
+// この認証プロセスは最後に、アクセストークンの取得をおこないます。
+// この取得が成功すればユーザーはログインしたことになります。取得に失敗したとき
+// は、認証も失敗したとみなします。
 app.get('/auth/twitter/callback', 
   passport.authenticate('twitter', { successRedirect: '/',
                                      failureRedirect: '/login' }));
 ```
 
-Note that the URL of the callback route matches that of the `callbackURL` option
-specified when configuring the strategy.
+注意: このコールバックルーティングの URL は、ストラテジーの設定時に
+`callbackURL` オプションで指定されたものです。
 
 #### Link
 
-A link or button can be placed on a web page, allowing one-click sign in with
-Twitter.
+Twitter 用の1-クリックサインインはリンクかボタンによって実現できます。
 
 ```xml
 <a href="/auth/twitter">Sign in with Twitter</a>
