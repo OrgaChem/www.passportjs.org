@@ -41,7 +41,7 @@ passport.use(new TwitterStrategy({
 ```
 
 Twitter 認証のための検証用コールバック内では引数である `token` と `tokenSecret`、`profile` が利用できます。
-`profile` は Twitter 上のユーザープロフィール情報です（詳細は[ユーザープロフィール](/guide/profile/)を参照してください）。
+`profile` は Twitter 上のユーザープロフィール情報です（詳細は[ユーザープロフィール](/www.passportjs.org/guide/profile/)を参照してください）。
 
 #### ルーティング
 

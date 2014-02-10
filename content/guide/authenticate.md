@@ -22,7 +22,7 @@ Passport は、認証に失敗したとき `401 Unauthorized` ステータスを
 認証に成功したときは、次のハンドラーを実行し、`req.user` プロパティに認証されたユーザーをセットします。
 
 <small>注意: ストラテジーはルーティングされる前に設定されていなければなりません。
-詳細は[設定](/guide/configure/)の章で確認できます。</small>
+詳細は[設定](/www.passportjs.org/guide/configure/)の章で確認できます。</small>
 
 #### リダイレクト
 

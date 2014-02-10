@@ -13,7 +13,7 @@ The protocol greatly improves the security of web applications, in particular,
 and OAuth has been important in bringing attention to the potential dangers of
 exposing passwords to external services.
 
-While OAuth 1.0 is still widely used, it has been superseded by [OAuth 2.0](/guide/oauth2-api/).
+While OAuth 1.0 is still widely used, it has been superseded by [OAuth 2.0](/www.passportjs.org/guide/oauth2-api/).
 It is recommended to base new implementations on OAuth 2.0.
 
 When using OAuth to protect API endpoints, there are three distinct steps that

@@ -10,7 +10,7 @@ HTTPの認証フレームワークを規定すると共に、[RFC 2617](http://t
 
 <small>注意: このようなユーザーIDとパスワードに依存する認証は安全性に問題があります。
 特に信頼性が求められるクライアントサーバ間の通信には使用しないでください。
-このような状況では、[OAuth 2.0](/guide/oauth2-api/)のようなフレームワークが推奨されています。</small>
+このような状況では、[OAuth 2.0](/www.passportjs.org/guide/oauth2-api/)のようなフレームワークが推奨されています。</small>
 
 Basic認証とDigest認証は、[passport-http](https://github.com/jaredhanson/passport-http)モジュールで提供されています。
 

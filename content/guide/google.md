@@ -47,7 +47,7 @@ passport.use(new GoogleStrategy({
 
 The verify callback for Google authentication accepts `identifier` and `profile`
 arguments.  `profile` will contain user profile information provided by Google;
-refer to [User Profile](/guide/profile/) for additional information.
+refer to [User Profile](/www.passportjs.org/guide/profile/) for additional information.
 
 #### Routes
 

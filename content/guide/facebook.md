@@ -42,7 +42,7 @@ passport.use(new FacebookStrategy({
 ```
 
 Facebook 認証のための検証用コールバック内では引数である `accessToken` と `refreshtoken`、`profile` が利用できます。
-`profile` は Facebook 上のユーザープロフィール情報です（詳細は[ユーザープロフィール](/guide/profile/)を参照してください）。
+`profile` は Facebook 上のユーザープロフィール情報です（詳細は[ユーザープロフィール](/www.passportjs.org/guide/profile/)を参照してください）。
 
 <small>注意: セキュリティ上の理由で、リダイレクト用の URL は Facebook に登録したものと同じホストである必要があります。</small>
 

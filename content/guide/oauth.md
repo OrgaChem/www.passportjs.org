@@ -27,8 +27,8 @@ Thankfully, Passport shields an application from the complexities of dealing
 with OAuth variants.  In many cases, a provider-specific strategy can be used
 instead of the generic OAuth strategies described below.  This cuts down on the
 necessary configuration, and accommodates any provider-specific quirks. See
-[Facebook](/guide/facebook/), [Twitter](/guide/twitter/) or the list of
-[providers](/guide/providers/) for preferred usage.
+[Facebook](/www.passportjs.org/guide/facebook/), [Twitter](/www.passportjs.org/guide/twitter/) or the list of
+[providers](/www.passportjs.org/guide/providers/) for preferred usage.
 
 Support for OAuth is provided by the [passport-oauth](https://github.com/jaredhanson/passport-oauth)
 module.
@@ -76,7 +76,7 @@ passport.use('provider', new OAuthStrategy({
 The verify callback for OAuth-based strategies accepts `token`, `tokenSecret`,
 and `profile` arguments.  `token` is the access token and `tokenSecret` is its
 corresponding secret.  `profile` will contain user profile information provided
-by the service provider; refer to [User Profile](/guide/profile/) for
+by the service provider; refer to [User Profile](/www.passportjs.org/guide/profile/) for
 additional information.
 
 #### Routes
@@ -148,7 +148,7 @@ The verify callback for OAuth 2.0-based strategies accepts `accessToken`,
 `refreshToken`, and `profile` arguments.  `refreshToken` can be used to obtain
 new access tokens, and may be `undefined` if the provider does not issue refresh
 tokens.  `profile` will contain user profile information provided by the service
-provider; refer to [User Profile](/guide/profile/) for additional information.
+provider; refer to [User Profile](/www.passportjs.org/guide/profile/) for additional information.
 
 #### Routes
 
