@@ -2,6 +2,11 @@ site:
 	node site
 
 publish:
-	scp -rp passportjs.org jaredhanson@passportjs.org:/home/jaredhanson
+	git checkout gh-pages
+	rm -rf content layouts public Makefile README.md package.json server.js site.js
+	mv passportjs.org/* ./
+	git commit -a -m "Regenerate"
+	git push origin gh-pages
+	git checkout master
 
 .PHONY: site publish
