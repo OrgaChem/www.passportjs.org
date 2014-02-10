@@ -73,8 +73,7 @@
 しかし、いまどきは<a href="https://www.facebook.com/">Facebook</a> や <a href="https://twitter.com/">Twitter</a> などのソーシャルネットワーキングと連携し、 <a href="http://oauth.net/">OAuth</a> を使ったシングルサインオンをおこなう手法が一般的に普及してきています。
 これらの API を公開しているサービスでは、アクセスを保護するためにトークンベースの認証情報を必要としています。</p>
 <p>Passport はアプリケーション毎に、それぞれ適した認証があることを踏まえてつくられています。
-認証メカニズムは<em>ストラテジー</em>と呼ばれる独立したモジュールによってパッケージ化されています。
-アプリケーションはこのストラテジーを選べばよいだけです。</p>
+<em>アプリケーションへの認証機能の組み込みは、ストラテジー</em>と呼ばれる独立した認証メカニズムのモジュールを選ぶだけで実現できます。</p>
 <p>認証作業は複雑かもしれませんが、何もコードまでも複雑なものになる必要はもうないのです。</p>
 <pre><code class="undefinedjavascript">app.post(<span class="string">'/login'</span>, passport.authenticate(<span class="string">'local'</span>, { successRedirect: <span class="string">'/'</span>,
                                                     failureRedirect: <span class="string">'/login'</span> }));</code></pre>

@@ -1,60 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://passportjs.org/guide/authenticate/index.html</loc>
+    <loc>http://knimon-software.github.io/guide/authenticate/index.html</loc>
   </url>
   <url>
-    <loc>http://passportjs.org/guide/authorize/index.html</loc>
+    <loc>http://knimon-software.github.io/guide/authorize/index.html</loc>
   </url>
   <url>
-    <loc>http://passportjs.org/guide/basic-digest/index.html</loc>
+    <loc>http://knimon-software.github.io/guide/basic-digest/index.html</loc>
   </url>
   <url>
-    <loc>http://passportjs.org/guide/configure/index.html</loc>
+    <loc>http://knimon-software.github.io/guide/configure/index.html</loc>
   </url>
   <url>
-    <loc>http://passportjs.org/guide/facebook/index.html</loc>
+    <loc>http://knimon-software.github.io/guide/facebook/index.html</loc>
   </url>
   <url>
-    <loc>http://passportjs.org/guide/google/index.html</loc>
+    <loc>http://knimon-software.github.io/guide/google/index.html</loc>
   </url>
   <url>
-    <loc>http://passportjs.org/guide/index.html</loc>
+    <loc>http://knimon-software.github.io/guide/index.html</loc>
   </url>
   <url>
-    <loc>http://passportjs.org/guide/login/index.html</loc>
+    <loc>http://knimon-software.github.io/guide/login/index.html</loc>
   </url>
   <url>
-    <loc>http://passportjs.org/guide/logout/index.html</loc>
+    <loc>http://knimon-software.github.io/guide/logout/index.html</loc>
   </url>
   <url>
-    <loc>http://passportjs.org/guide/oauth-api/index.html</loc>
+    <loc>http://knimon-software.github.io/guide/oauth-api/index.html</loc>
   </url>
   <url>
-    <loc>http://passportjs.org/guide/oauth/index.html</loc>
+    <loc>http://knimon-software.github.io/guide/oauth/index.html</loc>
   </url>
   <url>
-    <loc>http://passportjs.org/guide/oauth2-api/index.html</loc>
+    <loc>http://knimon-software.github.io/guide/oauth2-api/index.html</loc>
   </url>
   <url>
-    <loc>http://passportjs.org/guide/openid/index.html</loc>
+    <loc>http://knimon-software.github.io/guide/openid/index.html</loc>
   </url>
   <url>
-    <loc>http://passportjs.org/guide/other-api/index.html</loc>
+    <loc>http://knimon-software.github.io/guide/other-api/index.html</loc>
   </url>
   <url>
-    <loc>http://passportjs.org/guide/profile/index.html</loc>
+    <loc>http://knimon-software.github.io/guide/profile/index.html</loc>
   </url>
   <url>
-    <loc>http://passportjs.org/guide/providers/index.html</loc>
+    <loc>http://knimon-software.github.io/guide/providers/index.html</loc>
   </url>
   <url>
-    <loc>http://passportjs.org/guide/twitter/index.html</loc>
+    <loc>http://knimon-software.github.io/guide/twitter/index.html</loc>
   </url>
   <url>
-    <loc>http://passportjs.org/guide/username-password/index.html</loc>
+    <loc>http://knimon-software.github.io/guide/username-password/index.html</loc>
   </url>
   <url>
-    <loc>http://passportjs.org/index.html</loc>
+    <loc>http://knimon-software.github.io/index.html</loc>
   </url>
 </urlset>

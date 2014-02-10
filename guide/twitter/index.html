@@ -106,8 +106,8 @@ app.get(<span class="string">'/auth/twitter/callback'</span>,
   passport.authenticate(<span class="string">'twitter'</span>, { successRedirect: <span class="string">'/'</span>,
                                      failureRedirect: <span class="string">'/login'</span> }));</code></pre>
 <p><small>注意: このコールバックルーティングの URL は、ストラテジーの設定時に <code>callbackURL</code> オプションで指定されたものです。</small></p>
-<h4 id="link">Link</h4>
-<p>Twitter 用の1-クリックサインインは、リンクかボタンによって実現できます。</p>
+<h4 id="-">リンク</h4>
+<p>Twitter を使った1-クリックサインインは、リンクやボタンによって実現できます。</p>
 <pre><code class="undefinedxml"><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"/auth/twitter"</span>&gt;</span>Sign in with Twitter<span class="tag">&lt;/<span class="title">a</span>&gt;</span></code></pre>
   </div>
 </div>

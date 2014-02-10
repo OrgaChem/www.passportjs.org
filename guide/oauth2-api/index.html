@@ -105,14 +105,13 @@
 <p>Bearer トークンの検証用コールバック内では、<code>token</code> 引数が利用できます。
 また、<code>done</code> の実行時に <code>info</code> を指定すると、<code>req.authInfo</code> をセットすることができます。
 これは、トークンの範囲通知やアクセス制御の確認のために使うことができます。</p>
-<h5 id="-">保護されたエンドポイント</h5>
-<p>REVIEW: 訳の正確性を確認</p>
+<h5 id="-">エンドポイントの保護</h5>
 <pre><code class="undefinedjavascript">app.get(<span class="string">'/api/me'</span>, 
   passport.authenticate(<span class="string">'bearer'</span>, { session: <span class="literal">false</span> }),
   <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> {</span>
     res.json(req.user);
   });</code></pre>
-<p>API のエンドポイントを保護するためには、<code>passport.authenticate()</code> に <code>bearer</code> ストラテジーを指定してください。
+<p>API のエンドポイントを <code>bearer</code> トークンを使った認証で保護するには、<code>passport.authenticate()</code> に <code>bearer</code> ストラテジーを指定してください。
 なお、このような API にセッション管理は不要なことが多いため、無効にすることが出来ます。</p>
   </div>
 </div>
