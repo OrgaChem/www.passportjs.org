@@ -67,7 +67,7 @@ app.get('/auth/facebook/callback',
                                       failureRedirect: '/login' }));
 ```
 
-注意: このコールバックルーティングの URL は、ストラテジーの設定時に `callbackURL` オプションで指定されたものです。
+<small>注意: このコールバックルーティングの URL は、ストラテジーの設定時に `callbackURL` オプションで指定されたものです。</small>
 
 #### アプリケーションの求めるアクセス許可
 
