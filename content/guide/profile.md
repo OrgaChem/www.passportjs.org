@@ -18,7 +18,7 @@ Facebook や Twitter のような外部のサービスの認証を利用する�
   <dt><code>id</code> {String}<dt>
   <dd>サービスの提供者によって生成されたユーザーのユニークな識別子。</dd>
   <dt><code>displayName</code> {String}<dt>
-  <dd>表示されるユーザ名</dd>
+  <dd>表示されるユーザID</dd>
   <dt><code>name</code> {Object}<dt>
   <dd>
     <dl>
