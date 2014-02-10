@@ -1,12 +1,13 @@
 ---
 layout: 'guide'
-title: 'Other'
+title: '認証スキーム'
 ---
 
-### API Schemes
+### 認証スキーム
 
 The following is a list of strategies that implement authentication schemes used
 when protecting API endpoints.
+
 
 <table class="table table-condensed table-striped">
   <thead>
