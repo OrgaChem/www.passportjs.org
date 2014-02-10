@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Passport  | 設定 </title>    <link rel="stylesheet" href="/vendor/bootstrap/2.2.1/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendor/highlight/gc5f3dbd/styles/github.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-104798-10']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+  <ul class="nav nav-pills pull-right">
+    <li><a href="/">ホーム</a></li>    <li class="active"><a href="/guide/">使い方</a></li>  </ul>
+  <h3><a href="/"><img src="/assets/images/logo-90px.png" class="logo"> Passport</a></h3>
+</div>
+
+      
+<div class="row guide">
+  <div class="span3 toc">
+    <ul class="unstyled">
+  <li><a href="/guide/">はじめに</a></li>
+  <li><a href="/guide/authenticate/">認証</a></li>
+  <li><a href="/guide/configure/">設定方法</a></li>
+  <li><a href="/guide/username-password/">ユーザー名 &amp; パスワード</a></li>
+  <li><a href="/guide/openid/">OpenID</a></li>
+  <li><a href="/guide/oauth/">OAuth</a></li>
+  <li><strong>対応しているサービス</strong></li>
+  <ul>
+    <li><a href="/guide/facebook/">Facebook</a></li>
+    <li><a href="/guide/twitter/">Twitter</a></li>
+    <li><a href="/guide/google/">Google</a></li>
+    <li><a href="/guide/providers/">その他</a></li>
+  </ul>
+  <li><strong>認証スキーム</strong></li>
+  <ul>
+    <li><a href="/guide/basic-digest/">Basic認証 &amp; Digest認証</a></li>
+    <li><a href="/guide/oauth-api/">OAuth</a></li>
+    <li><a href="/guide/oauth2-api/">OAuth 2.0</a></li>
+    <li><a href="/guide/other-api/">その他</a></li>
+  </ul>
+  <li><strong>操作</strong></li>
+  <ul>
+    <li><a href="/guide/login/">ログイン</a></li>
+    <li><a href="/guide/logout/">ログアウト</a></li>
+    <li><a href="/guide/authorize/">権限付与</a></li>
+  </ul>
+  <li><a href="/guide/profile/">ユーザープロフィール</a></li>
+</ul>
+
+  </div>
+  <div class="span9 content">
+    <h3 id="-">設定</h3>
+<p>Passportを認証に用いるためには、以下の3つの項目を設定する必要があります:</p>
+<ol>
+<li>認証用ストラテジーの選択</li>
+<li>アプリケーションミドルウェア </li>
+<li>セッション管理(<em>省略可</em>)</li>
+</ol>
+<h4 id="-">ストラテジーの設定</h4>
+<p>Passportは認証のために<em>ストラテジー</em>と呼ばれるものを認証に使用します。
+ストラテジーは、ユーザーIDとパスワード用いた検証や、<a href="http://oauth.net/">OAuth</a>を用いた権限委譲、分散認証システムである<a href="http://openid.net/">OpenID</a>を用いた認証に対応しています。</p>
+<p>Passportを用いて認証を行う前に、必ず1つ以上のストラテジーに関する設定が必要になります。</p>
+<p>ストラテジーやその設定は <code>use()</code> 関数にて提供されます。
+以下に、<code>LocalStrategy</code> でのユーザーID、パスワードを用いた認証の例を示します。</p>
+<pre><code class="undefinedjavascript"><span class="keyword">var</span> passport = require(<span class="string">'passport'</span>)
+  , LocalStrategy = require(<span class="string">'passport-local'</span>).Strategy;
+
+passport.use(<span class="keyword">new</span> LocalStrategy(
+  <span class="function"><span class="keyword">function</span><span class="params">(username, password, done)</span> {</span>
+    User.findOne({ username: username }, <span class="function"><span class="keyword">function</span> <span class="params">(err, user)</span> {</span>
+      <span class="keyword">if</span> (err) { <span class="keyword">return</span> done(err); }
+      <span class="keyword">if</span> (!user) {
+        <span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>, { message: <span class="string">'Incorrect username.'</span> });
+      }
+      <span class="keyword">if</span> (!user.validPassword(password)) {
+        <span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>, { message: <span class="string">'Incorrect password.'</span> });
+      }
+      <span class="keyword">return</span> done(<span class="literal">null</span>, user);
+    });
+  }
+));</code></pre>
+<h5 id="-">検証用コールバックに関する設定</h5>
+<p>この例では重要なコンセプトを説明します。
+ストラテジーは<em>検証用コールバック</em>(<em>verify callback</em>)と呼ばれるものを必要とします。
+検証用コールバックの目的は、認証情報を照合し、ユーザーを特定することです。</p>
+<p>認証がリクエストされると、Passportはリクエストに含まれる認証情報を解析します。
+上の例では、ユーザーIDとパスワードが認証情報として検証用コールバックの引数に指定されます。
+認証情報が正しい場合は、検証用コールバック内で <code>done</code> を実行する際に Passport に認証済のユーザー情報を返してください。</p>
+<pre><code class="undefinedjavascript"><span class="keyword">return</span> done(<span class="literal">null</span>, user);</code></pre>
+<p>上記の例において、パスワードが不正であるようといった認証情報の誤りがある場合は、<code>false</code> を引数に指定し <code>done</code> を実行します。
+これにより認証情報が失敗した、ということを Passport に通知します。</p>
+<pre><code class="undefinedjavascript"><span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>);</code></pre>
+<p>認証が失敗した原因を詳細にメッセージとして通知することも可能です。
+この機能は、フラッシュメッセージとしてユーザーに再度認証を促す場合に役立ちます。</p>
+<pre><code class="undefinedjavascript"><span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>, { message: <span class="string">'Incorrect password.'</span> });</code></pre>
+<p>最後に、認証中にデータベースが機能していないといった例外が発生した際は、Node の慣用的な表現にて error 情報を指定し <code>done</code> を実行することで通知可能です。</p>
+<pre><code class="undefinedjavascript"><span class="keyword">return</span> done(err);</code></pre>
+<p>この2つのエラーがどのような場合に発生するのか、両者を明確に区別しておくことが重要です。
+後者はサーバ側での例外であり、この例外が発生した際には <code>err</code> に <code>null</code> 以外の値がセットされます。
+認証時の例外は、認証に失敗したことによるものですから、正常な動作により引き起こされる例外です。
+この点はサーバ側の例外と明確に異なっています。
+この場合は、<code>err</code> が <code>null</code> であることは保障され、詳細なメッセージを追加する目的で引数の最後のパラメータを使用する事が出来ます。</p>
+<p>このようにストラテジーに処理を委譲することで、検証用コールバックは、Passportとデータベースを疎に保ちます。
+これによりアプリケーションは、認証レイヤーでの様々な前提条件にとらわれず、ユーザー情報をどのように格納するか自由に選択できます。</p>
+<h4 id="-">ミドルウェアの設定</h4>
+<p><a href="http://senchalabs.github.com/connect/">Connect</a> or <a href="http://expressjs.com/">Express</a>を基盤にしたアプリケーションでは、<code>passport.initialize()</code> を用いて Passport の初期化を行うことが必要になります。
+アプリケーションでログイン後のセッション管理を行う場合には、<code>passport.session()</code> の記述も必要になります。</p>
+<pre><code class="undefinedjavascript">app.configure(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  app.use(express.static(<span class="string">'public'</span>));
+  app.use(express.cookieParser());
+  app.use(express.bodyParser());
+  app.use(express.session({ secret: <span class="string">'keyboard cat'</span> }));
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.use(app.router);
+});</code></pre>
+<p>セッションのサポートはほとんどのアプリケーションで推奨されていますが、オプションで省略することができます。
+セッションのサポート機能を有効にする場合は、正しい順番でログインセッションを処理できるように、<code>passport.session()</code> <em>の前に</em> <code>express.session()</code> を記述してください。</p>
+<h4 id="-">セッション管理に関する設定</h4>
+<p>現在Web上にあるほとんどのアプリケーションは、都度認証を行うのではなく、認証情報をログインリクエストのときのみ送信しています。
+そして、認証が成功した場合は、ブラウザ上のクッキーを利用することでセッションを確立・維持する作りになっています。</p>
+<p>この仕組みは、ユニークなクッキーによるセッション管理によって実現されています。
+ログイン後のリクエストそれぞれに認証情報を含むことはありません。
+セッションのサポートのために、パスポートは <code>user</code> インスタンスをシリアライズ/デシリアライズしてセッション情報として管理しています。</p>
+<pre><code class="undefinedjavascript">passport.serializeUser(<span class="function"><span class="keyword">function</span><span class="params">(user, done)</span> {</span>
+  done(<span class="literal">null</span>, user.id);
+});
+
+passport.deserializeUser(<span class="function"><span class="keyword">function</span><span class="params">(id, done)</span> {</span>
+  User.findById(id, <span class="function"><span class="keyword">function</span><span class="params">(err, user)</span> {</span>
+    done(err, user);
+  });
+});</code></pre>
+<p>この例では、<code>userID</code> をシリアライズしてセッションに埋め込み、データをコンパクトにしています。
+リクエストを受け取ると、IDからユーザーを特定し、<code>req.user</code> 内に格納します。</p>
+<p>上記のシリアライズ、デシリアライズ内の動作はアプリケーションによって定義されるため、アプリケーションでは認証レイヤーでの制限無しに、適切なデーターベースやオブジェクトマッパーを選択可能です。</p>
+  </div>
+</div>
+      <div class="footer">
+  <p>&copy; 2011-2013 Jared Hanson<br/><a href="https://github.com/stuartpb/passport-logo">Logo</a> by <a href="https://github.com/stuartpb">Stuart P. Bentley</a>, <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a><br>Translation by <a href="https://github.com/OrgaChem">OrgaChem</a></p>
+</div>
+
+    </div>
+  </body>
+</html>

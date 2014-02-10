@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Passport  | はじめに </title>    <link rel="stylesheet" href="/vendor/bootstrap/2.2.1/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendor/highlight/gc5f3dbd/styles/github.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-104798-10']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+  <ul class="nav nav-pills pull-right">
+    <li><a href="/">ホーム</a></li>    <li class="active"><a href="/guide/">使い方</a></li>  </ul>
+  <h3><a href="/"><img src="/assets/images/logo-90px.png" class="logo"> Passport</a></h3>
+</div>
+
+      
+<div class="row guide">
+  <div class="span3 toc">
+    <ul class="unstyled">
+  <li><a href="/guide/">はじめに</a></li>
+  <li><a href="/guide/authenticate/">認証</a></li>
+  <li><a href="/guide/configure/">設定方法</a></li>
+  <li><a href="/guide/username-password/">ユーザー名 &amp; パスワード</a></li>
+  <li><a href="/guide/openid/">OpenID</a></li>
+  <li><a href="/guide/oauth/">OAuth</a></li>
+  <li><strong>対応しているサービス</strong></li>
+  <ul>
+    <li><a href="/guide/facebook/">Facebook</a></li>
+    <li><a href="/guide/twitter/">Twitter</a></li>
+    <li><a href="/guide/google/">Google</a></li>
+    <li><a href="/guide/providers/">その他</a></li>
+  </ul>
+  <li><strong>認証スキーム</strong></li>
+  <ul>
+    <li><a href="/guide/basic-digest/">Basic認証 &amp; Digest認証</a></li>
+    <li><a href="/guide/oauth-api/">OAuth</a></li>
+    <li><a href="/guide/oauth2-api/">OAuth 2.0</a></li>
+    <li><a href="/guide/other-api/">その他</a></li>
+  </ul>
+  <li><strong>操作</strong></li>
+  <ul>
+    <li><a href="/guide/login/">ログイン</a></li>
+    <li><a href="/guide/logout/">ログアウト</a></li>
+    <li><a href="/guide/authorize/">権限付与</a></li>
+  </ul>
+  <li><a href="/guide/profile/">ユーザープロフィール</a></li>
+</ul>
+
+  </div>
+  <div class="span9 content">
+    <h3 id="-">はじめに</h3>
+<p>Passport は <a href="http://nodejs.org/">Node</a> のための認証ミドルウェアです。
+認証リクエストをおこなうための必要最低限の機能をもつように設計されています。
+この Passport の素晴らしいところは、認証リクエスト以外の全ての機能をアプリケーション側で自由に実現できるということに尽きます。
+このように Passport とアプリケーションを疎結合に保つことによって、コードは簡潔になり保守性が高まることでしょう。
+さらに、Passport はとても簡単にアプリケーションに組み込むことができるのです。</p>
+<p>モダンな Web アプリケーションは多くの認証形態を採用しています。
+これまで、ユーザーはユーザー名とパスワードでログインしてきました。
+しかし、いまどきは<a href="https://www.facebook.com/">Facebook</a> や <a href="https://twitter.com/">Twitter</a> などのソーシャルネットワーキングと連携し、 <a href="http://oauth.net/">OAuth</a> を使ったシングルサインオンをおこなう手法が一般的に普及してきています。
+これらの API を公開しているサービスでは、アクセスを保護するためにトークンベースの認証情報を必要としています。</p>
+<p>Passport はアプリケーション毎に、それぞれ適した認証があることを踏まえてつくられています。
+認証メカニズムは<em>ストラテジー</em>と呼ばれる独立したモジュールによってパッケージ化されています。
+アプリケーションはこのストラテジーを選べばよいだけです。</p>
+<p>認証作業は複雑かもしれませんが、何もコードまでも複雑なものになる必要はもうないのです。</p>
+<pre><code class="undefinedjavascript">app.post(<span class="string">'/login'</span>, passport.authenticate(<span class="string">'local'</span>, { successRedirect: <span class="string">'/'</span>,
+                                                    failureRedirect: <span class="string">'/login'</span> }));</code></pre>
+<h4 id="-">インストール</h4>
+<pre><code class="undefinedbash">$ npm install passport</code></pre>
+  </div>
+</div>
+      <div class="footer">
+  <p>&copy; 2011-2013 Jared Hanson<br/><a href="https://github.com/stuartpb/passport-logo">Logo</a> by <a href="https://github.com/stuartpb">Stuart P. Bentley</a>, <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a><br>Translation by <a href="https://github.com/OrgaChem">OrgaChem</a></p>
+</div>
+
+    </div>
+  </body>
+</html>

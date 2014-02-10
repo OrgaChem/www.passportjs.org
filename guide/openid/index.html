@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Passport  | OpenID </title>    <link rel="stylesheet" href="/vendor/bootstrap/2.2.1/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendor/highlight/gc5f3dbd/styles/github.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-104798-10']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+  <ul class="nav nav-pills pull-right">
+    <li><a href="/">ホーム</a></li>    <li class="active"><a href="/guide/">使い方</a></li>  </ul>
+  <h3><a href="/"><img src="/assets/images/logo-90px.png" class="logo"> Passport</a></h3>
+</div>
+
+      
+<div class="row guide">
+  <div class="span3 toc">
+    <ul class="unstyled">
+  <li><a href="/guide/">はじめに</a></li>
+  <li><a href="/guide/authenticate/">認証</a></li>
+  <li><a href="/guide/configure/">設定方法</a></li>
+  <li><a href="/guide/username-password/">ユーザー名 &amp; パスワード</a></li>
+  <li><a href="/guide/openid/">OpenID</a></li>
+  <li><a href="/guide/oauth/">OAuth</a></li>
+  <li><strong>対応しているサービス</strong></li>
+  <ul>
+    <li><a href="/guide/facebook/">Facebook</a></li>
+    <li><a href="/guide/twitter/">Twitter</a></li>
+    <li><a href="/guide/google/">Google</a></li>
+    <li><a href="/guide/providers/">その他</a></li>
+  </ul>
+  <li><strong>認証スキーム</strong></li>
+  <ul>
+    <li><a href="/guide/basic-digest/">Basic認証 &amp; Digest認証</a></li>
+    <li><a href="/guide/oauth-api/">OAuth</a></li>
+    <li><a href="/guide/oauth2-api/">OAuth 2.0</a></li>
+    <li><a href="/guide/other-api/">その他</a></li>
+  </ul>
+  <li><strong>操作</strong></li>
+  <ul>
+    <li><a href="/guide/login/">ログイン</a></li>
+    <li><a href="/guide/logout/">ログアウト</a></li>
+    <li><a href="/guide/authorize/">権限付与</a></li>
+  </ul>
+  <li><a href="/guide/profile/">ユーザープロフィール</a></li>
+</ul>
+
+  </div>
+  <div class="span9 content">
+    <h3 id="openid">OpenID</h3>
+<p><a href="http://openid.net/">OpenID</a> は分散認証のオープン標準です。
+ユーザーは OpenID を提示すると Web サイトにサインインできます。
+ユーザーの認証は、ユーザが選んだ OpenID プロバイダーにユーザーの識別子の正当性を検証してもらうことでおこなわれます。
+Web サイトは検証結果を確認し、ユーザーのサインインをおこないます。</p>
+<p>OpenID は <a href="https://github.com/jaredhanson/passport-openid">passport-openid</a> モジュールによって提供されています。</p>
+<h4 id="-">インストール</h4>
+<pre><code class="undefinedbash">$ npm install passport-openid</code></pre>
+<h4 id="-">設定方法</h4>
+<p>OpenID を利用するには、<code>returnURL</code> と <code>realm</code> を明示しなければなりません。
+この <code>returnURL</code> は OpenID プロバイダーによる認証後にユーザーがリダイレクトされる先の URL です。
+<code>realm</code> は認証が正当である URL の範囲を示します。
+通常であればこれらは Web サイトのルート URL となっています。</p>
+<pre><code class="undefinedjavascript"><span class="keyword">var</span> passport = require(<span class="string">'passport'</span>)
+  , OpenIDStrategy = require(<span class="string">'passport-openid'</span>).Strategy;
+
+passport.use(<span class="keyword">new</span> OpenIDStrategy({
+    returnURL: <span class="string">'http://www.example.com/auth/openid/return'</span>,
+    realm: <span class="string">'http://www.example.com/'</span>
+  },
+  <span class="function"><span class="keyword">function</span><span class="params">(identifier, done)</span> {</span>
+    User.findOrCreate({ openId: identifier }, <span class="function"><span class="keyword">function</span><span class="params">(err, user)</span> {</span>
+      done(err, user);
+    });
+  }
+));</code></pre>
+<p>OpenID 認証の検証用コールバック内では、引数として <code>identifier</code> を利用できます。
+<code>identifier</code> はユーザーの主張している識別子が含まれます。</p>
+<h4 id="-">フォーム</h4>
+<p>OpenId を使ったサインインは、Web ページのフォーム上で実現できます。</p>
+<pre><code class="undefinedxml"><span class="tag">&lt;<span class="title">form</span> <span class="attribute">action</span>=<span class="value">"/auth/openid"</span> <span class="attribute">method</span>=<span class="value">"post"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">label</span>&gt;</span>OpenID:<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">name</span>=<span class="value">"openid_identifier"</span>/&gt;</span><span class="tag">&lt;<span class="title">br</span>/&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"submit"</span> <span class="attribute">value</span>=<span class="value">"Sign In"</span>/&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">form</span>&gt;</span></code></pre>
+<h4 id="-">ルーティング</h4>
+<p>OpenID 認証には2つのルーティングが必要です。
+最初に OpenID 識別子を含むフォームの内容を送信します。
+認証の際、ユーザーは OpenID プロバイダーへとリダイレクトされます。
+次のルーティングでは、OpenID プロバイダーの認証後にユーザーを指定した URL に戻します。</p>
+<pre><code class="undefinedjavascript"><span class="comment">// 認証のために OpenID 識別子を受け取った後、ユーザーを OpenID プロバイダーへと</span>
+<span class="comment">// リダイレクトさせます。この後、OpenID プロバイダーはユーザーをアプリケーションへと</span>
+<span class="comment">// リダイレクトして戻します：</span>
+<span class="comment">//     /auth/openid/return</span>
+app.post(<span class="string">'/auth/openid'</span>, passport.authenticate(<span class="string">'openid'</span>));
+
+<span class="comment">// OpenID プロバイダーがユーザーをアプリケーションへとリダイレクトして戻した後、</span>
+<span class="comment">// 検証結果を確認して認証を終えます。検証結果の正当性が確認できれば、ユーザーは</span>
+<span class="comment">// ログインできます。確認できなければ、認証は失敗します。</span>
+app.get(<span class="string">'/auth/openid/return'</span>, 
+  passport.authenticate(<span class="string">'openid'</span>, { successRedirect: <span class="string">'/'</span>,
+                                    failureRedirect: <span class="string">'/login'</span> }));</code></pre>
+<h4 id="-">プロフィール取得</h4>
+<p>OpenID では、認証されたユーザーのプロフィール情報の取得を設定できます。
+プロフィール取得を有効にするには、 <code>profile</code> オプションを <code>true</code> にしてください。</p>
+<pre><code class="undefinedjavascript">passport.use(<span class="keyword">new</span> OpenIDStrategy({
+    returnURL: <span class="string">'http://www.example.com/auth/openid/return'</span>,
+    realm: <span class="string">'http://www.example.com/'</span>,
+    profile: <span class="literal">true</span>
+  },
+  <span class="function"><span class="keyword">function</span><span class="params">(identifier, profile, done)</span> {</span>
+    <span class="comment">// ...</span>
+  }
+));</code></pre>
+<p>プロフィール交換が有効になれば、検証用コールバックの引数に <code>profile</code> が追加されます。
+<code>profile</code> には OpenID プロバイダーが提供したユーザーのプロフィール情報がセットされています(詳細は<a href="/guide/profile/">ユーザープロフィール</a>を参照してください) 。</p>
+  </div>
+</div>
+      <div class="footer">
+  <p>&copy; 2011-2013 Jared Hanson<br/><a href="https://github.com/stuartpb/passport-logo">Logo</a> by <a href="https://github.com/stuartpb">Stuart P. Bentley</a>, <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a><br>Translation by <a href="https://github.com/OrgaChem">OrgaChem</a></p>
+</div>
+
+    </div>
+  </body>
+</html>

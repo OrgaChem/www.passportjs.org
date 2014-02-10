@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Passport  | 権限付与 </title>    <link rel="stylesheet" href="/vendor/bootstrap/2.2.1/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendor/highlight/gc5f3dbd/styles/github.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-104798-10']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+  <ul class="nav nav-pills pull-right">
+    <li><a href="/">ホーム</a></li>    <li class="active"><a href="/guide/">使い方</a></li>  </ul>
+  <h3><a href="/"><img src="/assets/images/logo-90px.png" class="logo"> Passport</a></h3>
+</div>
+
+      
+<div class="row guide">
+  <div class="span3 toc">
+    <ul class="unstyled">
+  <li><a href="/guide/">はじめに</a></li>
+  <li><a href="/guide/authenticate/">認証</a></li>
+  <li><a href="/guide/configure/">設定方法</a></li>
+  <li><a href="/guide/username-password/">ユーザー名 &amp; パスワード</a></li>
+  <li><a href="/guide/openid/">OpenID</a></li>
+  <li><a href="/guide/oauth/">OAuth</a></li>
+  <li><strong>対応しているサービス</strong></li>
+  <ul>
+    <li><a href="/guide/facebook/">Facebook</a></li>
+    <li><a href="/guide/twitter/">Twitter</a></li>
+    <li><a href="/guide/google/">Google</a></li>
+    <li><a href="/guide/providers/">その他</a></li>
+  </ul>
+  <li><strong>認証スキーム</strong></li>
+  <ul>
+    <li><a href="/guide/basic-digest/">Basic認証 &amp; Digest認証</a></li>
+    <li><a href="/guide/oauth-api/">OAuth</a></li>
+    <li><a href="/guide/oauth2-api/">OAuth 2.0</a></li>
+    <li><a href="/guide/other-api/">その他</a></li>
+  </ul>
+  <li><strong>操作</strong></li>
+  <ul>
+    <li><a href="/guide/login/">ログイン</a></li>
+    <li><a href="/guide/logout/">ログアウト</a></li>
+    <li><a href="/guide/authorize/">権限付与</a></li>
+  </ul>
+  <li><a href="/guide/profile/">ユーザープロフィール</a></li>
+</ul>
+
+  </div>
+  <div class="span9 content">
+    <h3 id="-">権限付与</h3>
+<p>アプリケーションが複数のサードパーティからの情報を必要とする場合がよくあります。
+このようなとき、アプリケーションはユーザーに Facebook や Twitter などのアカウントとの“連携”を要求することになるでしょう。</p>
+<p>これは、ユーザーがすでにアプリケーションから認証されていて、かつサードパーティのアカウントからの許可・連携のみが必要な状況です。
+このような認証・権限付与の場合にも Passport を使うことができます。</p>
+<p>権限付与は <code>passport.authorize()</code> の呼び出しによって動作します。
+権限付与の申請が承諾されれば、ストラテジーの検証用コールバックの <code>req.account</code> に結果がセットされます。
+このとき、ログインセッションや <code>req.user</code> に影響は及びません。</p>
+<pre><code class="undefinedjavascript">app.get(<span class="string">'/connect/twitter'</span>,
+  passport.authorize(<span class="string">'twitter-authz'</span>, { failureRedirect: <span class="string">'/account'</span> })
+);
+
+app.get(<span class="string">'/connect/twitter/callback'</span>,
+  passport.authorize(<span class="string">'twitter-authz'</span>, { failureRedirect: <span class="string">'/account'</span> }),
+  <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> {</span>
+    <span class="keyword">var</span> user = req.user;
+    <span class="keyword">var</span> account = req.account;
+
+    <span class="comment">// ログイン済のユーザーと Twitter アカウントを連携する。</span>
+    account.userId = user.id;
+    account.save(<span class="function"><span class="keyword">function</span><span class="params">(err)</span> {</span>
+      <span class="keyword">if</span> (err) { <span class="keyword">return</span> self.error(err); }
+      self.redirect(<span class="string">'/'</span>);
+    });
+  }
+);</code></pre>
+<p>route のコールバックでは、<code>req.user</code> と <code>req.account</code> のどちらも利用可能です。
+新しく連携されたアカウントはログインユーザーと紐づけられてデータベースに保存されます。</p>
+<h4 id="-">設定</h4>
+<p>権限付与のストラテジーは、認証で用いたストラテジーと同じものです。
+しかし、アプリケーションがサードパーティの認証と権限付与のどちらも必要とする場合もあるでしょう。
+この場合では、<em>名前付きストラテジー</em>を使うことで <code>use()</code> の呼び出し時のデフォルトの名前をオーバーライドすることができます。</p>
+<pre><code class="undefinedjavascript">passport.use(<span class="string">'twitter-authz'</span>, <span class="keyword">new</span> TwitterStrategy({
+    consumerKey: TWITTER_CONSUMER_KEY,
+    consumerSecret: TWITTER_CONSUMER_SECRET,
+    callbackURL: <span class="string">"http://www.example.com/connect/twitter/callback"</span>
+  },
+  <span class="function"><span class="keyword">function</span><span class="params">(token, tokenSecret, profile, done)</span> {</span>
+    Account.findOne({ domain: <span class="string">'twitter.com'</span>, uid: profile.id }, <span class="function"><span class="keyword">function</span><span class="params">(err, account)</span> {</span>
+      <span class="keyword">if</span> (err) { <span class="keyword">return</span> done(err); }
+      <span class="keyword">if</span> (account) { <span class="keyword">return</span> done(<span class="literal">null</span>, account); }
+
+      <span class="keyword">var</span> account = <span class="keyword">new</span> Account();
+      account.domain = <span class="string">'twitter.com'</span>;
+      account.uid = profile.id;
+      <span class="keyword">var</span> t = { kind: <span class="string">'oauth'</span>, token: token, attributes: { tokenSecret: tokenSecret } };
+      account.tokens.push(t);
+      <span class="keyword">return</span> done(<span class="literal">null</span>, account);
+    });
+  }
+));</code></pre>
+<p>上の例では、<code>twitter-authz</code> ストラテジーが Twitter のアカウント情報を保存するために <code>Account</code> インスタンスを確認または作成していることがわかります。
+この結果は <code>req.account</code> に代入されているので、route ハンドラーは認証済のユーザーを連携させることができます。</p>
+<h3 id="-">検証用コールバック内での連携</h3>
+<p>このアプローチのデメリットは ストラテジー・route サポートが同じ2つのインスタンスが必要なことです。</p>
+<p>これを避けるためには <code>passReqToCallback</code> オプションを <code>true</code> にセットしてください。
+このオプションが有効になると、 <em>第一</em>引数として <code>req</code> が検証用コールバックに渡されるようになります。</p>
+<pre><code class="undefinedjavascript">passport.use(<span class="keyword">new</span> TwitterStrategy({
+    consumerKey: TWITTER_CONSUMER_KEY,
+    consumerSecret: TWITTER_CONSUMER_SECRET,
+    callbackURL: <span class="string">"http://www.example.com/auth/twitter/callback"</span>,
+    passReqToCallback: <span class="literal">true</span>
+  },
+  <span class="function"><span class="keyword">function</span><span class="params">(req, token, tokenSecret, profile, done)</span> {</span>
+    <span class="keyword">if</span> (!req.user) {
+      <span class="comment">// ログインしていない場合。Twitter アカウントを基にして認証されます。</span>
+    } <span class="keyword">else</span> {
+      <span class="comment">// ログインしている場合。Twitter アカウントはこのユーザーと連携されます。</span>
+      <span class="comment">// 連携後も既存のユーザーが渡されるのでログイン状態は変わりません。</span>
+      <span class="comment">// return done(null, req.user);</span>
+    }
+  }
+));</code></pre>
+<p>検証用コールバックに <code>req</code> が引数として渡されると、リクエストの状態を、認証プロセスの組み立てやひとつのストラテジーインスタンスによる認証・権限付与の処理、routes のセットのために使うことができるようになります。
+たとえば、ユーザーが既にログインしている場合でも、新しい連携アカウントを紐づけることができます。
+また、<code>req</code> にセットされたアプリケーション特有のプロパティ（<code>req.session</code> を含む）も利用できます。</p>
+  </div>
+</div>
+      <div class="footer">
+  <p>&copy; 2011-2013 Jared Hanson<br/><a href="https://github.com/stuartpb/passport-logo">Logo</a> by <a href="https://github.com/stuartpb">Stuart P. Bentley</a>, <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a><br>Translation by <a href="https://github.com/OrgaChem">OrgaChem</a></p>
+</div>
+
+    </div>
+  </body>
+</html>

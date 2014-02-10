@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Passport  | OAuth 2.0 API </title>    <link rel="stylesheet" href="/vendor/bootstrap/2.2.1/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendor/highlight/gc5f3dbd/styles/github.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-104798-10']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+  <ul class="nav nav-pills pull-right">
+    <li><a href="/">ホーム</a></li>    <li class="active"><a href="/guide/">使い方</a></li>  </ul>
+  <h3><a href="/"><img src="/assets/images/logo-90px.png" class="logo"> Passport</a></h3>
+</div>
+
+      
+<div class="row guide">
+  <div class="span3 toc">
+    <ul class="unstyled">
+  <li><a href="/guide/">はじめに</a></li>
+  <li><a href="/guide/authenticate/">認証</a></li>
+  <li><a href="/guide/configure/">設定方法</a></li>
+  <li><a href="/guide/username-password/">ユーザー名 &amp; パスワード</a></li>
+  <li><a href="/guide/openid/">OpenID</a></li>
+  <li><a href="/guide/oauth/">OAuth</a></li>
+  <li><strong>対応しているサービス</strong></li>
+  <ul>
+    <li><a href="/guide/facebook/">Facebook</a></li>
+    <li><a href="/guide/twitter/">Twitter</a></li>
+    <li><a href="/guide/google/">Google</a></li>
+    <li><a href="/guide/providers/">その他</a></li>
+  </ul>
+  <li><strong>認証スキーム</strong></li>
+  <ul>
+    <li><a href="/guide/basic-digest/">Basic認証 &amp; Digest認証</a></li>
+    <li><a href="/guide/oauth-api/">OAuth</a></li>
+    <li><a href="/guide/oauth2-api/">OAuth 2.0</a></li>
+    <li><a href="/guide/other-api/">その他</a></li>
+  </ul>
+  <li><strong>操作</strong></li>
+  <ul>
+    <li><a href="/guide/login/">ログイン</a></li>
+    <li><a href="/guide/logout/">ログアウト</a></li>
+    <li><a href="/guide/authorize/">権限付与</a></li>
+  </ul>
+  <li><a href="/guide/profile/">ユーザープロフィール</a></li>
+</ul>
+
+  </div>
+  <div class="span9 content">
+    <h3 id="oauth-2-0">OAuth 2.0</h3>
+<p>OAuth 2.0 は <a href="http://tools.ietf.org/html/rfc6749">RFC 6749</a> に策定された認可フレームワークの一種で、ユーザーのアクセス権限を外部のアプリケーションに付与するための仕組みです。権限付与が成功すると、アプリケーションは認証情報としてトークンを利用することになります。
+このような仕組みを使うと、2つの観点で安全性が高まります：</p>
+<ol>
+<li>アプリケーションはユーザー名とパスワードを保存する必要がありません</li>
+<li>トークンで付与される権限は限定的です（たとえば、読み込み権限のみ付与ということもできるでしょう）</li>
+</ol>
+<p>これらの利点は Web アプリケーションの安全性の保証する上でも重要な要素です。
+このような、OAuth 2.0 は API の認証に広く使われている標準です。</p>
+<p>OAuth 2.0 によって保護されている API のエンドポイントへアクセスするためには、3つのステップを踏む必要があります。</p>
+<ol>
+<li>アプリケーションは、ユーザーに保護されたリソースへのアクセス許可をリクエストします</li>
+<li>ユーザーに許可されると、アプリケーションにトークンが発行されます</li>
+<li>アプリケーションはトークンを使って、保護されたリソースにアクセスします</li>
+</ol>
+<h4 id="-">トークンの発行</h4>
+<p>Passport の姉妹プロジェクトである <a href="https://github.com/jaredhanson/oauth2orize">OAuth2orize</a> は、 OAuth 2.0 の権限付与サーバー実装のためのツールキットです。</p>
+<p>権限付与プロセスでは、アプリケーションとユーザーのリクエスト、ユーザーの許可、ユーザーが意思決定できる程度の詳細情報の提供などの複雑な手続きをとらなければなりません。</p>
+<p>加えて、アプリケーションのアクセスできる範囲をどの程度で制限するかという判断は実装者ごとに異なります。</p>
+<p>OAuth2orize は、実装を決定するようなことはしてくれません。
+しかし、OAuth 2.0 を利用するサービスにおけるセキュリティの懸念事項を理解するために、OAuth2orize を利用することを強く勧めます。</p>
+<h4 id="-">認証トークン</h4>
+<p>OAuth 2.0 が提供する枠組みは、発行されるトークンの種類を任意に拡張できます。
+しかし、実際には広く使われていますトークンの種類は限られています。</p>
+<h4 id="bearer-">Bearer トークン</h4>
+<p>Bearer トークンは OAuth 2.0 で最も議論されているトークンの種類です。
+多くの実装では、発行できるトークンは bearer トークンのみとされています。</p>
+<p>Bearer トークンの認証には <a href="https://github.com/jaredhanson/passport-http-bearer">passport-http-bearer</a> モジュールを使ってください。</p>
+<h5 id="-">インストール</h5>
+<pre><code class="undefinedbash">$ npm install passport-http-bearer</code></pre>
+<h5 id="configuration">Configuration</h5>
+<pre><code class="undefinedjavascript">passport.use(<span class="keyword">new</span> BearerStrategy(
+  <span class="function"><span class="keyword">function</span><span class="params">(token, done)</span> {</span>
+    User.findOne({ token: token }, <span class="function"><span class="keyword">function</span> <span class="params">(err, user)</span> {</span>
+      <span class="keyword">if</span> (err) { <span class="keyword">return</span> done(err); }
+      <span class="keyword">if</span> (!user) { <span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>); }
+      <span class="keyword">return</span> done(<span class="literal">null</span>, user, { scope: <span class="string">'read'</span> });
+    });
+  }
+));</code></pre>
+<p>Bearer トークンの検証用コールバック内では、<code>token</code> 引数が利用できます。
+また、<code>done</code> の実行時に <code>info</code> を指定すると、<code>req.authInfo</code> をセットすることができます。
+これは、トークンの範囲通知やアクセス制御の確認のために使うことができます。</p>
+<h5 id="-">保護されたエンドポイント</h5>
+<p>REVIEW: 訳の正確性を確認</p>
+<pre><code class="undefinedjavascript">app.get(<span class="string">'/api/me'</span>, 
+  passport.authenticate(<span class="string">'bearer'</span>, { session: <span class="literal">false</span> }),
+  <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> {</span>
+    res.json(req.user);
+  });</code></pre>
+<p>API のエンドポイントを保護するためには、<code>passport.authenticate()</code> に <code>bearer</code> ストラテジーを指定してください。
+なお、このような API にセッション管理は不要なことが多いため、無効にすることが出来ます。</p>
+  </div>
+</div>
+      <div class="footer">
+  <p>&copy; 2011-2013 Jared Hanson<br/><a href="https://github.com/stuartpb/passport-logo">Logo</a> by <a href="https://github.com/stuartpb">Stuart P. Bentley</a>, <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a><br>Translation by <a href="https://github.com/OrgaChem">OrgaChem</a></p>
+</div>
+
+    </div>
+  </body>
+</html>

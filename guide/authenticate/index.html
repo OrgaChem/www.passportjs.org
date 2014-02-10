@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Passport  | 認証 </title>    <link rel="stylesheet" href="/vendor/bootstrap/2.2.1/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendor/highlight/gc5f3dbd/styles/github.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-104798-10']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+  <ul class="nav nav-pills pull-right">
+    <li><a href="/">ホーム</a></li>    <li class="active"><a href="/guide/">使い方</a></li>  </ul>
+  <h3><a href="/"><img src="/assets/images/logo-90px.png" class="logo"> Passport</a></h3>
+</div>
+
+      
+<div class="row guide">
+  <div class="span3 toc">
+    <ul class="unstyled">
+  <li><a href="/guide/">はじめに</a></li>
+  <li><a href="/guide/authenticate/">認証</a></li>
+  <li><a href="/guide/configure/">設定方法</a></li>
+  <li><a href="/guide/username-password/">ユーザー名 &amp; パスワード</a></li>
+  <li><a href="/guide/openid/">OpenID</a></li>
+  <li><a href="/guide/oauth/">OAuth</a></li>
+  <li><strong>対応しているサービス</strong></li>
+  <ul>
+    <li><a href="/guide/facebook/">Facebook</a></li>
+    <li><a href="/guide/twitter/">Twitter</a></li>
+    <li><a href="/guide/google/">Google</a></li>
+    <li><a href="/guide/providers/">その他</a></li>
+  </ul>
+  <li><strong>認証スキーム</strong></li>
+  <ul>
+    <li><a href="/guide/basic-digest/">Basic認証 &amp; Digest認証</a></li>
+    <li><a href="/guide/oauth-api/">OAuth</a></li>
+    <li><a href="/guide/oauth2-api/">OAuth 2.0</a></li>
+    <li><a href="/guide/other-api/">その他</a></li>
+  </ul>
+  <li><strong>操作</strong></li>
+  <ul>
+    <li><a href="/guide/login/">ログイン</a></li>
+    <li><a href="/guide/logout/">ログアウト</a></li>
+    <li><a href="/guide/authorize/">権限付与</a></li>
+  </ul>
+  <li><a href="/guide/profile/">ユーザープロフィール</a></li>
+</ul>
+
+  </div>
+  <div class="span9 content">
+    <h3 id="-">認証</h3>
+<p>認証リクエストは <code>passport.authenticate()</code> の呼び出し時に使いたい認証ストラテジーを指定するだけ実行できます。
+<code>authenticate()</code>によって返される関数は <a href="http://www.senchalabs.org/connect/">Connect</a> 標準に準拠しているので、<a href="http://expressjs.com/">Express</a> アプリケーションのルーティングミドルウェアとして簡単に利用できます。</p>
+<pre><code class="undefinedjavascript">app.post(<span class="string">'/login'</span>,
+  passport.authenticate(<span class="string">'local'</span>),
+  <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> {</span>
+    <span class="comment">// 認証に施工すると、この関数が呼び出される。</span>
+    <span class="comment">// 認証されたユーザーは `req.user` に含まれている。</span>
+    res.redirect(<span class="string">'/users/'</span> + req.user.username);
+  });</code></pre>
+<p>Passport は、認証に失敗したとき <code>401 Unauthorized</code> ステータスを返し、その他のルーティングハンドラーは実行しません。
+認証に成功したときは、次のハンドラーを実行し、<code>req.user</code> プロパティに認証されたユーザーをセットします。</p>
+<p><small>注意: ストラテジーはルーティングされる前に設定されていなければなりません。
+詳細は<a href="/guide/configure/">設定</a>の章で確認できます。</small></p>
+<h4 id="-">リダイレクト</h4>
+<p>リダイレクトは、一般的にリクエストの認証後におこなわれます。</p>
+<pre><code class="undefinedjavascript">app.post(<span class="string">'/login'</span>,
+  passport.authenticate(<span class="string">'local'</span>, { successRedirect: <span class="string">'/'</span>,
+                                   failureRedirect: <span class="string">'/login'</span> }));</code></pre>
+<p>この例では、リダイレクトオプションはデフォルトの振る舞いをオーバーライドしています。
+認証が成功するとユーザーはホームページにリダイレクトされ、認証が失敗するとユーザーはもう一度認証をおこなうためにログインページに戻るようリダイレクトされます。</p>
+<h4 id="-">フラッシュメッセージ</h4>
+<p>リダイレクトの後で、ステータス情報を表示するためのフラッシュメッセージを表示することがよくあります。</p>
+<pre><code class="undefinedjavascript">app.post(<span class="string">'/login'</span>,
+  passport.authenticate(<span class="string">'local'</span>, { successRedirect: <span class="string">'/'</span>,
+                                   failureRedirect: <span class="string">'/login'</span>,
+                                   failureFlash: <span class="literal">true</span> })
+);</code></pre>
+<p><code>failureFlash</code> オプションを <code>true</code> にセットすると、Passport はストラテジーの検証用のコールバックが生成したメッセージを <code>error</code> メッセージとして表示します。
+この方法を使うと、検証用のコールバックは認証が失敗した理由について正確に判断することができます。
+これは多くの場合にもっとも優れたアプローチです。</p>
+<p>あるいは、フラッシュメッセージを任意に指定することもできます。</p>
+<pre><code class="undefinedjavascript">passport.authenticate(<span class="string">'local'</span>, { failureFlash: <span class="string">'ユーザーIDかパスワードが間違っています。'</span> });</code></pre>
+<p>また、認証成功時の <code>success</code> メッセージは <code>successFlash</code> オプションによって指定できます。</p>
+<pre><code class="undefinedjavascript">passport.authenticate(<span class="string">'local'</span>, { successFlash: <span class="string">'ようこそ！'</span> });</code></pre>
+<p>注意: フラッシュメッセージを使うためには、<code>req.flash()</code> 関数が必要です。
+この関数はExpress 2.x までは提供されていましたが、Express 3.x からは取り除かれています。
+Express 3.x では、<a href="https://github.com/jaredhanson/connect-flash">connect-flash</a> ミドルウェアを使うことでこの機能を利用することができます。</p>
+<h4 id="-">セッションを無効化</h4>
+<p>認証が成功した際、Passport は継続的なログインセッションを確立します。
+これはユーザーがブラウザから Web アプリケーションにアクセスするといったシナリオで役に立ちます。
+しかし、それ以外の場合はセッションのサポートは必要ありません。
+たとえば、API サーバーはリクエスト毎に認証情報を要求するのが一般的です。
+このような場合では <code>seeeion</code> オプションを <code>false</code> にすることでセッションサポートを無効にできます。</p>
+<pre><code class="undefinedjavascript">app.get(<span class="string">'/api/users/me'</span>,
+  passport.authenticate(<span class="string">'basic'</span>, { session: <span class="literal">false</span> }),
+  <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> {</span>
+    res.json({ id: req.user.id, username: req.user.username });
+  });</code></pre>
+<h4 id="-">カスタムコールバック</h4>
+<p>ビルトインオプションが認証リクエストを処理するのに十分でない場合は、カスタムコールバックによって成功・失敗を処理できます。</p>
+<pre><code class="undefinedjavascript">app.get(<span class="string">'/login'</span>, <span class="function"><span class="keyword">function</span><span class="params">(req, res, next)</span> {</span>
+  passport.authenticate(<span class="string">'local'</span>, <span class="function"><span class="keyword">function</span><span class="params">(err, user, info)</span> {</span>
+    <span class="keyword">if</span> (err) { <span class="keyword">return</span> next(err); }
+    <span class="keyword">if</span> (!user) { <span class="keyword">return</span> res.redirect(<span class="string">'/login'</span>); }
+    req.logIn(user, <span class="function"><span class="keyword">function</span><span class="params">(err)</span> {</span>
+      <span class="keyword">if</span> (err) { <span class="keyword">return</span> next(err); }
+      <span class="keyword">return</span> res.redirect(<span class="string">'/users/'</span> + user.username);
+    });
+  })(req, res, next);
+});</code></pre>
+<p>この例では、<code>authenticate()</code> はルーティングミドルウェアで使われずにルーティングハンドラーから呼ばれています。
+こうすることで、コールバックのクロージャ内で <code>req</code> と <code>res</code> オブジェクトにアクセスできています。</p>
+<p>もし認証が失敗したときは、 <code>user</code> は <code>false</code> にセットされます。
+例外が発生したときは <code>err</code> がセットされます。また、ストラテジーの検証用コールバックに追加で情報を渡すときには <code>into</code> パラメータを利用できます（省略可能）。</p>
+<p>このコールバックには必要な認証結果が引数として渡されます。
+ただし、カスタムコールバックを使うときは、アプリケーションセッション確立（<code>req.login()</code>を呼び出すことによる）およびレスポンスの送信をおこなう必要があります。</p>
+  </div>
+</div>
+      <div class="footer">
+  <p>&copy; 2011-2013 Jared Hanson<br/><a href="https://github.com/stuartpb/passport-logo">Logo</a> by <a href="https://github.com/stuartpb">Stuart P. Bentley</a>, <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a><br>Translation by <a href="https://github.com/OrgaChem">OrgaChem</a></p>
+</div>
+
+    </div>
+  </body>
+</html>

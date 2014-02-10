@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Passport  | Twitter </title>    <link rel="stylesheet" href="/vendor/bootstrap/2.2.1/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendor/highlight/gc5f3dbd/styles/github.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-104798-10']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+  <ul class="nav nav-pills pull-right">
+    <li><a href="/">ホーム</a></li>    <li class="active"><a href="/guide/">使い方</a></li>  </ul>
+  <h3><a href="/"><img src="/assets/images/logo-90px.png" class="logo"> Passport</a></h3>
+</div>
+
+      
+<div class="row guide">
+  <div class="span3 toc">
+    <ul class="unstyled">
+  <li><a href="/guide/">はじめに</a></li>
+  <li><a href="/guide/authenticate/">認証</a></li>
+  <li><a href="/guide/configure/">設定方法</a></li>
+  <li><a href="/guide/username-password/">ユーザー名 &amp; パスワード</a></li>
+  <li><a href="/guide/openid/">OpenID</a></li>
+  <li><a href="/guide/oauth/">OAuth</a></li>
+  <li><strong>対応しているサービス</strong></li>
+  <ul>
+    <li><a href="/guide/facebook/">Facebook</a></li>
+    <li><a href="/guide/twitter/">Twitter</a></li>
+    <li><a href="/guide/google/">Google</a></li>
+    <li><a href="/guide/providers/">その他</a></li>
+  </ul>
+  <li><strong>認証スキーム</strong></li>
+  <ul>
+    <li><a href="/guide/basic-digest/">Basic認証 &amp; Digest認証</a></li>
+    <li><a href="/guide/oauth-api/">OAuth</a></li>
+    <li><a href="/guide/oauth2-api/">OAuth 2.0</a></li>
+    <li><a href="/guide/other-api/">その他</a></li>
+  </ul>
+  <li><strong>操作</strong></li>
+  <ul>
+    <li><a href="/guide/login/">ログイン</a></li>
+    <li><a href="/guide/logout/">ログアウト</a></li>
+    <li><a href="/guide/authorize/">権限付与</a></li>
+  </ul>
+  <li><a href="/guide/profile/">ユーザープロフィール</a></li>
+</ul>
+
+  </div>
+  <div class="span9 content">
+    <h3 id="twitter">Twitter</h3>
+<p>ユーザーの Twitter アカウントを使ってログインするには、Twitter ストラテジーを使います。この認証には OAuth 1.0a を使っています。</p>
+<p>Twitter サポートは <a href="https://github.com/jaredhanson/passport-twitter">passport-twitter</a> によって実装されています。</p>
+<h4 id="-">インストール</h4>
+<pre><code class="undefinedbash">$ npm install passport-twitter</code></pre>
+<h4 id="-">設定方法</h4>
+<p>Twitter 認証を使う前に <a href="https://dev.twitter.com/">Twitter Developers</a> でアプリケーションを登録しておく必要があります。
+登録が終わると、アプリケーションにコンシューマーキーとコンシューマーシークレットが発行されます。
+アプリケーション側ではコールバックURLを実装しておいてください。
+このURLはアクセスが許可された後にユーザーがリダイレクトされるページを示す必要があります。</p>
+<pre><code class="undefinedjavascript"><span class="keyword">var</span> passport = require(<span class="string">'passport'</span>)
+  , TwitterStrategy = require(<span class="string">'passport-twitter'</span>).Strategy;
+
+passport.use(<span class="keyword">new</span> TwitterStrategy({
+    consumerKey: TWITTER_CONSUMER_KEY,
+    consumerSecret: TWITTER_CONSUMER_SECRET,
+    callbackURL: <span class="string">"http://www.example.com/auth/twitter/callback"</span>
+  },
+  <span class="function"><span class="keyword">function</span><span class="params">(token, tokenSecret, profile, done)</span> {</span>
+    User.findOrCreate(..., <span class="function"><span class="keyword">function</span><span class="params">(err, user)</span> {</span>
+      <span class="keyword">if</span> (err) { <span class="keyword">return</span> done(err); }
+      done(<span class="literal">null</span>, user);
+    });
+  }
+));</code></pre>
+<p>Twitter 認証のための検証用コールバック内では引数である <code>token</code> と <code>tokenSecret</code>、<code>profile</code> が利用できます。
+<code>profile</code> は Twitter 上のユーザープロフィール情報です（詳細は<a href="/guide/profile/">ユーザープロフィール</a>を参照してください）。</p>
+<h4 id="-">ルーティング</h4>
+<p>Twitter 認証には2つのルーティングが必要です。
+最初のルーティングでは OAuth トランザクションを開始し、ユーザーを Twitter へリダイレクトさせます。
+次のルーティングでは Twitter サインインの後でユーザーをリダイレクトさせます。</p>
+<pre><code class="undefinedjavascript"><span class="comment">// 認証のために Twitter へリダイレクトさせます。認証が完了すると、Twitter は</span>
+<span class="comment">// ユーザーをアプリケーションへとリダイレクトして戻します。</span>
+<span class="comment">//   /auth/twitter/callback</span>
+app.get(<span class="string">'/auth/twitter'</span>, passport.authenticate(<span class="string">'twitter'</span>));
+
+<span class="comment">// ユーザーが許可を確認すると、Twitter はユーザーをこの URL にリダイレクトさせます。</span>
+<span class="comment">// この認証プロセスの最後に、アクセストークンの取得をおこないます。</span>
+<span class="comment">// この取得が成功すればユーザーはログインしたことになります。取得に失敗したとき</span>
+<span class="comment">// は、認証が失敗したとみなされます。</span>
+app.get(<span class="string">'/auth/twitter/callback'</span>, 
+  passport.authenticate(<span class="string">'twitter'</span>, { successRedirect: <span class="string">'/'</span>,
+                                     failureRedirect: <span class="string">'/login'</span> }));</code></pre>
+<p><small>注意: このコールバックルーティングの URL は、ストラテジーの設定時に <code>callbackURL</code> オプションで指定されたものです。</small></p>
+<h4 id="link">Link</h4>
+<p>Twitter 用の1-クリックサインインは、リンクかボタンによって実現できます。</p>
+<pre><code class="undefinedxml"><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"/auth/twitter"</span>&gt;</span>Sign in with Twitter<span class="tag">&lt;/<span class="title">a</span>&gt;</span></code></pre>
+  </div>
+</div>
+      <div class="footer">
+  <p>&copy; 2011-2013 Jared Hanson<br/><a href="https://github.com/stuartpb/passport-logo">Logo</a> by <a href="https://github.com/stuartpb">Stuart P. Bentley</a>, <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a><br>Translation by <a href="https://github.com/OrgaChem">OrgaChem</a></p>
+</div>
+
+    </div>
+  </body>
+</html>

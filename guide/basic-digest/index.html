@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Passport  | Basic認証 & Digest認証 </title>    <link rel="stylesheet" href="/vendor/bootstrap/2.2.1/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendor/highlight/gc5f3dbd/styles/github.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-104798-10']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+  <ul class="nav nav-pills pull-right">
+    <li><a href="/">ホーム</a></li>    <li class="active"><a href="/guide/">使い方</a></li>  </ul>
+  <h3><a href="/"><img src="/assets/images/logo-90px.png" class="logo"> Passport</a></h3>
+</div>
+
+      
+<div class="row guide">
+  <div class="span3 toc">
+    <ul class="unstyled">
+  <li><a href="/guide/">はじめに</a></li>
+  <li><a href="/guide/authenticate/">認証</a></li>
+  <li><a href="/guide/configure/">設定方法</a></li>
+  <li><a href="/guide/username-password/">ユーザー名 &amp; パスワード</a></li>
+  <li><a href="/guide/openid/">OpenID</a></li>
+  <li><a href="/guide/oauth/">OAuth</a></li>
+  <li><strong>対応しているサービス</strong></li>
+  <ul>
+    <li><a href="/guide/facebook/">Facebook</a></li>
+    <li><a href="/guide/twitter/">Twitter</a></li>
+    <li><a href="/guide/google/">Google</a></li>
+    <li><a href="/guide/providers/">その他</a></li>
+  </ul>
+  <li><strong>認証スキーム</strong></li>
+  <ul>
+    <li><a href="/guide/basic-digest/">Basic認証 &amp; Digest認証</a></li>
+    <li><a href="/guide/oauth-api/">OAuth</a></li>
+    <li><a href="/guide/oauth2-api/">OAuth 2.0</a></li>
+    <li><a href="/guide/other-api/">その他</a></li>
+  </ul>
+  <li><strong>操作</strong></li>
+  <ul>
+    <li><a href="/guide/login/">ログイン</a></li>
+    <li><a href="/guide/logout/">ログアウト</a></li>
+    <li><a href="/guide/authorize/">権限付与</a></li>
+  </ul>
+  <li><a href="/guide/profile/">ユーザープロフィール</a></li>
+</ul>
+
+  </div>
+  <div class="span9 content">
+    <h3 id="basic-digest-">Basic認証 &amp; Digest認証</h3>
+<p>HTTPの認証フレームワークを規定すると共に、<a href="http://tools.ietf.org/html/rfc2617">RFC 2617</a> には、Basic認証、Digest認証の枠組みが策定されています。
+これらの2つの枠組みは、ユーザーIDとパスワードをユーザー認証のために使用し、またAPIのエンドポイントを保護するためにも使用されます。</p>
+<p><small>注意: このようなユーザーIDとパスワードに依存する認証は安全性に問題があります。
+特に信頼性が求められるクライアントサーバ間の通信には使用しないでください。
+このような状況では、<a href="/guide/oauth2-api/">OAuth 2.0</a>のようなフレームワークが推奨されています。</small></p>
+<p>Basic認証とDigest認証は、<a href="https://github.com/jaredhanson/passport-http">passport-http</a>モジュールで提供されています。</p>
+<h4 id="-">インストール</h4>
+<pre><code class="undefinedbash">$ npm install passport-http</code></pre>
+<h3 id="basic-">Basic認証</h3>
+<p>Basic認証はユーザーIDとパスワードを用いてユーザー認証を行います。
+この認証方式では平文で情報が送信されるため、HTTPSの使用が推奨されています。</p>
+<h4 id="-">設定方法</h4>
+<pre><code class="undefinedjavascript">passport.use(<span class="keyword">new</span> BasicStrategy(
+  <span class="function"><span class="keyword">function</span><span class="params">(username, password, done)</span> {</span>
+    User.findOne({ username: username }, <span class="function"><span class="keyword">function</span> <span class="params">(err, user)</span> {</span>
+      <span class="keyword">if</span> (err) { <span class="keyword">return</span> done(err); }
+      <span class="keyword">if</span> (!user) { <span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>); }
+      <span class="keyword">if</span> (!user.validPassword(password)) { <span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>); }
+      <span class="keyword">return</span> done(<span class="literal">null</span>, user);
+    });
+  }
+));</code></pre>
+<p>Basic認証のための検証用コールバックは、ユーザーIDとパスワードの引数を受け動作します。</p>
+<h4 id="-">エンドポイントの保護</h4>
+<pre><code class="undefinedjavascript">app.get(<span class="string">'/api/me'</span>, 
+  passport.authenticate(<span class="string">'basic'</span>, { session: <span class="literal">false</span> }),
+  <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> {</span>
+    res.json(req.user);
+  });</code></pre>
+<p><code>basic</code> をストラテジーに指定し  <code>passport.authenticate()</code> を使用することでAPIエンドポイントを保護することができます。
+APIの利用にセッション管理は必要ないことが多いので、セッションの無効化も可能です。</p>
+<h3 id="digest-">Digest認証</h3>
+<p>Digest認証は、ユーザーIDとパスワードを用いてユーザー認証を行います。
+この認証方式がBasic認証より優れた点は、平文でのパスワード送信を避けるため、チャレンジ/レスポンス認証を採用しているところにあります。</p>
+<h4 id="-">設定方法</h4>
+<pre><code class="undefinedjavascript">passport.use(<span class="keyword">new</span> DigestStrategy({ qop: <span class="string">'auth'</span> },
+  <span class="function"><span class="keyword">function</span><span class="params">(username, done)</span> {</span>
+    User.findOne({ username: username }, <span class="function"><span class="keyword">function</span> <span class="params">(err, user)</span> {</span>
+      <span class="keyword">if</span> (err) { <span class="keyword">return</span> done(err); }
+      <span class="keyword">if</span> (!user) { <span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>); }
+      <span class="keyword">return</span> done(<span class="literal">null</span>, user, user.password);
+    });
+  },
+  <span class="function"><span class="keyword">function</span><span class="params">(params, done)</span> {</span>
+    <span class="comment">// validate nonces as necessary</span>
+    done(<span class="literal">null</span>, <span class="literal">true</span>)
+  }
+));</code></pre>
+<p>上記のDigest認証では2つのコールバックが引数に指定していますが、2つ目は省略可能です。</p>
+<p>１つ目のコールバック（シークレットコールバックと呼ばれるもの）は、ユーザーIDと <code>done</code> を引数にとります。
+<code>done</code> には、ユーザーIDとパスワード（平文）を指定してください。
+指定されたユーザーID、パスワードからハッシュ値が計算されサーバからリクエストされるものと合致するか検証されます。</p>
+<p>2つ目のコールバックは、検証用コールバックであり、リプレイアタック等の脅威を避けるために
+サーバから受け取るランダムな文字列（nonce）の検証が可能です。</p>
+<h4 id="protect-endpoints">Protect Endpoints</h4>
+<pre><code class="undefinedjavascript">app.get(<span class="string">'/api/me'</span>, 
+  passport.authenticate(<span class="string">'digest'</span>, { session: <span class="literal">false</span> }),
+  <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> {</span>
+    res.json(req.user);
+  });</code></pre>
+<p><code>digest</code> をストラテジーに指定し <code>passport.authenticate()</code> を使用することでAPIエンドポイントを保護することができます。
+APIの利用にセッション管理は必要とされないことが多いので、セッションの無効化も可能です。</p>
+  </div>
+</div>
+      <div class="footer">
+  <p>&copy; 2011-2013 Jared Hanson<br/><a href="https://github.com/stuartpb/passport-logo">Logo</a> by <a href="https://github.com/stuartpb">Stuart P. Bentley</a>, <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a><br>Translation by <a href="https://github.com/OrgaChem">OrgaChem</a></p>
+</div>
+
+    </div>
+  </body>
+</html>

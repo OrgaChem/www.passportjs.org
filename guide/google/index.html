@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Passport  | Google </title>    <link rel="stylesheet" href="/vendor/bootstrap/2.2.1/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendor/highlight/gc5f3dbd/styles/github.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-104798-10']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+  <ul class="nav nav-pills pull-right">
+    <li><a href="/">ホーム</a></li>    <li class="active"><a href="/guide/">使い方</a></li>  </ul>
+  <h3><a href="/"><img src="/assets/images/logo-90px.png" class="logo"> Passport</a></h3>
+</div>
+
+      
+<div class="row guide">
+  <div class="span3 toc">
+    <ul class="unstyled">
+  <li><a href="/guide/">はじめに</a></li>
+  <li><a href="/guide/authenticate/">認証</a></li>
+  <li><a href="/guide/configure/">設定方法</a></li>
+  <li><a href="/guide/username-password/">ユーザー名 &amp; パスワード</a></li>
+  <li><a href="/guide/openid/">OpenID</a></li>
+  <li><a href="/guide/oauth/">OAuth</a></li>
+  <li><strong>対応しているサービス</strong></li>
+  <ul>
+    <li><a href="/guide/facebook/">Facebook</a></li>
+    <li><a href="/guide/twitter/">Twitter</a></li>
+    <li><a href="/guide/google/">Google</a></li>
+    <li><a href="/guide/providers/">その他</a></li>
+  </ul>
+  <li><strong>認証スキーム</strong></li>
+  <ul>
+    <li><a href="/guide/basic-digest/">Basic認証 &amp; Digest認証</a></li>
+    <li><a href="/guide/oauth-api/">OAuth</a></li>
+    <li><a href="/guide/oauth2-api/">OAuth 2.0</a></li>
+    <li><a href="/guide/other-api/">その他</a></li>
+  </ul>
+  <li><strong>操作</strong></li>
+  <ul>
+    <li><a href="/guide/login/">ログイン</a></li>
+    <li><a href="/guide/logout/">ログアウト</a></li>
+    <li><a href="/guide/authorize/">権限付与</a></li>
+  </ul>
+  <li><a href="/guide/profile/">ユーザープロフィール</a></li>
+</ul>
+
+  </div>
+  <div class="span9 content">
+    <h3 id="google">Google</h3>
+<p>The Google strategy allows users to sign in to a web application using their
+Google account.  Internally, Google authentication works using OpenID.</p>
+<p>Using this strategy directly, as opposed to the general-purpose OpenID strategy,
+allows a site to offer one-click sign in.  The user does not have to enter an
+identifier, which improves usability, albeit at the expense of limiting choice
+of provider.</p>
+<p>Support for Google is implemented by the <a href="https://github.com/jaredhanson/passport-google">passport-google</a>
+module.</p>
+<h4 id="install">Install</h4>
+<pre><code class="undefinedbash">$ npm install passport-google</code></pre>
+<h4 id="configuration">Configuration</h4>
+<p>When using Google for sign in, your application must implement a return
+URL, to which Google will redirect users after they have authenticated.
+The <code>realm</code> indicates the part of URL-space for which authentication is valid.
+Typically this will be the root URL of your website.</p>
+<pre><code class="undefinedjavascript"><span class="keyword">var</span> passport = require(<span class="string">'passport'</span>)
+  , GoogleStrategy = require(<span class="string">'passport-google'</span>).Strategy;
+
+passport.use(<span class="keyword">new</span> GoogleStrategy({
+    returnURL: <span class="string">'http://www.example.com/auth/google/return'</span>,
+    realm: <span class="string">'http://www.example.com/'</span>
+  },
+  <span class="function"><span class="keyword">function</span><span class="params">(identifier, profile, done)</span> {</span>
+    User.findOrCreate({ openId: identifier }, <span class="function"><span class="keyword">function</span><span class="params">(err, user)</span> {</span>
+      done(err, user);
+    });
+  }
+));</code></pre>
+<p>The verify callback for Google authentication accepts <code>identifier</code> and <code>profile</code>
+arguments.  <code>profile</code> will contain user profile information provided by Google;
+refer to <a href="/guide/profile/">User Profile</a> for additional information.</p>
+<h4 id="routes">Routes</h4>
+<p>Two routes are required for Google authentication.  The first route redirects
+the user to Google.  The second route is the URL to which Google will return the
+user after they have signed in.</p>
+<pre><code class="undefinedjavascript"><span class="comment">// Redirect the user to Google for authentication.  When complete, Google</span>
+<span class="comment">// will redirect the user back to the application at</span>
+<span class="comment">//     /auth/google/return</span>
+app.get(<span class="string">'/auth/google'</span>, passport.authenticate(<span class="string">'google'</span>));
+
+<span class="comment">// Google will redirect the user to this URL after authentication.  Finish</span>
+<span class="comment">// the process by verifying the assertion.  If valid, the user will be</span>
+<span class="comment">// logged in.  Otherwise, authentication has failed.</span>
+app.get(<span class="string">'/auth/google/return'</span>, 
+  passport.authenticate(<span class="string">'google'</span>, { successRedirect: <span class="string">'/'</span>,
+                                    failureRedirect: <span class="string">'/login'</span> }));</code></pre>
+<p>Note that the URL of the return route matches that of the <code>returnURL</code> option
+specified when configuring the strategy.</p>
+<h4 id="link">Link</h4>
+<p>A link or button can be placed on a web page, allowing one-click sign in with
+Google.</p>
+<pre><code class="undefinedxml"><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"/auth/google"</span>&gt;</span>Sign In with Google<span class="tag">&lt;/<span class="title">a</span>&gt;</span></code></pre>
+  </div>
+</div>
+      <div class="footer">
+  <p>&copy; 2011-2013 Jared Hanson<br/><a href="https://github.com/stuartpb/passport-logo">Logo</a> by <a href="https://github.com/stuartpb">Stuart P. Bentley</a>, <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a><br>Translation by <a href="https://github.com/OrgaChem">OrgaChem</a></p>
+</div>
+
+    </div>
+  </body>
+</html>

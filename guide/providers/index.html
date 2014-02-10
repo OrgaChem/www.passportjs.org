@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Passport  | 対応しているサービス </title>    <link rel="stylesheet" href="/vendor/bootstrap/2.2.1/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendor/highlight/gc5f3dbd/styles/github.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-104798-10']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+  <ul class="nav nav-pills pull-right">
+    <li><a href="/">ホーム</a></li>    <li class="active"><a href="/guide/">使い方</a></li>  </ul>
+  <h3><a href="/"><img src="/assets/images/logo-90px.png" class="logo"> Passport</a></h3>
+</div>
+
+      
+<div class="row guide">
+  <div class="span3 toc">
+    <ul class="unstyled">
+  <li><a href="/guide/">はじめに</a></li>
+  <li><a href="/guide/authenticate/">認証</a></li>
+  <li><a href="/guide/configure/">設定方法</a></li>
+  <li><a href="/guide/username-password/">ユーザー名 &amp; パスワード</a></li>
+  <li><a href="/guide/openid/">OpenID</a></li>
+  <li><a href="/guide/oauth/">OAuth</a></li>
+  <li><strong>対応しているサービス</strong></li>
+  <ul>
+    <li><a href="/guide/facebook/">Facebook</a></li>
+    <li><a href="/guide/twitter/">Twitter</a></li>
+    <li><a href="/guide/google/">Google</a></li>
+    <li><a href="/guide/providers/">その他</a></li>
+  </ul>
+  <li><strong>認証スキーム</strong></li>
+  <ul>
+    <li><a href="/guide/basic-digest/">Basic認証 &amp; Digest認証</a></li>
+    <li><a href="/guide/oauth-api/">OAuth</a></li>
+    <li><a href="/guide/oauth2-api/">OAuth 2.0</a></li>
+    <li><a href="/guide/other-api/">その他</a></li>
+  </ul>
+  <li><strong>操作</strong></li>
+  <ul>
+    <li><a href="/guide/login/">ログイン</a></li>
+    <li><a href="/guide/logout/">ログアウト</a></li>
+    <li><a href="/guide/authorize/">権限付与</a></li>
+  </ul>
+  <li><a href="/guide/profile/">ユーザープロフィール</a></li>
+</ul>
+
+  </div>
+  <div class="span9 content">
+    <h3 id="-">対応しているサービス</h3>
+<p>Passport は多くのサードパーティのご協力によって多くのサービスの認証をサポートしています。
+これらの実装を提供してくれた、この素晴らしいコミュニティの開発者たちに感謝します。</p>
+<table class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th>提供者</th>
+      <th>プロトコル</th>
+      <th>開発者</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://github.com/mowens/passport-23andme">23andMe</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/mowens">Michael Owens</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-37signals">37signals</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jeremybenaim/passport-500px">500px</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jeremybenaim">Jeremy Benaim</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/AllPlayers/passport-allplayers">AllPlayers.com</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/christianchristensen">Chris Christensen</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-amazon">Amazon</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-angellist">AngelList</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/sargodarya/passport-animexx">Animexx</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/SargoDarya">Sargo Darya</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-aol">AOL</a></td>
+      <td>OpenID</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mowens/passport-appdotnet">App.net</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/mowens">Michael Owens</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/maxiperezc/passport-assembla">Assembla</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/maxiperezc">Maxi Perez Coto</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/att-innovate/passport-att-alpha">AT&amp;T Foundry</a> Alpha API Program</td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/eusholli">Geoff Hollingworth</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/auth0/passport-auth0">Auth0</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/auth0">Auth0</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/authic/passport-authic">Authic</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/authic">Authic</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/xiaoao/passport-baidu">Baidu</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/xiaoao">xiaoao</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/fastman/passport-beatport">Beatport</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/fastman">Jakub Jelen</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-bitbucket">Bitbucket</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/dreadjr/passport-bitly">bitly</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/dreadjr">dreadjr</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/bluedge/passport-box">Box</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/bluedge">Nicolas Alessandra</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/despekiroule/passport-bufferapp">Buffer</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/despekiroule">Sébastien De Bollivier</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/headlessme/passport-chalkable-oauth2">Chalkable</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/headlessme">Andy Pritchard</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/rajaraodv/passport-cloudfoundry">Cloud Foundry</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/rajaraodv">Raja Rao DV</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/rajaraodv/passport-cloudfoundry-openidconnect">Cloud Foundry</a></td>
+      <td>OpenID Connect</td>
+      <td><a href="https://github.com/rajaraodv">Raja Rao DV</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/hstove/passport-dailycred">DailyCred</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/hstove">Hank Stoever</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/Mistat/passport-deskcom">Desk.com</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/Mistat">Misato Takahashi</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-digg">Digg</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/doctape/passport-doctape">doctape</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/doctape">doctape</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/ktmud/passport-douban">douban</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/ktmud">Jesse Yang</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-dropbox">Dropbox</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/florianheinemann/passport-dropbox-oauth2">Dropbox</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/florianheinemann">Florian Heinemann</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-dwolla">Dwolla</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/venkatperi/passport-eventbrite-oauth">Eventbrite</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/venkatperi">Venkat Peri</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-evernote">Evernote</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/Everyplay/passport-everyplay">Everyplay</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/Everyplay">Matti Savolainen</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/elmariachi111/passport-eyeem">EyeEm</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/elmariachi111">Stefan Adolf</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-facebook">Facebook</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-familysearch">FamilySearch</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-fitbit">Fitbit</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/freenerd/passport-flattr">Flattr</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/freenerd">Johan Uhle</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/johnnyhalife/passport-flickr">Flickr</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/johnnyhalife">Johnny Halife</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/joshbirk/passport-forcedotcom">Force.com</a> (Salesforce, Database.com)</td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/joshbirk">Joshua Birk</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-foursquare">Foursquare</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/JoeStanton/Node-FreeAgent2">FreeAgent</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/JoeStanton">Joe Stanton</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/carlos8f/passport-freedomworks">FreedomWorks</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/carlos8f">Carlos Rodriguez</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/MichaelJCole/passport-freshbooks">FreshBooks</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/MichaelJCole">Michael Cole</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/despekiroule/passport-geeklist">Geeklist</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/despekiroule">Sébastien De Bollivier</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-geoloqi">Geoloqi</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-github">GitHub</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-goodreads">Goodreads</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-google">Google</a></td>
+      <td>OpenID</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-google-oauth">Google</a></td>
+      <td>OAuth / OAuth 2.0</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-gowalla">Gowalla</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/HackBerkeley/passport-hackid">HackID</a> (Hackers @ Berkeley)</td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/HackBerkeley">Hackers @ Berkeley</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/humanapi/passport-humanapi">human/api</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/olawiberg">Ola Wiberg</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mindfreakthemon/passport-imgur">imgur</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/mindfreakthemon">Monday Freelem</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-instagram">Instagram</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-intuit">Intuit</a></td>
+      <td>OpenID</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-intuit-oauth">Intuit</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-justintv">Justin.tv</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/ktt-ol/passport-ktt">Kreativität trifft Technik</a></td>
+      <td>OpenID</td>
+      <td><a href="https://github.com/ktt-ol">Martin Hilscher</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-linkedin">LinkedIn</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/tiberule/passport-mailru">Mail.Ru</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/tiberule">Tiberule</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/brainflake/passport-mailchimp">MailChimp</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/brainflake">Brian Falk</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/outsideris/passport-me2day">me2day</a></td>
+      <td></td>
+      <td><a href="https://github.com/outsideris">JeongHoon Byun</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-meetup">Meetup</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/sdurandeu/passport-mercadolibre">MercadoLibre</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/sdurandeu">Sebastian Durandeu</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://bitbucket.org/fumito_ito/passport-mixi">mixi</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://bitbucket.org/fumito_ito">Fumito Ito</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/Innovation-Toolkit/passport-myusa">MyUSA</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/polastre">Joe Polastre</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/pukapukan/passport-nate">Nate</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/pukapukan">Jason Park</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-netflix">Netflix</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/dglittle/passport-odesk">oDesk</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/vodolaz095">Anatolij Ostroumov</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/ozon1234/passport-odnoklassniki">Odnoklassniki</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/ozon1234">Alexey Kozlov</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-ohloh">Ohloh</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-openstreetmap">OpenStreetMap</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-paypal">Paypal</a></td>
+      <td>OpenID</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-paypal-oauth">Paypal</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-picplz">picplz</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/Siedrix/passport-pocket">Pocket</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/Siedrix">Siedrix</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mjpearson/passport-podio">Podio</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/mjpearson">Michael Pearson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/AndyShang/passport-qq">QQ</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/AndyShang">Andy Shang</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/gologo13/passport-rakuten">Rakuten</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/gologo13">Yohei Yamaguchi</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-rdio">Rdio</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-readability">Readability</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/Slotos/passport-reddit">reddit</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/Slotos">Dmytro Soltys</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/xinbenlv/passport-renren">Renren</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/xinbenlv">Zainan Victor Zhou</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-runkeeper">RunKeeper</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/kfll/passport-sina">Sina Weibo</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/kfll">Qichao Yang</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/Singly/passport-singly">Singly</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/beaugunderson">Beau Gunderson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-smugmug">SmugMug</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-soundcloud">SoundCloud</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/geNAZt/passport-stackexchange">Stack Exchange</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/geNAZt">Fabian Faßbender</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/zoowar/passport-statusnet">StatusNet</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/zoowar">zoowar</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/liamcurry/passport-steam">Steam</a></td>
+      <td>OpenID</td>
+      <td><a href="https://github.com/liamcurry">Liam Curry</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/huffpostlabs/passport-stripe">Stripe</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/huffpostlabs/passport-stripe">Matthew Conlen</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/godezinc/passport-supinfo">SUPINFO</a></td>
+      <td>OpenID</td>
+      <td><a href="https://github.com/GodezInc">Vincent PEYROUSE</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/teambox/passport-teambox">Teambox</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/PatrickHeneise">Patrick Heneise</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/heroicyang/passport-tqq">Tencent QQ</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/heroicyang">Heroic Yang</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/TxSSC/passport-txssc">Texas School Safety Center</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/particlebanana">Cody Stoltman</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/Tumunu/passport-trademe">Trade Me</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/Tumunu">Cleave Pokotea</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/fuwaneko/passport-trello">Trello</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/fuwaneko">Dmitry Gorbunov</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-tripit">TripIt</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-tumblr">Tumblr</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/johnkernke/passport-twitchtv">Twitch</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/johnkernke">John Kernke</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-twitter">Twitter</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/ForbesLindesay/passport-raven">University of Cambridge</a> (Raven)</td>
+      <td><a href="http://raven.cam.ac.uk/project/waa2wls-protocol.txt">WAA-&gt;WLS</a></td>
+      <td><a href="https://github.com/ForbesLindesay">Forbes Lindesay</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/UniversityofWarwick/passport-warwick-sso-oauth">University of Warwick</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/UniversityofWarwick">Mat Mannion</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/urlship/passport-urlship">Urlship</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/urlship">Cleave Pokotea</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-vimeo">Vimeo</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/stevebest/passport-vkontakte">VKontakte</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/stevebest">Stepan Stolyarov</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/AndyShang/passport-weibo">Weibo</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/AndyShang">Andy Shang</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-windowslive">Windows Live</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mowens/passport-withings">Withings</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/mowens">Michael Owens</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mjpearson/passport-wordpress">WordPress</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/mjpearson">Michael Pearson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/pascal-bach/passport-xing">XING</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/pascal-bach">Pascal Bach</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-yahoo">Yahoo!</a></td>
+      <td>OpenID</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-yahoo-oauth">Yahoo!</a></td>
+      <td>OAuth</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/Lewuathe/passport-yj">Yahoo! JAPAN</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/Lewuathe">Kai Sasaki</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jaredhanson/passport-yammer">Yammer</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/jaredhanson">Jared Hanson</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/gurugray/passport-yandex">Yandex</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/gurugray">Sergey Sergeev</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jozzhart/passport-youtube">YouTube</a></td>
+      <td>OAuth 2.0</td>
+      <td><a href="https://github.com/jozzhart">Jozz Hart</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>開発者の皆様へ</strong>: もし、上記のリストに載っていないサービスの認証を実装したときは、私に連絡してください。
+連絡を頂ければ、このリストに追加します。</p>
+  </div>
+</div>
+      <div class="footer">
+  <p>&copy; 2011-2013 Jared Hanson<br/><a href="https://github.com/stuartpb/passport-logo">Logo</a> by <a href="https://github.com/stuartpb">Stuart P. Bentley</a>, <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a><br>Translation by <a href="https://github.com/OrgaChem">OrgaChem</a></p>
+</div>
+
+    </div>
+  </body>
+</html>
