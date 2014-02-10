@@ -52,11 +52,11 @@
     <h3 id="-">権限付与</h3>
 <p>アプリケーションが複数のサードパーティからの情報を必要とする場合がよくあります。
 このようなとき、アプリケーションはユーザーに Facebook や Twitter などのアカウントとの“連携”を要求することになるでしょう。</p>
-<p>これは、ユーザーがすでにアプリケーションから認証されていて、かつサードパーティのアカウントからの許可・連携のみが必要な状況です。
-このような認証・権限付与の場合にも Passport を使うことができます。</p>
+<p>これは、ユーザーがすでにアプリケーションから認証されていて、かつサードパーティのアカウントからの許可や連携のみが必要な状況です。
+このような認証や権限付与の場合にも Passport を使うことができます。</p>
 <p>権限付与は <code>passport.authorize()</code> の呼び出しによって動作します。
 権限付与の申請が承諾されれば、ストラテジーの検証用コールバックの <code>req.account</code> に結果がセットされます。
-このとき、ログインセッションや <code>req.user</code> に影響は及びません。</p>
+ログインセッションや <code>req.user</code> に影響は及びません。</p>
 <pre><code class="undefinedjavascript">app.get(<span class="string">'/connect/twitter'</span>,
   passport.authorize(<span class="string">'twitter-authz'</span>, { failureRedirect: <span class="string">'/account'</span> })
 );
@@ -75,7 +75,7 @@ app.get(<span class="string">'/connect/twitter/callback'</span>,
     });
   }
 );</code></pre>
-<p>route のコールバックでは、<code>req.user</code> と <code>req.account</code> のどちらも利用可能です。
+<p>ルーティングのコールバックでは、<code>req.user</code> と <code>req.account</code> のどちらも利用可能です。
 新しく連携されたアカウントはログインユーザーと紐づけられてデータベースに保存されます。</p>
 <h4 id="-">設定</h4>
 <p>権限付与のストラテジーは、認証で用いたストラテジーと同じものです。
@@ -101,9 +101,9 @@ app.get(<span class="string">'/connect/twitter/callback'</span>,
   }
 ));</code></pre>
 <p>上の例では、<code>twitter-authz</code> ストラテジーが Twitter のアカウント情報を保存するために <code>Account</code> インスタンスを確認または作成していることがわかります。
-この結果は <code>req.account</code> に代入されているので、route ハンドラーは認証済のユーザーを連携させることができます。</p>
+この結果は <code>req.account</code> に代入されているので、ルーティングハンドラーは認証済のユーザーを連携させることができます。</p>
 <h3 id="-">検証用コールバック内での連携</h3>
-<p>このアプローチのデメリットは ストラテジー・route サポートが同じ2つのインスタンスが必要なことです。</p>
+<p>このアプローチのデメリットは2つのストラテジーのインスタンスが必要なことです。</p>
 <p>これを避けるためには <code>passReqToCallback</code> オプションを <code>true</code> にセットしてください。
 このオプションが有効になると、 <em>第一</em>引数として <code>req</code> が検証用コールバックに渡されるようになります。</p>
 <pre><code class="undefinedjavascript">passport.use(<span class="keyword">new</span> TwitterStrategy({
@@ -122,7 +122,7 @@ app.get(<span class="string">'/connect/twitter/callback'</span>,
     }
   }
 ));</code></pre>
-<p>検証用コールバックに <code>req</code> が引数として渡されると、リクエストの状態を、認証プロセスの組み立てやひとつのストラテジーインスタンスによる認証・権限付与の処理、routes のセットのために使うことができるようになります。
+<p>検証用コールバックに <code>req</code> が引数として渡されると、リクエストの状態を、認証プロセスの組み立てやひとつのストラテジーインスタンスによる認証・権限付与の処理、ルーティングの設定のために使うことができるようになります。
 たとえば、ユーザーが既にログインしている場合でも、新しい連携アカウントを紐づけることができます。
 また、<code>req</code> にセットされたアプリケーション特有のプロパティ（<code>req.session</code> を含む）も利用できます。</p>
   </div>

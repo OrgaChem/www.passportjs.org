@@ -58,14 +58,11 @@ and OAuth has been important in bringing attention to the potential dangers of
 exposing passwords to external services.</p>
 <p>While OAuth 1.0 is still widely used, it has been superseded by <a href="/www.passportjs.org/guide/oauth2-api/">OAuth 2.0</a>.
 It is recommended to base new implementations on OAuth 2.0.</p>
-<p>When using OAuth to protect API endpoints, there are three distinct steps that
-that must be performed:</p>
+<p>OAuth によって API のエンドポイントを保護するためには、3つのステップを踏む必要があります。</p>
 <ol>
-<li>The application requests permission from the user for access to protected
-resources.</li>
-<li>A token is issued to the application, if permission is granted by the user.</li>
-<li>The application authenticates using the token to access protected
-resources.</li>
+<li>アプリケーションは、ユーザーに保護されたリソースへのアクセス許可をリクエストします</li>
+<li>ユーザーに許可されると、アプリケーションにトークンが発行されます</li>
+<li>アプリケーションはトークンを使って、保護されたリソースにアクセスします</li>
 </ol>
 <h4 id="issuing-tokens">Issuing Tokens</h4>
 <p><a href="https://github.com/jaredhanson/oauthorize">OAuthorize</a>, a sibling project to
