@@ -66,9 +66,9 @@ app.get('/auth/twitter/callback',
 
 <small>注意: このコールバックルーティングの URL は、ストラテジーの設定時に `callbackURL` オプションで指定されたものです。</small>
 
-#### Link
+#### リンク
 
-Twitter 用の1-クリックサインインは、リンクかボタンによって実現できます。
+Twitter を使った1-クリックサインインは、リンクやボタンによって実現できます。
 
 ```xml
 <a href="/auth/twitter">Sign in with Twitter</a>

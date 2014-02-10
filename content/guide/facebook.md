@@ -87,9 +87,9 @@ app.get('/auth/facebook',
 );
 ```
 
-#### Link
+#### リンク
 
-Facebook 用の1-クリックサインインは、リンクかボタンによって実現できます。
+Facebook を使った1-クリックサインインは、リンクやボタンによって実現できます。
 
 ```xml
 <a href="/auth/facebook">Login with Facebook</a>
