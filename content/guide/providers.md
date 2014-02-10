@@ -1,20 +1,19 @@
 ---
 layout: 'guide'
-title: 'Providers'
+title: '対応しているサービス'
 ---
 
-### Providers
+### 対応しているサービス
 
-Passport supports authentication with an extensive list of third-party providers.
-Many thanks belong to the fine community of developers who have contributed
-implementations.
+Passport は多くのサードパーティのご協力によって多くのサービスの認証をサポートしています。
+これらの実装を提供してくれた、この素晴らしいコミュニティの開発者たちに感謝します。
 
 <table class="table table-condensed table-striped">
   <thead>
     <tr>
-      <th>Provider</th>
-      <th>Protocol</th>
-      <th>Developer</th>
+      <th>提供者</th>
+      <th>プロトコル</th>
+      <th>開発者</th>
     </tr>
   </thead>
   <tbody>
@@ -616,5 +615,5 @@ implementations.
   </tbody>
 </table>
 
-**Attention Developers:** If you implement support another provider, send me a
-message and I will add it to the list.
+**開発者の皆様へ**: もし、上記のリスト以外のサービスの認証を実装したときは、私に連絡してください。
+連絡を頂ければ、このリストに追加します。
