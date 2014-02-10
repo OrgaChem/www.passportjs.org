@@ -5,11 +5,9 @@ title: 'Twitter'
 
 ### Twitter
 
-ユーザーの Twitter アカウントを使ってログインするには、Twitter ストラテジーを
-使います。この認証には OAuth 1.0a を使っています。
+ユーザーの Twitter アカウントを使ってログインするには、Twitter ストラテジーを使います。この認証には OAuth 1.0a を使っています。
 
-Twitter サポートは [passport-twitter](https://github.com/jaredhanson/passport-twitter)
-によって実装されています。
+Twitter サポートは [passport-twitter](https://github.com/jaredhanson/passport-twitter) によって実装されています。
 
 #### インストール
 
@@ -19,11 +17,10 @@ $ npm install passport-twitter
 
 #### 設定方法
 
-Twitter 認証を使う前に [Twitter Developers](https://dev.twitter.com/) で
-アプリケーションを登録しておく必要があります。登録が終わると、アプリケーション
-にコンシューマーキーとコンシューマーシークレットが発行されます。アプリケーション
-側ではコールバックURLを実装しておいてください。このURLはアクセスが許可された後に
-ユーザーがリダイレクトされるページを示す必要があります。
+Twitter 認証を使う前に [Twitter Developers](https://dev.twitter.com/) でアプリケーションを登録しておく必要があります。
+登録が終わると、アプリケーションにコンシューマーキーとコンシューマーシークレットが発行されます。
+アプリケーション側ではコールバックURLを実装しておいてください。
+このURLはアクセスが許可された後にユーザーがリダイレクトされるページを示す必要があります。
 
 ```javascript
 var passport = require('passport')
@@ -43,15 +40,14 @@ passport.use(new TwitterStrategy({
 ));
 ```
 
-Twitter 認証のための検証用コールバック内では引数である `token` と `tokenSecret`、
-`profile` が利用できます。`profile` は Twitter 上のユーザープロフィール情報
-です（詳細は[ユーザープロフィール](/guide/profile/)を参照してください）。
+Twitter 認証のための検証用コールバック内では引数である `token` と `tokenSecret`、`profile` が利用できます。
+`profile` は Twitter 上のユーザープロフィール情報です（詳細は[ユーザープロフィール](/guide/profile/)を参照してください）。
 
 #### ルーティング
 
-Twitter 認証には2つのルーティングが必要です。最初のルーティングでは OAuth
-トランザクションを開始し、ユーザーを Twitter へリダイレクトさせます。次の
-ルーティングでは Twitter サインインの後でユーザーをリダイレクトさせます。
+Twitter 認証には2つのルーティングが必要です。
+最初のルーティングでは OAuth トランザクションを開始し、ユーザーを Twitter へリダイレクトさせます。
+次のルーティングでは Twitter サインインの後でユーザーをリダイレクトさせます。
 
 ```javascript
 // 認証のために Twitter へリダイレクトさせます。認証が完了すると、Twitter は
@@ -68,12 +64,11 @@ app.get('/auth/twitter/callback',
                                      failureRedirect: '/login' }));
 ```
 
-<small>注意: このコールバックルーティングの URL は、ストラテジーの設定時に
-`callbackURL` オプションで指定されたものです。</small>
+<small>注意: このコールバックルーティングの URL は、ストラテジーの設定時に `callbackURL` オプションで指定されたものです。</small>
 
 #### Link
 
-Twitter 用の1-クリックサインインはリンクかボタンによって実現できます。
+Twitter 用の1-クリックサインインは、リンクかボタンによって実現できます。
 
 ```xml
 <a href="/auth/twitter">Sign in with Twitter</a>

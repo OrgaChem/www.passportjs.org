@@ -5,9 +5,7 @@ title: 'ユーザーID & パスワード'
 
 ### ユーザーID & パスワード
 
-多くの Web サイトの認証に、ユーザーID/パスワード認証が使われています。この認証
-メカニズムは [passport-local](https://github.com/jaredhanson/passport-local)
-モジュールによって提供されています。
+多くの Web サイトの認証に、ユーザーID/パスワード認証が使われています。この認証メカニズムは [passport-local](https://github.com/jaredhanson/passport-local) モジュールによって提供されています。
 
 #### インストール
 
@@ -37,8 +35,7 @@ passport.use(new LocalStrategy(
 ));
 ```
 
-ローカルの認証に検証用コールバックには、アプリケーションのログインフォームに
-よって送信されてきた `username` と `password` が引数として与えられています。
+ローカルの認証に検証用コールバックには、アプリケーションのログインフォームによって送信されてきた `username` と `password` が引数として与えられています。
 
 #### フォーム
 
@@ -64,8 +61,7 @@ passport.use(new LocalStrategy(
 #### ルート
 
 ログインフォームの内容は `POST` メソッドでサーバーに送信されます。
-`local` ストラテジーでログイン要求を処理するためには、`authenticate()` を
-使います。
+`local` ストラテジーでログイン要求を処理するためには、`authenticate()` を使います。
 
 ```javascript
 app.post('/login',
@@ -75,15 +71,12 @@ app.post('/login',
 );
 ```
 
-検証用コールバック内で指定した `message` オプションで `error` メッセージなどを
-フラッシュメッセージとして表示するには、`failureFlash` オプションを `true` に
-してください。
+検証用コールバック内で指定した `message` オプションで `error` メッセージなどをフラッシュメッセージとして表示するには、`failureFlash` オプションを `true` にしてください。
 
 #### パラメーター
 
-`LocalStrategy` は認証情報を `username` と `password` の2つのパラメータ名で確認
-しています。別のフィールド名を使っている場合は、確認するパラメータ名を変更して
-ください。
+`LocalStrategy` は認証情報を `username` と `password` の2つのパラメータ名で確認しています。
+別のフィールド名を使っている場合は、確認するパラメータ名を変更してください。
 
     passport.use(new LocalStrategy({
         usernameField: 'email',
