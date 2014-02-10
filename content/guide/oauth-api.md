@@ -16,14 +16,11 @@ exposing passwords to external services.
 While OAuth 1.0 is still widely used, it has been superseded by [OAuth 2.0](/www.passportjs.org/guide/oauth2-api/).
 It is recommended to base new implementations on OAuth 2.0.
 
-When using OAuth to protect API endpoints, there are three distinct steps that
-that must be performed:
+OAuth によって API のエンドポイントを保護するためには、3つのステップを踏む必要があります。
 
-  1. The application requests permission from the user for access to protected
-     resources.
-  2. A token is issued to the application, if permission is granted by the user.
-  3. The application authenticates using the token to access protected
-     resources.
+  1. アプリケーションは、ユーザーに保護されたリソースへのアクセス許可をリクエストします
+  2. ユーザーに許可されると、アプリケーションにトークンが発行されます
+  3. アプリケーションはトークンを使って、保護されたリソースにアクセスします
 
 #### Issuing Tokens
 
