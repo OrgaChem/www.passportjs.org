@@ -82,10 +82,10 @@ app.get('/auth/openid/return',
                                     failureRedirect: '/login' }));
 ```
 
-#### プロフィール交換
+#### プロフィール取得
 
 OpenID では、認証されたユーザーのプロフィール情報の取得を設定できます。
-プロフィール交換を有効にするには、 `profile` オプションを `true` にしてください。
+プロフィール取得を有効にするには、 `profile` オプションを `true` にしてください。
 
 ```javascript
 passport.use(new OpenIDStrategy({
