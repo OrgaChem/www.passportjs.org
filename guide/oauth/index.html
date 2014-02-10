@@ -68,8 +68,8 @@ semantics.</p>
 with OAuth variants.  In many cases, a provider-specific strategy can be used
 instead of the generic OAuth strategies described below.  This cuts down on the
 necessary configuration, and accommodates any provider-specific quirks. See
-<a href="/guide/facebook/">Facebook</a>, <a href="/guide/twitter/">Twitter</a> or the list of
-<a href="/guide/providers/">providers</a> for preferred usage.</p>
+<a href="/www.passportjs.org/guide/facebook/">Facebook</a>, <a href="/www.passportjs.org/guide/twitter/">Twitter</a> or the list of
+<a href="/www.passportjs.org/guide/providers/">providers</a> for preferred usage.</p>
 <p>Support for OAuth is provided by the <a href="https://github.com/jaredhanson/passport-oauth">passport-oauth</a>
 module.</p>
 <h4 id="install">Install</h4>
@@ -104,7 +104,7 @@ passport.use(<span class="string">'provider'</span>, <span class="keyword">new</
 <p>The verify callback for OAuth-based strategies accepts <code>token</code>, <code>tokenSecret</code>,
 and <code>profile</code> arguments.  <code>token</code> is the access token and <code>tokenSecret</code> is its
 corresponding secret.  <code>profile</code> will contain user profile information provided
-by the service provider; refer to <a href="/guide/profile/">User Profile</a> for
+by the service provider; refer to <a href="/www.passportjs.org/guide/profile/">User Profile</a> for
 additional information.</p>
 <h4 id="routes">Routes</h4>
 <p>Two routes are required for OAuth authentication.  The first route initiates an
@@ -158,7 +158,7 @@ passport.use(<span class="string">'provider'</span>, <span class="keyword">new</
 <code>refreshToken</code>, and <code>profile</code> arguments.  <code>refreshToken</code> can be used to obtain
 new access tokens, and may be <code>undefined</code> if the provider does not issue refresh
 tokens.  <code>profile</code> will contain user profile information provided by the service
-provider; refer to <a href="/guide/profile/">User Profile</a> for additional information.</p>
+provider; refer to <a href="/www.passportjs.org/guide/profile/">User Profile</a> for additional information.</p>
 <h4 id="routes">Routes</h4>
 <p>Two routes are required for OAuth 2.0 authentication.  The first route redirects
 the user to the service provider.  The second route is the URL to which the user

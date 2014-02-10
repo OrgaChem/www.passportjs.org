@@ -50,7 +50,7 @@
   </div>
   <div class="span9 content">
     <h3 id="-">認証</h3>
-<p>認証リクエストは <code>passport.authenticate()</code> の呼び出し時に使いたい認証ストラテジーを指定するだけ実行できます。
+<p>認証リクエストは <code>passport.authenticate()</code> に使いたい認証ストラテジーを指定して呼び出すだけで実行できます。
 <code>authenticate()</code>によって返される関数は <a href="http://www.senchalabs.org/connect/">Connect</a> 標準に準拠しているので、<a href="http://expressjs.com/">Express</a> アプリケーションのルーティングミドルウェアとして簡単に利用できます。</p>
 <pre><code class="undefinedjavascript">app.post(<span class="string">'/login'</span>,
   passport.authenticate(<span class="string">'local'</span>),
@@ -62,7 +62,7 @@
 <p>Passport は、認証に失敗したとき <code>401 Unauthorized</code> ステータスを返し、その他のルーティングハンドラーは実行しません。
 認証に成功したときは、次のハンドラーを実行し、<code>req.user</code> プロパティに認証されたユーザーをセットします。</p>
 <p><small>注意: ストラテジーはルーティングされる前に設定されていなければなりません。
-詳細は<a href="/guide/configure/">設定</a>の章で確認できます。</small></p>
+詳細は<a href="/www.passportjs.org/guide/configure/">設定</a>の章で確認できます。</small></p>
 <h4 id="-">リダイレクト</h4>
 <p>リダイレクトは、一般的にリクエストの認証後におこなわれます。</p>
 <pre><code class="undefinedjavascript">app.post(<span class="string">'/login'</span>,
