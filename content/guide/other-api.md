@@ -5,16 +5,15 @@ title: '認証スキーム'
 
 ### 認証スキーム
 
-The following is a list of strategies that implement authentication schemes used
-when protecting API endpoints.
+API のエンドポイントを保護するための認証スキームのストラテジーを下のリストにまとめました。。
 
 
 <table class="table table-condensed table-striped">
   <thead>
     <tr>
-      <th>Scheme</th>
-      <th>Specification</th>
-      <th>Developer</th>
+      <th>認証スキーム</th>
+      <th>仕様</th>
+      <th>開発者</th>
     </tr>
   </thead>
   <tbody>
@@ -29,12 +28,12 @@ when protecting API endpoints.
       <td>[Jared Hanson](https://github.com/jaredhanson)</td>
     </tr>
     <tr>
-      <td>[Basic](https://github.com/jaredhanson/passport-http)</td>
+      <td>[Basic認証](https://github.com/jaredhanson/passport-http)</td>
       <td>[RFC 2617](http://tools.ietf.org/html/rfc2617)</td>
       <td>[Jared Hanson](https://github.com/jaredhanson)</td>
     </tr>
     <tr>
-      <td>[Digest](https://github.com/jaredhanson/passport-http)</td>
+      <td>[Digest認証](https://github.com/jaredhanson/passport-http)</td>
       <td>[RFC 2617](http://tools.ietf.org/html/rfc2617)</td>
       <td>[Jared Hanson](https://github.com/jaredhanson)</td>
     </tr>
