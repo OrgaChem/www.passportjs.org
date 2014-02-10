@@ -8,7 +8,7 @@ title: 'Facebook'
 ユーザーの Facebook アカウントを使ってログインするには、Facebook ストラテジーを使用します。
 この認証には、OAuth2.0 を使用しています。
 
-Facebook のサポートは [passport-facebook](https://github.com/jaredhanson/passport-facebook)によって実装されています。
+Facebook のサポートは [passport-facebook](https://github.com/jaredhanson/passport-facebook) によって実装されています。
 
 #### インストール
 
