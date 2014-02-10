@@ -9,7 +9,7 @@ Facebook や Twitter のような外部のサービスの認証を利用する�
 情報のエンコーディングが異なっていることが多いため、対応が面倒になっています。
 そのため、Passport はこれらのプロフィール情報を正規化する機能を持っています。
 
-正規化されたプロフィール情報は [Portable Contacts](http://portablecontacts.net/) によって策定された [コンタクトスキーマ](http://portablecontacts.net/draft-spec.html#schema) の形式で正規化されます。
+プロフィール情報は [Portable Contacts](http://portablecontacts.net/) によって策定された [コンタクトスキーマ](http://portablecontacts.net/draft-spec.html#schema) の形式で正規化されます。
 共通するフィールドについては下の表をご覧ください。
 
 <dl>
