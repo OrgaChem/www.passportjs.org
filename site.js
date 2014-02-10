@@ -1,7 +1,7 @@
 var kerouac = require('kerouac');
 var site = kerouac();
 
-site.set('base url', 'http://passportjs.org/');
+site.set('base url', 'http://knimon-software.github.io/www.passportjs.org/');
 site.set('output', 'passportjs.org');
 
 site.engine('ejs', require('ejs-locals'));
@@ -32,7 +32,7 @@ site.plug(require('kerouac-robotstxt')());
     '/guide/user-profile.html': '/guide/profile/',
     '/guide/username-password.html': '/guide/username-password/'
   }
-  
+
   site.plug(require('kerouac-htaccess')({ redirect: redirect }));
 })();
 
