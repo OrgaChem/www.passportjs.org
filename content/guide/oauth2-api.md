@@ -29,7 +29,7 @@ Passport の姉妹プロジェクトである [OAuth2orize](https://github.com/j
 加えて、アプリケーションのアクセスできる範囲をどの程度で制限するかという判断は実装者ごとに異なります。
 
 OAuth2orize は、実装を決定するようなことはしてくれません。
-しかし、OAuth 2.0 を利用するサービスにおけるセキュリティ上の懸念を理解するために、OAuth2orize を利用することを強く勧めます。
+しかし、OAuth 2.0 を利用するサービスにおけるセキュリティの懸念事項を理解するために、OAuth2orize を利用することを強く勧めます。
 
 #### 認証トークン
 
@@ -41,7 +41,7 @@ OAuth 2.0 が提供する枠組みは、発行されるトークンの種類を�
 Bearer トークンは OAuth 2.0 で最も議論されているトークンの種類です。
 多くの実装では、発行できるトークンは bearer トークンのみとされています。
 
-Bearer トークンを認証するは [passport-http-bearer](https://github.com/jaredhanson/passport-http-bearer) モジュールを使ってください。
+Bearer トークンの認証には [passport-http-bearer](https://github.com/jaredhanson/passport-http-bearer) モジュールを使ってください。
 
 ##### インストール
 
@@ -68,6 +68,7 @@ Bearer トークンの検証用コールバック内では、`token` 引数が�
 これは、トークンの範囲通知やアクセス制御の確認のために使うことができます。
 
 ##### 保護されたエンドポイント
+REVIEW: 訳の正確性を確認
 
 ```javascript
 app.get('/api/me', 
