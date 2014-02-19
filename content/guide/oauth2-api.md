@@ -77,5 +77,5 @@ app.get('/api/me',
   });
 ```
 
-API のエンドポイントを `bearer` トークンを使った認証で保護するには、`passport.authenticate()` に `bearer` ストラテジーを指定してください。
+ユーザーへ提供するAPI のエンドポイントを、 `bearer` トークンを使った認証で保護するには、`passport.authenticate()` に `bearer` ストラテジーを指定してください。
 なお、このような API にセッション管理は不要なことが多いため、無効にすることが出来ます。
