@@ -1,6 +1,6 @@
 # www.passportjs.org
 
-[passportjs.org](http://passportjs.org/) の Web サイトの非公式日本語訳。
+[passportjs.org](http://passportjs.org/) の Web サイトの非公式日本語訳です。
 
 
 ## 使い方
