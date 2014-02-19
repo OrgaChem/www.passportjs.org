@@ -57,4 +57,7 @@
   <url>
     <loc>http://knimon-software.github.io/index.html</loc>
   </url>
+  <url>
+    <loc>http://knimon-software.github.io/vendor/jquery/1.11.0/jquery.min.map</loc>
+  </url>
 </urlset>

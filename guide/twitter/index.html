@@ -85,7 +85,7 @@ passport.use(<span class="keyword">new</span> TwitterStrategy({
 <span class="comment">//   /auth/twitter/callback</span>
 app.get(<span class="string">'/auth/twitter'</span>, passport.authenticate(<span class="string">'twitter'</span>));
 
-<span class="comment">// ユーザーが許可を確認すると、Twitter はユーザーをこの URL にリダイレクトさせます。</span>
+<span class="comment">// ユーザーが許可すると、Twitter はユーザーをこの URL にリダイレクトさせます。</span>
 <span class="comment">// この認証プロセスの最後に、アクセストークンの取得をおこないます。</span>
 <span class="comment">// この取得が成功すればユーザーはログインしたことになります。取得に失敗したとき</span>
 <span class="comment">// は、認証が失敗したとみなされます。</span>
@@ -103,5 +103,7 @@ app.get(<span class="string">'/auth/twitter/callback'</span>,
 </div>
 
     </div>
+    <script src="/www.passportjs.org/vendor/jquery/1.11.0/jquery.min.js"></script>
+    <script src="/www.passportjs.org/assets/js/showorigin.js"></script>
   </body>
 </html>

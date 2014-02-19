@@ -50,14 +50,14 @@
   </div>
   <div class="span9 content">
     <h3 id="oauth-2-0">OAuth 2.0</h3>
-<p>OAuth 2.0 は <a href="http://tools.ietf.org/html/rfc6749">RFC 6749</a> に策定された認可フレームワークの一種で、ユーザーのアクセス権限を外部のアプリケーションに付与するための仕組みです。権限付与が成功すると、アプリケーションは認証情報としてトークンを利用することになります。
-このような仕組みを使うと、2つの観点で安全性が高まります：</p>
+<p>OAuth 2.0 は <a href="http://tools.ietf.org/html/rfc6749">RFC 6749</a> に策定された、ユーザーのアクセス権限を外部のアプリケーションに付与するための枠組みです。権限付与が許可されると、アプリケーションは認証情報としてトークンを利用することになります。
+この仕組みを使うと、2つの観点で安全性が高まります：</p>
 <ol>
 <li>アプリケーションはユーザーIDとパスワードを保存する必要がありません</li>
 <li>トークンで付与される権限は限定的です（たとえば、読み込み権限のみ付与ということもできるでしょう）</li>
 </ol>
 <p>これらの利点は Web アプリケーションの安全性の保証する上でも重要な要素です。
-このような、OAuth 2.0 は API の認証に広く使われている標準です。</p>
+このような OAuth 2.0 は API の認証に広く使われている標準です。</p>
 <p>OAuth 2.0 によって API のエンドポイントを保護するためには、3つのステップを踏む必要があります。</p>
 <ol>
 <li>アプリケーションは、ユーザーに保護されたリソースへのアクセス許可をリクエストします</li>
@@ -98,7 +98,7 @@
   <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> {</span>
     res.json(req.user);
   });</code></pre>
-<p>API のエンドポイントを <code>bearer</code> トークンを使った認証で保護するには、<code>passport.authenticate()</code> に <code>bearer</code> ストラテジーを指定してください。
+<p>ユーザーへ提供するAPI のエンドポイントを、 <code>bearer</code> トークンを使った認証で保護するには、<code>passport.authenticate()</code> に <code>bearer</code> ストラテジーを指定してください。
 なお、このような API にセッション管理は不要なことが多いため、無効にすることが出来ます。</p>
   </div>
 </div>
@@ -107,5 +107,7 @@
 </div>
 
     </div>
+    <script src="/www.passportjs.org/vendor/jquery/1.11.0/jquery.min.js"></script>
+    <script src="/www.passportjs.org/assets/js/showorigin.js"></script>
   </body>
 </html>

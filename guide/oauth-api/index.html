@@ -50,14 +50,11 @@
   </div>
   <div class="span9 content">
     <h3 id="oauth">OAuth</h3>
-<p><a href="http://oauth.net/">OAuth</a> (formally specified by <a href="http://tools.ietf.org/html/rfc5849">RFC 5849</a>)
-provides a means for users to grant third-party applications access to their
-data without exposing their password to those applications.</p>
-<p>The protocol greatly improves the security of web applications, in particular,
-and OAuth has been important in bringing attention to the potential dangers of
-exposing passwords to external services.</p>
-<p>While OAuth 1.0 is still widely used, it has been superseded by <a href="/www.passportjs.org/guide/oauth2-api/">OAuth 2.0</a>.
-It is recommended to base new implementations on OAuth 2.0.</p>
+<p><a href="http://oauth.net/">OAuth</a> は <a href="http://tools.ietf.org/html/rfc5849">RFC 5849</a> で策定された、外部のアプリケーションがユーザーのデータへのアクセス権を獲得できるようにする枠組みです。
+この枠組みでは、ユーザーはアプリケーションにパスワードを供与する必要がありません。</p>
+<p>このプロトコルを利用すれば、Web アプリケーションのセキュリティを改善することができます。
+たとえば、パスワードを外部のサービスに供与することによるリスクを避けることができます。</p>
+<p>OAuth 1.0 は未だに広く使われていますが、改良版である <a href="/www.passportjs.org/guide/oauth2-api/">OAuth 2.0</a> への切り替えが推奨されています。</p>
 <p>OAuth によって API のエンドポイントを保護するためには、3つのステップを踏む必要があります。</p>
 <ol>
 <li>アプリケーションは、ユーザーに保護されたリソースへのアクセス許可をリクエストします</li>
@@ -136,5 +133,7 @@ endpoints.  Sessions are not typically needed by APIs, so they can be disabled.<
 </div>
 
     </div>
+    <script src="/www.passportjs.org/vendor/jquery/1.11.0/jquery.min.js"></script>
+    <script src="/www.passportjs.org/assets/js/showorigin.js"></script>
   </body>
 </html>

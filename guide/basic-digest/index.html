@@ -110,7 +110,7 @@ APIの利用にセッション管理は必要ないことが多いので、セ�
   <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> {</span>
     res.json(req.user);
   });</code></pre>
-<p><code>digest</code> をストラテジーに指定し <code>passport.authenticate()</code> を使用することでAPIエンドポイントを保護することができます。
+<p><code>digest</code> をストラテジーに指定し <code>passport.authenticate()</code> を使用することでユーザーへ提供するAPIエンドポイントを保護することができます。
 APIの利用にセッション管理は必要とされないことが多いので、セッションの無効化も可能です。</p>
   </div>
 </div>
@@ -119,5 +119,7 @@ APIの利用にセッション管理は必要とされないことが多いの�
 </div>
 
     </div>
+    <script src="/www.passportjs.org/vendor/jquery/1.11.0/jquery.min.js"></script>
+    <script src="/www.passportjs.org/assets/js/showorigin.js"></script>
   </body>
 </html>
