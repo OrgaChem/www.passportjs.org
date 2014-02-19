@@ -10,6 +10,10 @@ API access to web and desktop or mobile applications.  Once access has been
 granted, the authorized application can utilize the API on behalf of the user.
 OAuth has also emerged as a popular mechanism for [delegated authentication](http://hueniverse.com/2009/04/introducing-sign-in-with-twitter-oauth-style-connect/).
 
+[OAuth](http://oauth.net/) とは、ユーザーがデスクトップアプリケーションやモバイルアプリケーションに API アクセスへの権限を付与するための手続きの規格です。
+権限が付与されたアプリケーションは、ユーザーに代わって API を操作できます。
+OAuth 
+
 OAuth comes in two primary flavors, both of which are widely deployed.
 
 The initial version of OAuth was developed as an open standard by a loosely

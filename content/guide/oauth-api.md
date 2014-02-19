@@ -5,16 +5,13 @@ title: 'OAuth APIs'
 
 ### OAuth
 
-[OAuth](http://oauth.net/) (formally specified by [RFC 5849](http://tools.ietf.org/html/rfc5849))
-provides a means for users to grant third-party applications access to their
-data without exposing their password to those applications.
+[OAuth](http://oauth.net/) は [RFC 5849](http://tools.ietf.org/html/rfc5849) で策定された、外部のアプリケーションがユーザーのデータへのアクセス権を獲得できるようにする枠組みです。
+この枠組みでは、ユーザーはアプリケーションにパスワードを供与する必要がありません。
 
-The protocol greatly improves the security of web applications, in particular,
-and OAuth has been important in bringing attention to the potential dangers of
-exposing passwords to external services.
+このプロトコルを利用すれば、Web アプリケーションのセキュリティを改善することができます。
+たとえば、パスワードを外部のサービスに供与することによるリスクを避けることができます。
 
-While OAuth 1.0 is still widely used, it has been superseded by [OAuth 2.0](/www.passportjs.org/guide/oauth2-api/).
-It is recommended to base new implementations on OAuth 2.0.
+OAuth 1.0 は未だに広く使われていますが、改良版である [OAuth 2.0](/www.passportjs.org/guide/oauth2-api/) への切り替えが推奨されています。
 
 OAuth によって API のエンドポイントを保護するためには、3つのステップを踏む必要があります。
 
