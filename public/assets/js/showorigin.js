@@ -1,9 +1,16 @@
-var origins = $('.origin');
-origins.each(function(origin) {
+var origins = $('.original');
+origins.each(function(idx, elem) {
+  var origin = $(elem);
   var button = $(document.createElement('button'));
-  button.on('click', function() {
+  button.addClass('btn btn-mini btn-info');
+  var buttonContent = $(document.createElement('span'));
+  buttonContent.addClass('show-origin');
+  buttonContent.html('&raquo; 原文');
 
+  button.append(buttonContent);
+  button.on('click', function() {
+    origin.show();
   });
-  var translation = elem.prev('p');
-  translation.prop('title', origin.text());
+  var translation = origin.prev();
+  translation.append(button);
 });
