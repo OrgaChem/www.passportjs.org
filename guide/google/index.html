@@ -50,21 +50,20 @@
   </div>
   <div class="span9 content">
     <h3 id="google">Google</h3>
-<p>The Google strategy allows users to sign in to a web application using their
-Google account.  Internally, Google authentication works using OpenID.</p>
-<p>Using this strategy directly, as opposed to the general-purpose OpenID strategy,
-allows a site to offer one-click sign in.  The user does not have to enter an
-identifier, which improves usability, albeit at the expense of limiting choice
-of provider.</p>
-<p>Support for Google is implemented by the <a href="https://github.com/jaredhanson/passport-google">passport-google</a>
-module.</p>
-<h4 id="install">Install</h4>
+<p>ユーザーの Google アカウントを使ってログインするには、Google ストラテジーを使用します。
+この認証には、OpenID を使用しています。</p>
+<p>OpenID ストラテジーは汎用的に利用できる一方、Google ストラテジーでは
+認証情報を入力しない、１クリックサインインを提供しています。
+選択可能なプロバイダには制限があるものの、ユーザビリティは格段に向上します。</p>
+<p>Google のサポートは、 <a href="https://github.com/jaredhanson/passport-google">passport-google</a>によって実装されています。</p>
+<h4 id="-">インストール</h4>
 <pre><code class="undefinedbash">$ npm install passport-google</code></pre>
-<h4 id="configuration">Configuration</h4>
-<p>When using Google for sign in, your application must implement a return
-URL, to which Google will redirect users after they have authenticated.
-The <code>realm</code> indicates the part of URL-space for which authentication is valid.
-Typically this will be the root URL of your website.</p>
+<h4 id="-">設定項目</h4>
+<p>Google ストラテジーを用いる場合は、リダイレクト用のURLを実装する必要があります。
+このURLはアプリケーションが許可された場合に Google からリダイレクトされるページです。
+<code>realm</code> は認証要求が有効なURLスコープを示すもので、多くの場合はリダイレクト用のページの
+ルートURLが指定されます。</p>
+<p>Typically this will be the root URL of your website.</p>
 <pre><code class="undefinedjavascript"><span class="keyword">var</span> passport = require(<span class="string">'passport'</span>)
   , GoogleStrategy = require(<span class="string">'passport-google'</span>).Strategy;
 
@@ -78,29 +77,27 @@ passport.use(<span class="keyword">new</span> GoogleStrategy({
     });
   }
 ));</code></pre>
-<p>The verify callback for Google authentication accepts <code>identifier</code> and <code>profile</code>
-arguments.  <code>profile</code> will contain user profile information provided by Google;
-refer to <a href="/www.passportjs.org/guide/profile/">User Profile</a> for additional information.</p>
+<p>Google 認証のための検証用コールバックでは認証のために <code>identifier</code> と <code>profile</code> を引数として使用できます。
+<code>profile</code> は Google から提供されるユーザー情報を提供します。
+詳しくは、<a href="/www.passportjs.org/guide/profile/">User Profile</a> を参照してください。</p>
 <h4 id="routes">Routes</h4>
-<p>Two routes are required for Google authentication.  The first route redirects
-the user to Google.  The second route is the URL to which Google will return the
-user after they have signed in.</p>
-<pre><code class="undefinedjavascript"><span class="comment">// Redirect the user to Google for authentication.  When complete, Google</span>
-<span class="comment">// will redirect the user back to the application at</span>
+<p>Google 認証には２つのルーティングが必要です。
+最初のルーティングではユーザーを Google へリダイレクトさせます。
+次のルーティングでは、Google での認証が行われた後ユーザーをリダイレクトさせます。</p>
+<pre><code class="undefinedjavascript"><span class="comment">// 認証のためにユーザーを Google へリダイレクトし、認証が完了すると、</span>
+<span class="comment">// ユーザーを下記のURLにリダイレクトします。</span>
 <span class="comment">//     /auth/google/return</span>
 app.get(<span class="string">'/auth/google'</span>, passport.authenticate(<span class="string">'google'</span>));
 
-<span class="comment">// Google will redirect the user to this URL after authentication.  Finish</span>
-<span class="comment">// the process by verifying the assertion.  If valid, the user will be</span>
-<span class="comment">// logged in.  Otherwise, authentication has failed.</span>
+<span class="comment">// Google は認証が完了すると、下記のURLにユーザーをリダイレクトさせます。</span>
+<span class="comment">// 一連のプロセスは、ログインが成功したことを検証することで認証の完了とし、</span>
+<span class="comment">// さもなければ認証失敗とみなされます。</span>
 app.get(<span class="string">'/auth/google/return'</span>, 
   passport.authenticate(<span class="string">'google'</span>, { successRedirect: <span class="string">'/'</span>,
                                     failureRedirect: <span class="string">'/login'</span> }));</code></pre>
-<p>Note that the URL of the return route matches that of the <code>returnURL</code> option
-specified when configuring the strategy.</p>
-<h4 id="link">Link</h4>
-<p>A link or button can be placed on a web page, allowing one-click sign in with
-Google.</p>
+<p><small>注意:上記のリターン用ルートはストラテジーの設定時に設定しているものと一致させなければなりません。</small></p>
+<h4 id="-">リンク</h4>
+<p>Google での1-クリックサインインは、リンクやボタンによって実現できます。</p>
 <pre><code class="undefinedxml"><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"/auth/google"</span>&gt;</span>Sign In with Google<span class="tag">&lt;/<span class="title">a</span>&gt;</span></code></pre>
   </div>
 </div>
