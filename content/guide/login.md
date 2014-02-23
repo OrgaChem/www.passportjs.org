@@ -5,8 +5,8 @@ title: 'Log In'
 
 ### Log In
 
-Passport exposes a `login()` function on `req` (also aliased as `logIn()`) that
-can be used to establish a login session.
+Passport はログインセッションを確立するための `login()` 関数を `req` のメソッドとして
+用意しています。( `lonIn()` としてエイリアスも貼られています。)
 
 ```javascript
 req.login(user, function(err) {
@@ -15,8 +15,8 @@ req.login(user, function(err) {
 });
 ```
 
-When the login operation completes, `user` will be assigned to `req.user`.
+ログイン操作が完了すると、`user` は `req.user` に割り当てられます。
 
-Note: `passport.authenticate()` middleware invokes `req.login()` automatically.
-This function is primarily used when users sign up, during which `req.login()`
-can be invoked to automatically log in the newly registered user.
+<small>注意: `passport.authentocate()` ミドルウェアは自動的に `req.login()` を実行します。
+この関数は主にユーザーのサインアップのために用いられ、その際に `req.login()` 関数を実行し
+自動的にログインを行います。</small>
