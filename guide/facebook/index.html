@@ -53,12 +53,28 @@
 <p>ユーザーの Facebook アカウントを使ってログインするには、Facebook ストラテジーを使用します。
 この認証には、OAuth2.0 を使用しています。</p>
 <p>Facebook のサポートは <a href="https://github.com/jaredhanson/passport-facebook">passport-facebook</a> によって実装されています。</p>
+<blockquote class="original">
+The Facebook strategy allows users to log in to a web application using their
+Facebook account.  Internally, Facebook authentication works using OAuth 2.0.
+
+Support for Facebook is implemented by the <a href="https://github.com/jaredhanson/passport-facebook">passport-facebook</a>
+module.
+</blockquote>
+
 <h4 id="-">インストール</h4>
 <pre><code class="undefinedbash">$ npm install passport-facebook</code></pre>
 <h4 id="-">設定方法</h4>
 <p>Facebook 認証を行う前に、<a href="https://developers.facebook.com/">Facebook Developers</a> にてアプリケーションを登録する必要があります。
 登録が完了すると、アプリケーションIDとアプリケーションシークレットが発行されます。
 アプリケーション側ではリダイレクト用のURLを実装してください。このURLは、アクセスが許可された後にユーザーがリダイレクトされるページです。</p>
+<blockquote class="original">
+In order to use Facebook authentication, you must first create an app at
+<a href="https://developers.facebook.com/">Facebook Developers</a>.  When created, an
+app is assigned an App ID and App Secret.  Your application must also implement
+a redirect URL, to which Facebook will redirect users after they have approved
+access for your application.
+</blockquote>
+
 <pre><code class="undefinedjavascript"><span class="keyword">var</span> passport = require(<span class="string">'passport'</span>)
   , FacebookStrategy = require(<span class="string">'passport-facebook'</span>).Strategy;
 
@@ -76,11 +92,29 @@ passport.use(<span class="keyword">new</span> FacebookStrategy({
 ));</code></pre>
 <p>Facebook 認証のための検証用コールバック内では引数である <code>accessToken</code> と <code>refreshtoken</code>、<code>profile</code> が利用できます。
 <code>profile</code> は Facebook 上のユーザープロフィール情報です（詳細は<a href="/www.passportjs.org/guide/profile/">ユーザープロフィール</a>を参照してください）。</p>
+<blockquote class="original">
+The verify callback for Facebook authentication accepts <code>accessToken</code>,
+<code>refreshToken</code>, and <code>profile</code> arguments.  <code>profile</code> will contain user profile
+information provided by Facebook; refer to <a href="/guide/profile/">User Profile</a>
+for additional information.
+</blockquote>
+
 <p><small>注意: セキュリティ上の理由で、リダイレクト用の URL は Facebook に登録したものと同じホストである必要があります。</small></p>
+<blockquote class="original">
+Note: For security reasons, the redirection URL must reside on the same host
+that is registered with Facebook.
+</blockquote>
+
 <h4 id="-">ルーティング</h4>
 <p>Facebook 認証には2つのルーティングが必要です。
 最初のルーティングではユーザーを Facebook へリダイレクトさせます。
 次のルーティングでは、Facebook ログインの後でユーザーをリダイレクトさせます。</p>
+<blockquote class="original">
+Two routes are required for Facebook authentication.  The first route redirects
+the user to Facebook.  The second route is the URL to which Facebook will
+redirect the user after they have logged in.
+</blockquote>
+
 <pre><code class="undefinedjavascript"><span class="comment">// 認証のためにユーザーを Facebook へリダイレクトさせます。認証が完了すると、</span>
 <span class="comment">// ユーザーをアプリケーション上の以下のURLへとリダイレクトして戻します。</span>
 <span class="comment">//     /auth/facebook/callback</span>
@@ -94,17 +128,36 @@ app.get(<span class="string">'/auth/facebook/callback'</span>,
   passport.authenticate(<span class="string">'facebook'</span>, { successRedirect: <span class="string">'/'</span>,
                                       failureRedirect: <span class="string">'/login'</span> }));</code></pre>
 <p><small>注意: このコールバックルーティングの URL は、ストラテジーの設定時に <code>callbackURL</code> オプションで指定されたものです。</small></p>
+<blockquote class="original">
+Note that the URL of the callback route matches that of the <code>callbackURL</code> option
+specified when configuring the strategy.
+</blockquote>
+
 <h4 id="-">アプリケーションの求めるアクセス許可</h4>
 <p>アプリケーションがユーザーへさらに特定のアクセス許可を求める場合は、<code>scope</code> オプションの設定が必要になります。</p>
+<blockquote class="original">
+If your application needs extended permissions, they can be requested by setting
+the <code>scope</code> option.
+</blockquote>
+
 <pre><code class="undefinedjavascript">app.get(<span class="string">'/auth/facebook'</span>,
   passport.authenticate(<span class="string">'facebook'</span>, { scope: <span class="string">'read_stream'</span> })
 );</code></pre>
 <p>複数のアクセス許可を指定する場合は、配列を用いて指定します。</p>
+<blockquote class="original">
+Multiple permissions can be specified as an array.
+</blockquote>
+
 <pre><code class="undefinedjavascript">app.get(<span class="string">'/auth/facebook'</span>,
   passport.authenticate(<span class="string">'facebook'</span>, { scope: [<span class="string">'read_stream'</span>, <span class="string">'publish_actions'</span>] })
 );</code></pre>
 <h4 id="-">リンク</h4>
 <p>Facebook を使った1-クリックサインインは、リンクやボタンによって実現できます。</p>
+<blockquote class="original">
+A link or button can be placed on a web page, allowing one-click login with
+Facebook.
+</blockquote>
+
 <pre><code class="undefinedxml"><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"/auth/facebook"</span>&gt;</span>Login with Facebook<span class="tag">&lt;/<span class="title">a</span>&gt;</span></code></pre>
   </div>
 </div>
