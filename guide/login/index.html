@@ -52,14 +52,28 @@
     <h3 id="log-in">Log In</h3>
 <p>Passport はログインセッションを確立するための <code>login()</code> 関数を <code>req</code> のメソッドとして
 用意しています。( <code>lonIn()</code> としてエイリアスも貼られています。)</p>
+<blockquote class="original">
+Passport exposes a <code>login()</code> function on <code>req</code> (also aliased as <code>logIn()</code>) that
+can be used to establish a login session.
+</blockquote>
+
 <pre><code class="undefinedjavascript">req.login(user, <span class="function"><span class="keyword">function</span><span class="params">(err)</span> {</span>
   <span class="keyword">if</span> (err) { <span class="keyword">return</span> next(err); }
   <span class="keyword">return</span> res.redirect(<span class="string">'/users/'</span> + req.user.username);
 });</code></pre>
 <p>ログイン操作が完了すると、<code>user</code> は <code>req.user</code> に割り当てられます。</p>
+<blockquote class="original">
+When the login operation completes, <code>user</code> will be assigned to <code>req.user</code>.
+</blockquote>
+
 <p><small>注意: <code>passport.authentocate()</code> ミドルウェアは自動的に <code>req.login()</code> を実行します。
 この関数は主にユーザーのサインアップのために用いられ、その際に <code>req.login()</code> 関数を実行し
 自動的にログインを行います。</small></p>
+<blockquote class="original">
+Note: <code>passport.authenticate()</code> middleware invokes <code>req.login()</code> automatically.
+This function is primarily used when users sign up, during which <code>req.login()</code>
+can be invoked to automatically log in the newly registered user.
+</blockquote>
   </div>
 </div>
       <div class="footer">
