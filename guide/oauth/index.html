@@ -51,7 +51,8 @@
   <div class="span9 content">
     <h3 id="oauth">OAuth</h3>
 <p><a href="http://oauth.net/">OAuth</a> とは、ユーザーがデスクトップアプリケーションやモバイルアプリケーションに API アクセスへの権限を付与するための手続きの規格です。
-権限が付与されたアプリケーションは、ユーザーに代わって API を操作できます。</p>
+権限が付与されたアプリケーションは、ユーザーに代わって API を操作できます。
+また、OAuth は、<a href="http://hueniverse.com/2009/04/introducing-sign-in-with-twitter-oauth-style-connect/">委譲型認証</a>の為の仕組みとしてよく知られています。</p>
 <blockquote class="original">
 <a href="http://oauth.net/">OAuth</a> is a standard protocol that allows users to authorize
 API access to web and desktop or mobile applications.  Once access has been
@@ -59,10 +60,14 @@ granted, the authorized application can utilize the API on behalf of the user.
 OAuth has also emerged as a popular mechanism for <a href="http://hueniverse.com/2009/04/introducing-sign-in-with-twitter-oauth-style-connect/">delegated authentication</a>.
 </blockquote>
 
+<p>OAuthは2つの主要な〜から出来ており、どちらも広く展開されています。</p>
 <blockquote class="original">
 OAuth comes in two primary flavors, both of which are widely deployed.
 </blockquote>
 
+<p>最初のバージョンは、ゆるく組織されたWebデベロッパーの集団によって、オープンであり
+標準規格として開発されました。その結果、<a href="http://oauth.net/core/1.0/">OAuth 1.0</a>が生み出され、その後<a href="http://oauth.net/core/1.0a/">OAuth 1.0a</a>となりました。
+現在では、<a href="http://www.ietf.org/">IETF</a>によって、<a href="http://tools.ietf.org/html/rfc5849">RFC 5849</a>として標準化されています。</p>
 <blockquote class="original">
 The initial version of OAuth was developed as an open standard by a loosely
 organized collective of web developers.  Their work resulted in <a href="http://oauth.net/core/1.0/">OAuth 1.0</a>,
@@ -70,6 +75,10 @@ which was superseded by <a href="http://oauth.net/core/1.0a/">OAuth 1.0a</a>.  T
 has now been standardized by the <a href="http://www.ietf.org/">IETF</a> as <a href="http://tools.ietf.org/html/rfc5849">RFC 5849</a>.
 </blockquote>
 
+<p>最近では、<a href="http://tools.ietf.org/wg/oauth/">Web Authorization Protocol Working Group</a>によって
+<a href="http://tools.ietf.org/html/rfc6749">OAuth 2.0</a>の策定が行われています。
+標準化の策定に時間がかかり、いくつかの草案が展開、実装されており、それぞれ少しずつ
+異なる仕様となっています。</p>
 <blockquote class="original">
 Recent efforts undertaken by the <a href="http://tools.ietf.org/wg/oauth/">Web Authorization Protocol Working Group</a>
 have focused on defining <a href="http://tools.ietf.org/html/rfc6749">OAuth 2.0</a>.  Due
@@ -78,6 +87,12 @@ implementations conforming to various drafts, each with slightly different
 semantics.
 </blockquote>
 
+<p>幸運にも、Passport は OAuth との複雑なやり取りからアプリケーションを守る作りとなっています。
+多くの場合、特定のプロバイダーには対応のストラテジーを用いることで一般的なOAuthストラテジーの役割をかわりに果たす
+ことが可能です。この方法により、設定の煩わしさや、特定のプロバイダーの奇抜な実装を包括した
+認証が可能です。</p>
+<p><a href="/www.passportjs.org/guide/facebook/">Facebook</a>、 <a href="/www.passportjs.org/guide/twitter/">Twitter</a>、
+それ以外にも様々なプロバイダー(<a href="/www.passportjs.org/guide/providers/">providers</a>)に対応しています。</p>
 <blockquote class="original">
 Thankfully, Passport shields an application from the complexities of dealing
 with OAuth variants.  In many cases, a provider-specific strategy can be used
@@ -87,14 +102,22 @@ necessary configuration, and accommodates any provider-specific quirks. See
 <a href="/www.passportjs.org/guide/providers/">providers</a> for preferred usage.
 </blockquote>
 
+<p>一般的な OAuth 認証は <a href="https://github.com/jaredhanson/passport-oauth">passport-oauth</a> モジュールによって提供されています。</p>
 <blockquote class="original">
 Support for OAuth is provided by the <a href="https://github.com/jaredhanson/passport-oauth">passport-oauth</a>
 module.
 </blockquote>
 
-<h4 id="install">Install</h4>
+<h4 id="-">インストール</h4>
 <pre><code class="undefinedbash">$ npm install passport-oauth</code></pre>
 <h3 id="oauth-1-0">OAuth 1.0</h3>
+<p>OAuth 1.0 は、権限移譲型の認証用ストラテジーであり、認証にはいくつかのステップがあります。
+まず１つ目に、リクエストトークンを得る必要があります。
+次に、ユーザーをサービス・プロバイダーへ認証を行うためにリダイレクトさせます。
+最後に、承認が得られた後、アプリケーションへとユーザーをリダイレクトさせ、リクエストトークンと
+アクセストークンの交換を行います。
+サービスプロバイダーへのアクセスを要求するアプリケーションは、コンシューマキー及び
+コンシューマシークレットによって特定されます。</p>
 <blockquote class="original">
 OAuth 1.0 is a delegated authentication strategy that involves multiple steps.
 First, a request token must be obtained.  Next, the user is redirected to the
@@ -105,6 +128,8 @@ as a <em>consumer</em>, is identified by a consumer key and consumer secret.
 </blockquote>
 
 <h4 id="configuration">Configuration</h4>
+<p>一般的な OAuth 認証では、コンシューマキー及びシークレット、また、ユーザーに提供する
+APIのエンドポイントを設定によって明示します。</p>
 <blockquote class="original">
 When using the generic OAuth strategy, the key, secret, and endpoints are
 specified as options.
@@ -127,6 +152,10 @@ passport.use(<span class="string">'provider'</span>, <span class="keyword">new</
     });
   }
 ));</code></pre>
+<p>OAuth認証に基づくストラテジーのための検証用コールバックは、<code>token</code>、<code>tokenSecret</code>、
+また、<code>profile</code>、<code>argumentes</code>を提供します。<code>token</code> はアクセストークンであり、<code>tokenSecret</code> は
+アクセストークンに紐づくシークレットです。<code>profile</code> にはサービスプロバイダーによって提供される
+ユーザー情報が格納されています。詳しくは、<a href="/www.passportjs.org/guide/profile/">User Profile</a>を御覧ください。</p>
 <blockquote class="original">
 The verify callback for OAuth-based strategies accepts <code>token</code>, <code>tokenSecret</code>,
 and <code>profile</code> arguments.  <code>token</code> is the access token and <code>tokenSecret</code> is its
@@ -135,7 +164,10 @@ by the service provider; refer to <a href="/www.passportjs.org/guide/profile/">U
 additional information.
 </blockquote>
 
-<h4 id="routes">Routes</h4>
+<h4 id="-">ルーティング</h4>
+<p>OAuth認証には2つのルーティングが求められます。
+1つ目は、OAuth認証の開始とサービスプロバイダーへユーザをリダイレクトするためのルーティング、
+2つ目に、プロバイダーにて認証を終えたユーザーをリダイレクトさせるURLへのルーティングです。</p>
 <blockquote class="original">
 Two routes are required for OAuth authentication.  The first route initiates an
 OAuth transaction and redirects the user to the service provider.  The second
@@ -143,19 +175,34 @@ route is the URL to which the user will be redirected after authenticating with
 the provider.
 </blockquote>
 
-<pre><code class="undefinedjavascript"><span class="comment">// Redirect the user to the OAuth provider for authentication.  When</span>
+<pre><code class="undefinedjavascript"><span class="comment">//認証のため、プロバイダーへユーザーをリダイレクトします。</span>
+<span class="comment">//完了すると、プロバイダーはユーザーをアプリケーション内の下記のURLへとリダイレクトさせます。</span>
+<span class="comment">//     /auth/provider/callback</span>
+
+&lt;blockquote class=<span class="string">"original"</span>&gt;
+<span class="comment">// Redirect the user to the OAuth provider for authentication.  When</span>
 <span class="comment">// complete, the provider will redirect the user back to the application at</span>
 <span class="comment">//     /auth/provider/callback</span>
 app.get(<span class="string">'/auth/provider'</span>, passport.authenticate(<span class="string">'provider'</span>));
+<span class="xml"><span class="tag">&lt;/<span class="title">blockquote</span>&gt;</span>
 
-<span class="comment">// The OAuth provider has redirected the user back to the application.</span>
-<span class="comment">// Finish the authentication process by attempting to obtain an access</span>
-<span class="comment">// token.  If authorization was granted, the user will be logged in.</span>
-<span class="comment">// Otherwise, authentication has failed.</span>
-app.get(<span class="string">'/auth/provider/callback'</span>, 
-  passport.authenticate(<span class="string">'provider'</span>, { successRedirect: <span class="string">'/'</span>,
-                                      failureRedirect: <span class="string">'/login'</span> }));</code></pre>
-<h4 id="link">Link</h4>
+//OAuth 認証を行うプロバイダーはアプリケーションへとユーザーをリダイレクトさせます。
+//認証プロセスはアクセストークンを取得することによって完了します。
+//アクセストークンを取得できていれば成功とみなし、それ以外は失敗とみなされます。
+
+<span class="tag">&lt;<span class="title">blockquote</span> <span class="attribute">class</span>=<span class="value">"original"</span>&gt;</span>
+// The OAuth provider has redirected the user back to the application.
+// Finish the authentication process by attempting to obtain an access
+// token.  If authorization was granted, the user will be logged in.
+// Otherwise, authentication has failed.
+<span class="tag">&lt;/<span class="title">blockquote</span>&gt;</span>
+
+app.get('/auth/provider/callback', 
+  passport.authenticate('provider', { successRedirect: '/',
+                                      failureRedirect: '/login' }));</span></code></pre>
+<h4 id="-">リンク</h4>
+<p>リンクやボタンをWebページに配置することにより、クリックによる認証プロセスを
+開始することが可能です。</p>
 <blockquote class="original">
 A link or button can be placed on a web page, which will start the
 authentication process when clicked.
@@ -163,6 +210,13 @@ authentication process when clicked.
 
 <pre><code class="undefinedxml"><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"/auth/provider"</span>&gt;</span>Log In with OAuth Provider<span class="tag">&lt;/<span class="title">a</span>&gt;</span></code></pre>
 <h3 id="oauth-2-0">OAuth 2.0</h3>
+<p>OAuth 2.0 は、OAuth 1.0 の正式な後継者であり、短所を補うように設計されています。
+認証フローにおいて、本質的な部分に違いはありません。
+ユーザーはまず始めにサービスプロバイダーへと認証のためにリダイレクトされます。
+その後、承認が得られた後アクセストークンと交換可能なコードと共にアプリケーションへと
+再びリダイレクトされます。
+サービスプロバイダーへのアクセスを要求するアプリケーションは、それぞれID及びシークレットによって
+特定されます。</p>
 <blockquote class="original">
 OAuth 2.0 is the successor to OAuth 1.0, and is designed to overcome perceived
 shortcomings in the earlier version.  The authentication flow is essentially the
@@ -173,7 +227,9 @@ application requesting access, known as a <em>client</em>, is identified by an I
 secret.
 </blockquote>
 
-<h4 id="configuration">Configuration</h4>
+<h4 id="-">設定</h4>
+<p>一般的なOAuth 2.0 ストラテジーでは、クライアントID及びクライントシークレット、また、
+ユーザーへ提供するエンドポイントを設定により明示します。</p>
 <blockquote class="original">
 When using the generic OAuth 2.0 strategy, the client ID, client secret, and
 endpoints are specified as options.
@@ -195,6 +251,11 @@ passport.use(<span class="string">'provider'</span>, <span class="keyword">new</
     });
   }
 ));</code></pre>
+<p>OAuth 2.0 に基づくストラテジーの為の検証用コールバックでは、<code>accessToken</code>、<code>refreshToken</code>、
+また、<code>profile</code>が提供されます。<code>refreshToken</code> は新しいアクセストークンを取得するために使用され、
+プロバイダーによってリフレッシュトークンが提供されない場合は、<code>undefined</code> となります。
+<code>profile</code> はサービスプロバイダーによって提供されるユーザー情報が格納されています。
+詳しくは、<a href="/www.passportjs.org/guide/profile/">User Profile</a>を参照してください。</p>
 <blockquote class="original">
 The verify callback for OAuth 2.0-based strategies accepts <code>accessToken</code>,
 <code>refreshToken</code>, and <code>profile</code> arguments.  <code>refreshToken</code> can be used to obtain
@@ -203,26 +264,43 @@ tokens.  <code>profile</code> will contain user profile information provided by 
 provider; refer to <a href="/www.passportjs.org/guide/profile/">User Profile</a> for additional information.
 </blockquote>
 
-<h4 id="routes">Routes</h4>
+<h4 id="-">ルーティング</h4>
+<p>OAuth 2.0 認証には2つのルーティングが求められます。
+1つ目は、サービスプロバイダーへユーザをリダイレクトするためのルーティング、
+2つ目に、プロバイダーにて認証を終えたユーザーをリダイレクトさせるURLへのルーティングです。</p>
 <blockquote class="original">
 Two routes are required for OAuth 2.0 authentication.  The first route redirects
 the user to the service provider.  The second route is the URL to which the user
 will be redirected after authenticating with the provider.
 </blockquote>
 
-<pre><code class="undefinedjavascript"><span class="comment">// Redirect the user to the OAuth 2.0 provider for authentication.  When</span>
+<pre><code class="undefinedjavascript"><span class="comment">//認証のため、プロバイダーへユーザーをリダイレクトします。</span>
+<span class="comment">//完了すると、プロバイダーはユーザーをアプリケーション内の下記のURLへとリダイレクトさせます。</span>
+<span class="comment">//     /auth/provider/callback</span>
+
+&lt;blockquote class=<span class="string">"original"</span>&gt;
+<span class="comment">// Redirect the user to the OAuth 2.0 provider for authentication.  When</span>
 <span class="comment">// complete, the provider will redirect the user back to the application at</span>
 <span class="comment">//     /auth/provider/callback</span>
 app.get(<span class="string">'/auth/provider'</span>, passport.authenticate(<span class="string">'provider'</span>));
+<span class="xml"><span class="tag">&lt;/<span class="title">blockquote</span>&gt;</span>
 
-<span class="comment">// The OAuth 2.0 provider has redirected the user back to the application.</span>
-<span class="comment">// Finish the authentication process by attempting to obtain an access</span>
-<span class="comment">// token.  If authorization was granted, the user will be logged in.</span>
-<span class="comment">// Otherwise, authentication has failed.</span>
-app.get(<span class="string">'/auth/provider/callback'</span>, 
-  passport.authenticate(<span class="string">'provider'</span>, { successRedirect: <span class="string">'/'</span>,
-                                      failureRedirect: <span class="string">'/login'</span> }));</code></pre>
-<h4 id="scope">Scope</h4>
+//OAuth 認証を行うプロバイダーはアプリケーションへとユーザーをリダイレクトさせます。
+//認証プロセスはアクセストークンを取得することによって完了します。
+//アクセストークンを取得できていれば成功とみなし、それ以外は失敗とみなされます。
+
+<span class="tag">&lt;<span class="title">blockquote</span> <span class="attribute">class</span>=<span class="value">"original"</span>&gt;</span>
+// The OAuth 2.0 provider has redirected the user back to the application.
+// Finish the authentication process by attempting to obtain an access
+// token.  If authorization was granted, the user will be logged in.
+// Otherwise, authentication has failed.
+<span class="tag">&lt;/<span class="title">blockquote</span>&gt;</span>
+app.get('/auth/provider/callback', 
+  passport.authenticate('provider', { successRedirect: '/',
+                                      failureRedirect: '/login' }));</span></code></pre>
+<h4 id="-">スコープ</h4>
+<p>OAuth 2.0 を用いたアクセスをリクエストする際は、スコープオプションによってアクセスを行う範囲の
+制約を設けることが可能です。</p>
 <blockquote class="original">
 When requesting access using OAuth 2.0, the scope of access is controlled by the
 scope option.
@@ -231,6 +309,7 @@ scope option.
 <pre><code class="undefinedjavascript">app.get(<span class="string">'/auth/provider'</span>,
   passport.authenticate(<span class="string">'provider'</span>, { scope: <span class="string">'email'</span> })
 );</code></pre>
+<p>複数のスコープをアレイとして指定することも可能です。</p>
 <blockquote class="original">
 Multiple scopes can be specified as an array.
 </blockquote>
@@ -238,12 +317,15 @@ Multiple scopes can be specified as an array.
 <pre><code class="undefinedjavascript">app.get(<span class="string">'/auth/provider'</span>,
   passport.authenticate(<span class="string">'provider'</span>, { scope: [<span class="string">'email'</span>, <span class="string">'sms'</span>] })
 );</code></pre>
+<p>プロバイダーごとにスコープオプションに指定する値は様々です。
+どのようなスコープをサポートしているかはプロバイダーのドキュメントを参照してください。</p>
 <blockquote class="original">
 Values for the <code>scope</code> option are provider-specific.  Consult the provider&#39;s
 documentation for details regarding supported scopes.
 </blockquote>
 
-<h4 id="link">Link</h4>
+<h4 id="-">リンク</h4>
+<p>リンクやボタンをWebページに配置することによって、認証プロセスをクリックにより開始することが可能です。</p>
 <blockquote class="original">
 A link or button can be placed on a web page, which will start the
 authentication process when clicked.
