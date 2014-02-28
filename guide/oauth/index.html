@@ -60,13 +60,13 @@ granted, the authorized application can utilize the API on behalf of the user.
 OAuth has also emerged as a popular mechanism for <a href="http://hueniverse.com/2009/04/introducing-sign-in-with-twitter-oauth-style-connect/">delegated authentication</a>.
 </blockquote>
 
-<p>OAuthは2つの主要な〜から出来ており、どちらも広く展開されています。</p>
+<p>OAuthは2つの大きな流れから生み出されており、どちらも広く展開されています。</p>
 <blockquote class="original">
 OAuth comes in two primary flavors, both of which are widely deployed.
 </blockquote>
 
 <p>最初のバージョンは、ゆるく組織されたWebデベロッパーの集団によって、オープンであり
-標準規格として開発されました。その結果、<a href="http://oauth.net/core/1.0/">OAuth 1.0</a>が生み出され、その後<a href="http://oauth.net/core/1.0a/">OAuth 1.0a</a>となりました。
+標準的な規格として開発されました。その結果、<a href="http://oauth.net/core/1.0/">OAuth 1.0</a>が生み出され、その後<a href="http://oauth.net/core/1.0a/">OAuth 1.0a</a>となりました。
 現在では、<a href="http://www.ietf.org/">IETF</a>によって、<a href="http://tools.ietf.org/html/rfc5849">RFC 5849</a>として標準化されています。</p>
 <blockquote class="original">
 The initial version of OAuth was developed as an open standard by a loosely
@@ -179,27 +179,13 @@ the provider.
 <span class="comment">//完了すると、プロバイダーはユーザーをアプリケーション内の下記のURLへとリダイレクトさせます。</span>
 <span class="comment">//     /auth/provider/callback</span>
 
-&lt;blockquote class=<span class="string">"original"</span>&gt;
-<span class="comment">// Redirect the user to the OAuth provider for authentication.  When</span>
-<span class="comment">// complete, the provider will redirect the user back to the application at</span>
-<span class="comment">//     /auth/provider/callback</span>
-app.get(<span class="string">'/auth/provider'</span>, passport.authenticate(<span class="string">'provider'</span>));
-<span class="xml"><span class="tag">&lt;/<span class="title">blockquote</span>&gt;</span>
+<span class="comment">//OAuth 認証を行うプロバイダーはアプリケーションへとユーザーをリダイレクトさせます。</span>
+<span class="comment">//認証プロセスはアクセストークンを取得することによって完了します。</span>
+<span class="comment">//アクセストークンを取得できていれば成功とみなし、それ以外は失敗とみなされます。</span>
 
-//OAuth 認証を行うプロバイダーはアプリケーションへとユーザーをリダイレクトさせます。
-//認証プロセスはアクセストークンを取得することによって完了します。
-//アクセストークンを取得できていれば成功とみなし、それ以外は失敗とみなされます。
-
-<span class="tag">&lt;<span class="title">blockquote</span> <span class="attribute">class</span>=<span class="value">"original"</span>&gt;</span>
-// The OAuth provider has redirected the user back to the application.
-// Finish the authentication process by attempting to obtain an access
-// token.  If authorization was granted, the user will be logged in.
-// Otherwise, authentication has failed.
-<span class="tag">&lt;/<span class="title">blockquote</span>&gt;</span>
-
-app.get('/auth/provider/callback', 
-  passport.authenticate('provider', { successRedirect: '/',
-                                      failureRedirect: '/login' }));</span></code></pre>
+app.get(<span class="string">'/auth/provider/callback'</span>, 
+  passport.authenticate(<span class="string">'provider'</span>, { successRedirect: <span class="string">'/'</span>,
+                                      failureRedirect: <span class="string">'/login'</span> }));</code></pre>
 <h4 id="-">リンク</h4>
 <p>リンクやボタンをWebページに配置することにより、クリックによる認証プロセスを
 開始することが可能です。</p>
@@ -278,26 +264,13 @@ will be redirected after authenticating with the provider.
 <span class="comment">//完了すると、プロバイダーはユーザーをアプリケーション内の下記のURLへとリダイレクトさせます。</span>
 <span class="comment">//     /auth/provider/callback</span>
 
-&lt;blockquote class=<span class="string">"original"</span>&gt;
-<span class="comment">// Redirect the user to the OAuth 2.0 provider for authentication.  When</span>
-<span class="comment">// complete, the provider will redirect the user back to the application at</span>
-<span class="comment">//     /auth/provider/callback</span>
-app.get(<span class="string">'/auth/provider'</span>, passport.authenticate(<span class="string">'provider'</span>));
-<span class="xml"><span class="tag">&lt;/<span class="title">blockquote</span>&gt;</span>
+<span class="comment">//OAuth 認証を行うプロバイダーはアプリケーションへとユーザーをリダイレクトさせます。</span>
+<span class="comment">//認証プロセスはアクセストークンを取得することによって完了します。</span>
+<span class="comment">//アクセストークンを取得できていれば成功とみなし、それ以外は失敗とみなされます。</span>
 
-//OAuth 認証を行うプロバイダーはアプリケーションへとユーザーをリダイレクトさせます。
-//認証プロセスはアクセストークンを取得することによって完了します。
-//アクセストークンを取得できていれば成功とみなし、それ以外は失敗とみなされます。
-
-<span class="tag">&lt;<span class="title">blockquote</span> <span class="attribute">class</span>=<span class="value">"original"</span>&gt;</span>
-// The OAuth 2.0 provider has redirected the user back to the application.
-// Finish the authentication process by attempting to obtain an access
-// token.  If authorization was granted, the user will be logged in.
-// Otherwise, authentication has failed.
-<span class="tag">&lt;/<span class="title">blockquote</span>&gt;</span>
-app.get('/auth/provider/callback', 
-  passport.authenticate('provider', { successRedirect: '/',
-                                      failureRedirect: '/login' }));</span></code></pre>
+app.get(<span class="string">'/auth/provider/callback'</span>, 
+  passport.authenticate(<span class="string">'provider'</span>, { successRedirect: <span class="string">'/'</span>,
+                                      failureRedirect: <span class="string">'/login'</span> }));</code></pre>
 <h4 id="-">スコープ</h4>
 <p>OAuth 2.0 を用いたアクセスをリクエストする際は、スコープオプションによってアクセスを行う範囲の
 制約を設けることが可能です。</p>
