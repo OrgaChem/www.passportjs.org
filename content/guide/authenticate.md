@@ -5,7 +5,8 @@ title: '認証'
 
 ### 認証
 
-認証リクエストは `passport.authenticate()` に使いたい認証ストラテジーを指定して呼び出すだけで実行できます。
+`passport.authenticate()` に使いたい認証ストラテジーを指定して呼び出すことで、認証をリクエストできます。
+
 `authenticate()`によって返される関数は [Connect](http://www.senchalabs.org/connect/) 標準に準拠しているので、[Express](http://expressjs.com/) アプリケーションのルーティングミドルウェアとして簡単に利用できます。
 
 <blockquote class="original">
