@@ -7,6 +7,10 @@ title: '認証スキーム'
 
 ユーザーへ提供するAPI のエンドポイントを保護するためのストラテジーを下のリストにまとめました。
 
+<blockquote class="original">
+The following is a list of strategies that implement authentication schemes used
+when protecting API endpoints.
+</blockquote>
 
 <table class="table table-condensed table-striped">
   <thead>
