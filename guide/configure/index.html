@@ -52,7 +52,7 @@
     <h3 id="-">設定</h3>
 <p>Passportを認証に用いるためには、以下の3つの項目を設定する必要があります:</p>
 <blockquote class="original">
-    Three pieces need to be configured to use Passport for authentication:
+Three pieces need to be configured to use Passport for authentication:
 </blockquote>
 
 <ol>
@@ -68,14 +68,14 @@
 
 <h4 id="-">ストラテジーの設定</h4>
 <p>Passportは認証のために<em>ストラテジー</em>と呼ばれるものを認証に使用します。
-ストラテジーは、ユーザーIDとパスワード用いた検証や、<a href="http://oauth.net/">OAuth</a>を用いた権限委譲、分散認証システムである<a href="http://openid.net/">OpenID</a>を用いた認証に対応しています。</p>
+ストラテジーは、ユーザーIDとパスワードを用いた検証や、<a href="http://oauth.net/">OAuth</a>を用いた権限付与、<a href="http://openid.net/">OpenID</a>を用いた分散認証を実装しています。</p>
 <blockquote class="original">
 Passport uses what are termed <em>strategies</em> to authenticate requests.  Strategies
 range from verifying a username and password, delegated authentication using <a href="http://oauth.net/">OAuth</a>
 or federated authentication using <a href="http://openid.net/">OpenID</a>.
 </blockquote>
 
-<p>Passportを用いて認証を行う前に、必ず1つ以上のストラテジーに関する設定が必要になります。</p>
+<p>認証を行う前に、1つ以上のストラテジーに関する設定が必要です。</p>
 <blockquote class="original">
 Before asking Passport to authenticate a request, the strategy (or strategies)
 used by an application must be configured.
@@ -97,10 +97,10 @@ passport.use(<span class="keyword">new</span> LocalStrategy(
     User.findOne({ username: username }, <span class="function"><span class="keyword">function</span> <span class="params">(err, user)</span> {</span>
       <span class="keyword">if</span> (err) { <span class="keyword">return</span> done(err); }
       <span class="keyword">if</span> (!user) {
-        <span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>, { message: <span class="string">'Incorrect username.'</span> });
+        <span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>, { message: <span class="string">'ユーザーIDが正しくありません。'</span> });
       }
       <span class="keyword">if</span> (!user.validPassword(password)) {
-        <span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>, { message: <span class="string">'Incorrect password.'</span> });
+        <span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>, { message: <span class="string">'パスワードが正しくありません。'</span> });
       }
       <span class="keyword">return</span> done(<span class="literal">null</span>, user);
     });
@@ -109,7 +109,7 @@ passport.use(<span class="keyword">new</span> LocalStrategy(
 <h5 id="-">検証用コールバックに関する設定</h5>
 <p>この例では重要なコンセプトを説明します。
 ストラテジーは<em>検証用コールバック</em>(<em>verify callback</em>)と呼ばれるものを必要とします。
-検証用コールバックの目的は、認証情報を照合し、ユーザーを特定することです。</p>
+このコールバックの目的は、認証情報を照合し、ユーザーを特定することです。</p>
 <blockquote class="original">
 This example introduces an important concept.  Strategies require what is known
 as a <em>verify callback</em>.  The purpose of a verify callback is to find the user
@@ -118,7 +118,7 @@ that possesses a set of credentials.
 
 <p>認証がリクエストされると、Passportはリクエストに含まれる認証情報を解析します。
 上の例では、ユーザーIDとパスワードが認証情報として検証用コールバックの引数に指定されます。
-認証情報が正しい場合は、検証用コールバック内で <code>done</code> を実行する際に Passport に認証済のユーザー情報を返してください。</p>
+認証情報が正しい場合は、検証用コールバック内で <code>done</code> に認証済のユーザー情報を与えて実行してください。</p>
 <blockquote class="original">
 When Passport authenticates a request, it parses the credentials contained in
 the request.  It then invokes the verify callback with those credentials as
@@ -128,7 +128,7 @@ authenticated.
 </blockquote>
 
 <pre><code class="undefinedjavascript"><span class="keyword">return</span> done(<span class="literal">null</span>, user);</code></pre>
-<p>上記の例において、パスワードが不正であるようといった認証情報の誤りがある場合は、<code>false</code> を引数に指定し <code>done</code> を実行します。
+<p>上記の例において、パスワードが不正であるというような認証情報の誤りがある場合は、<code>done</code> に <code>false</code> を与えて実行してください。
 これにより認証情報が失敗した、ということを Passport に通知します。</p>
 <blockquote class="original">
 If the credentials are not valid (for example, if the password is incorrect),
@@ -145,7 +145,7 @@ failure.  This is useful for displaying a flash message prompting the user to
 try again.
 </blockquote>
 
-<pre><code class="undefinedjavascript"><span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>, { message: <span class="string">'Incorrect password.'</span> });</code></pre>
+<pre><code class="undefinedjavascript"><span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>, { message: <span class="string">'パスワードが正しくありません。'</span> });</code></pre>
 <p>最後に、認証中にデータベースが機能していないといった例外が発生した際は、Node の慣用的な表現にて error 情報を指定し <code>done</code> を実行することで通知可能です。</p>
 <blockquote class="original">
 Finally, if an exception occurred while verifying the credentials (for example,
@@ -176,7 +176,7 @@ without any assumptions imposed by the authentication layer.
 </blockquote>
 
 <h4 id="-">ミドルウェアの設定</h4>
-<p><a href="http://senchalabs.github.com/connect/">Connect</a> or <a href="http://expressjs.com/">Express</a>を基盤にしたアプリケーションでは、<code>passport.initialize()</code> を用いて Passport の初期化を行うことが必要になります。
+<p><a href="http://senchalabs.github.com/connect/">Connect</a> もしくは <a href="http://expressjs.com/">Express</a> を基盤にしたアプリケーションでは、<code>passport.initialize()</code> を用いて Passport の初期化を行うことが必要になります。
 アプリケーションでログイン後のセッション管理を行う場合には、<code>passport.session()</code> の記述も必要になります。</p>
 <blockquote class="original">
 In a <a href="http://senchalabs.github.com/connect/">Connect</a> or
@@ -214,7 +214,7 @@ browser.
 </blockquote>
 
 <p>この仕組みは、ユニークなクッキーによるセッション管理によって実現されています。
-ログイン後のリクエストそれぞれに認証情報を含むことはありません。
+そのため、ログイン後のリクエストそれぞれに認証情報を含むことはありません。
 セッションのサポートのために、パスポートは <code>user</code> インスタンスをシリアライズ/デシリアライズしてセッション情報として管理しています。</p>
 <blockquote class="original">
 Each subsequent request will not contain credentials, but rather the unique
@@ -232,7 +232,7 @@ passport.deserializeUser(<span class="function"><span class="keyword">function</
     done(err, user);
   });
 });</code></pre>
-<p>この例では、<code>userID</code> をシリアライズしてセッションに埋め込み、データをコンパクトにしています。
+<p>この例では、ユーザーIDをシリアライズしてセッションに埋め込み、データをコンパクトにしています。
 リクエストを受け取ると、IDからユーザーを特定し、<code>req.user</code> 内に格納します。</p>
 <p>上記のシリアライズ、デシリアライズ内の動作はアプリケーションによって定義されるため、アプリケーションでは認証レイヤーでの制限無しに、適切なデーターベースやオブジェクトマッパーを選択可能です。</p>
 <blockquote class="original">

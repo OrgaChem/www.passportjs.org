@@ -50,8 +50,9 @@
   </div>
   <div class="span9 content">
     <h3 id="-">認証</h3>
-<p>認証リクエストは <code>passport.authenticate()</code> に使いたい認証ストラテジーを指定して呼び出すだけで実行できます。
-<code>authenticate()</code>によって返される関数は <a href="http://www.senchalabs.org/connect/">Connect</a> 標準に準拠しているので、<a href="http://expressjs.com/">Express</a> アプリケーションのルーティングミドルウェアとして簡単に利用できます。</p>
+<p><code>passport.authenticate()</code> に使いたい認証ストラテジーを指定して呼び出すことで、認証をリクエストできます。
+<code>authenticate()</code>のシグネチャは標準的な <a href="http://www.senchalabs.org/connect/">Connect</a> ミドルウェアに対応しています。
+そのため、<a href="http://expressjs.com/">Express</a> アプリケーションのルーティングミドルウェアとして簡単に利用できます。</p>
 <blockquote class="original">
 Authenticating requests is as simple as calling <code>passport.authenticate()</code> and
 specifying which strategy to employ.  <code>authenticate()</code>&#39;s function signature is
@@ -67,8 +68,8 @@ applications.
     <span class="comment">// 認証されたユーザーは `req.user` に含まれている。</span>
     res.redirect(<span class="string">'/users/'</span> + req.user.username);
   });</code></pre>
-<p>Passport は、認証に失敗したとき <code>401 Unauthorized</code> ステータスを返し、その他のルーティングハンドラーは実行しません。
-認証に成功したときは、次のハンドラーを実行し、<code>req.user</code> プロパティに認証されたユーザーをセットします。</p>
+<p>認証に失敗したときは、 <code>401 Unauthorized</code> ステータスが返され、<code>passport.authenticate()</code> の後に指定されているルーティングハンドラーは実行されません。
+認証に成功したときは、このハンドラーが実行され、認証されたユーザーは引数の <code>req.user</code> プロパティにセットされます。</p>
 <blockquote class="original">
 By default, if authentication fails, Passport will respond with a
 <code>401 Unauthorized</code> status, and any additional route handlers will not be
@@ -76,7 +77,7 @@ invoked.  If authentication succeeds, the next handler will be invoked and the
 <code>req.user</code> property will be set to the authenticated user.
 </blockquote>
 
-<p><small>注意: ストラテジーはルーティングされる前に設定されていなければなりません。
+<p><small>注意: ストラテジーは設定後に利用しなければなりません。
 詳細は<a href="/www.passportjs.org/guide/configure/">設定</a>の章で確認できます。</small></p>
 <blockquote class="original">
 Note: Strategies must be configured prior to using them in a route.  Continue
@@ -102,7 +103,7 @@ another attempt.
 </blockquote>
 
 <h4 id="-">フラッシュメッセージ</h4>
-<p>リダイレクトの後で、ステータス情報を表示するためのフラッシュメッセージを表示することがよくあります。</p>
+<p>リダイレクトの後で、認証結果を表示するためにフラッシュメッセージを表示することがよくあります。</p>
 <blockquote class="original">
 Redirects are often combined with flash messages in order to display status
 information to the user.
@@ -113,8 +114,8 @@ information to the user.
                                    failureRedirect: <span class="string">'/login'</span>,
                                    failureFlash: <span class="literal">true</span> })
 );</code></pre>
-<p><code>failureFlash</code> オプションを <code>true</code> にセットすると、Passport はストラテジーの検証用のコールバックが生成したメッセージを <code>error</code> メッセージとして表示します。
-この方法を使うと、検証用のコールバックは認証が失敗した理由について正確に判断することができます。
+<p><code>failureFlash</code> オプションを <code>true</code> にセットすると、Passport はストラテジーの検証用コールバックが生成したメッセージを <code>error</code> メッセージとして表示します。
+この方法を使うと、検証用コールバックは認証が失敗した理由について正確な情報を得ることができます。
 これは多くの場合にもっとも優れたアプローチです。</p>
 <blockquote class="original">
 Setting the <code>failureFlash</code> option to <code>true</code> instructs Passport to flash an
@@ -123,7 +124,7 @@ any.  This is often the best approach, because the verify callback can make the
 most accurate determination of why authentication failed.
 </blockquote>
 
-<p>あるいは、フラッシュメッセージを任意に指定することもできます。</p>
+<p>あるいは、任意のフラッシュメッセージを指定することもできます。</p>
 <blockquote class="original">
 Alternatively, the flash message can be set specifically.
 </blockquote>
@@ -146,9 +147,9 @@ provided this functionality, however it was removed from Express 3.x.  Use of
 recommended to provide this functionality when using Express 3.x.
 </blockquote>
 
-<h4 id="-">セッションを無効化</h4>
+<h4 id="-">セッションの無効化</h4>
 <p>認証が成功した際、Passport は継続的なログインセッションを確立します。
-これはユーザーがブラウザから Web アプリケーションにアクセスするといったシナリオで役に立ちます。
+これはブラウザから Web アプリケーションにアクセスするといったシナリオで役に立ちます。
 しかし、それ以外の場合はセッションのサポートは必要ありません。
 たとえば、API サーバーはリクエスト毎に認証情報を要求するのが一般的です。
 このような場合では <code>seeeion</code> オプションを <code>false</code> にすることでセッションサポートを無効にできます。</p>
@@ -192,16 +193,17 @@ handler, rather than being used as route middleware.  This gives the callback
 access to the <code>req</code> and <code>res</code> objects through closure.
 </blockquote>
 
-<p>もし認証が失敗したときは、 <code>user</code> は <code>false</code> にセットされます。
-例外が発生したときは <code>err</code> がセットされます。また、ストラテジーの検証用コールバックに追加で情報を渡すときには <code>into</code> パラメータを利用できます（省略可能）。</p>
+<p>もし認証が失敗したとき <code>user</code> は <code>false</code> にセットされます。
+例外が発生したときは <code>err</code> がセットされます。
+また、ストラテジーの検証用コールバックに追加で情報を渡すときには <code>into</code> パラメータを利用できます（省略可能）。</p>
 <blockquote class="original">
 If authentication failed, <code>user</code> will be set to <code>false</code>.  If an exception
 occurred, <code>err</code> will be set.  An optional <code>info</code> argument will be passed,
 containing additional details provided by the strategy&#39;s verify callback.
 </blockquote>
 
-<p>このコールバックには必要な認証結果が引数として渡されます。
-ただし、カスタムコールバックを使うときは、アプリケーションセッション確立（<code>req.login()</code>を呼び出すことによる）およびレスポンスの送信をおこなう必要があります。</p>
+<p>このコールバックには認証結果が引数として渡されます。
+ただし、カスタムコールバックを使うときは、アプリケーションセッション確立（<code>req.login()</code>を呼び出すことによる）およびレスポンスを返す必要があります。</p>
 <blockquote class="original">
 The callback can use the arguments supplied to handle the authentication result
 as desired.  Note that when using a custom callback, it becomes the

@@ -69,16 +69,16 @@ passport.use(<span class="keyword">new</span> LocalStrategy(
     User.findOne({ username: username }, <span class="function"><span class="keyword">function</span><span class="params">(err, user)</span> {</span>
       <span class="keyword">if</span> (err) { <span class="keyword">return</span> done(err); }
       <span class="keyword">if</span> (!user) {
-        <span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>, { message: <span class="string">'Incorrect username.'</span> });
+        <span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>, { message: <span class="string">'ユーザーIDが間違っています。'</span> });
       }
       <span class="keyword">if</span> (!user.validPassword(password)) {
-        <span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>, { message: <span class="string">'Incorrect password.'</span> });
+        <span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>, { message: <span class="string">'パスワードが間違っています。'</span> });
       }
       <span class="keyword">return</span> done(<span class="literal">null</span>, user);
     });
   }
 ));</code></pre>
-<p>ローカルの認証に検証用コールバックには、アプリケーションのログインフォームによって送信されてきた <code>username</code> と <code>password</code> が引数として与えられています。</p>
+<p>検証用コールバックには、アプリケーションのログインフォームによって送信されてきた <code>username</code> と <code>password</code> が引数として与えられています。</p>
 <blockquote class="original">
 The verify callback for local authentication accepts <code>username</code> and <code>password</code>
 arguments, which are submitted to the application via a login form.
@@ -101,10 +101,10 @@ log in.
         <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"password"</span> <span class="attribute">name</span>=<span class="value">"password"</span>/&gt;</span>
     <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
     <span class="tag">&lt;<span class="title">div</span>&gt;</span>
-        <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"submit"</span> <span class="attribute">value</span>=<span class="value">"Log In"</span>/&gt;</span>
+        <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"submit"</span> <span class="attribute">value</span>=<span class="value">"ログイン"</span>/&gt;</span>
     <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">form</span>&gt;</span></code></pre>
-<h4 id="-">ルート</h4>
+<h4 id="-">ルーティング</h4>
 <p>ログインフォームの内容は <code>POST</code> メソッドでサーバーに送信されます。
 <code>local</code> ストラテジーでログイン要求を処理するためには、<code>authenticate()</code> を使います。</p>
 <blockquote class="original">
