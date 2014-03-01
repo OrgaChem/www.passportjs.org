@@ -7,7 +7,17 @@ title: 'Twitter'
 
 ユーザーの Twitter アカウントを使ってログインするには、Twitter ストラテジーを使います。この認証には OAuth 1.0a を使っています。
 
+<blockquote class="original">
+The Twitter strategy allows users to sign in to a web application using their
+Twitter account.  Internally, Twitter authentication works using OAuth 1.0a.
+</blockquote>
+
 Twitter サポートは [passport-twitter](https://github.com/jaredhanson/passport-twitter) によって実装されています。
+
+<blockquote class="original">
+Support for Twitter is implemented by the [passport-twitter](https://github.com/jaredhanson/passport-twitter)
+module.
+</blockquote>
 
 #### インストール
 
@@ -21,6 +31,14 @@ Twitter 認証を使う前に [Twitter Developers](https://dev.twitter.com/) で
 登録が終わると、アプリケーションにコンシューマーキーとコンシューマーシークレットが発行されます。
 アプリケーション側ではコールバックURLを実装しておいてください。
 このURLはアクセスが許可された後にユーザーがリダイレクトされるページを示す必要があります。
+
+<blockquote class="original">
+In order to use Twitter authentication, you must first create an application at
+[Twitter Developers](https://dev.twitter.com/).  When created, an application is
+assigned a consumer key and consumer secret.  Your application must also
+implement a callback URL, to which Twitter will redirect users after they have
+approved access for your application.
+</blockquote>
 
 ```javascript
 var passport = require('passport')
@@ -42,6 +60,13 @@ passport.use(new TwitterStrategy({
 
 Twitter 認証のための検証用コールバック内では引数である `token` と `tokenSecret`、`profile` が利用できます。
 `profile` は Twitter 上のユーザープロフィール情報です（詳細は[ユーザープロフィール](/www.passportjs.org/guide/profile/)を参照してください）。
+
+<blockquote class="original">
+The verify callback for Twitter authentication accepts `token`, `tokenSecret`,
+and `profile` arguments.  `profile` will contain user profile information
+provided by Twitter; refer to [User Profile](/guide/profile/) for additional
+information.
+</blockquote>
 
 #### ルーティング
 
@@ -66,9 +91,19 @@ app.get('/auth/twitter/callback',
 
 <small>注意: このコールバックルーティングの URL は、ストラテジーの設定時に `callbackURL` オプションで指定されたものです。</small>
 
+<blockquote class="original">
+Note that the URL of the callback route matches that of the `callbackURL` option
+specified when configuring the strategy.
+</blockquote>
+
 #### リンク
 
 Twitter を使った1-クリックサインインは、リンクやボタンによって実現できます。
+
+<blockquote class="original">
+A link or button can be placed on a web page, allowing one-click sign in with
+Twitter.
+</blockquote>
 
 ```xml
 <a href="/auth/twitter">Sign in with Twitter</a>
