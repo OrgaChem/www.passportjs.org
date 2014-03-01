@@ -8,6 +8,12 @@ title: '対応しているサービス'
 Passport は多くのサードパーティのご協力によって多くのサービスの認証をサポートしています。
 これらの実装を提供してくれた、この素晴らしいコミュニティの開発者たちに感謝します。
 
+<blockquote class="original">
+Passport supports authentication with an extensive list of third-party providers.
+Many thanks belong to the fine community of developers who have contributed
+implementations.
+</blockquote>
+
 <table class="table table-condensed table-striped">
   <thead>
     <tr>
@@ -617,3 +623,8 @@ Passport は多くのサードパーティのご協力によって多くのサ�
 
 **開発者の皆様へ**: もし、上記のリストに載っていないサービスの認証を実装したときは、私に連絡してください。
 連絡を頂ければ、このリストに追加します。
+
+<blockquote class="original">
+**Attention Developers:** If you implement support another provider, send me a
+message and I will add it to the list.
+</blockquote>
