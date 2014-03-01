@@ -55,13 +55,43 @@
 この Passport の素晴らしいところは、認証リクエスト以外の全ての機能をアプリケーション側で自由に実現できるということに尽きます。
 このように Passport とアプリケーションを疎結合に保つことによって、コードは簡潔になり保守性が高まることでしょう。
 さらに、Passport はとても簡単にアプリケーションに組み込むことができるのです。</p>
+<blockquote class="original">
+Passport is authentication middleware for <a href="http://nodejs.org/">Node</a>.  It is
+designed to serve a singular purpose: authenticate requests.  When writing
+modules, encapsulation is a virtue, so Passport delegates all other
+functionality to the application.  This separation of concerns keeps code clean
+and maintainable, and makes Passport extremely easy to integrate into an
+application.
+</blockquote>
+
 <p>モダンな Web アプリケーションは多くの認証形態を採用しています。
 これまで、ユーザーはユーザーIDとパスワードでログインしてきました。
 しかし、いまどきは<a href="https://www.facebook.com/">Facebook</a> や <a href="https://twitter.com/">Twitter</a> などのソーシャルネットワーキングと連携し、 <a href="http://oauth.net/">OAuth</a> を使ったシングルサインオンをおこなう手法が一般的に普及してきています。
 これらの API を公開しているサービスでは、アクセスを保護するためにトークンベースの認証情報を必要としています。</p>
+<blockquote class="original">
+In modern web applications, authentication can take a variety of forms.
+Traditionally, users log in by providing a username and password.  With the rise
+of social networking, single sign-on using an <a href="http://oauth.net/">OAuth</a>
+provider such as <a href="https://www.facebook.com/">Facebook</a> or <a href="https://twitter.com/">Twitter</a>
+has become a popular authentication method.  Services that expose an API often
+require token-based credentials to protect access.
+</blockquote>
+
 <p>Passport はアプリケーション毎に、それぞれ適した認証があることを踏まえてつくられています。
 <em>アプリケーションへの認証機能の組み込みは、ストラテジー</em>と呼ばれる独立した認証メカニズムのモジュールを選ぶだけで実現できます。</p>
+<blockquote class="original">
+Passport recognizes that each application has unique authentication
+requirements.  Authentication mechanisms, known as <em>strategies</em>, are packaged as
+individual modules.  Applications can choose which strategies to employ, without
+creating unnecessary dependencies.
+</blockquote>
+
 <p>認証作業は複雑かもしれませんが、何もコードまでも複雑なものになる必要はもうないのです。</p>
+<blockquote class="original">
+Despite the complexities involved in authentication, code does not have to be
+complicated.
+</blockquote>
+
 <pre><code class="undefinedjavascript">app.post(<span class="string">'/login'</span>, passport.authenticate(<span class="string">'local'</span>, { successRedirect: <span class="string">'/'</span>,
                                                     failureRedirect: <span class="string">'/login'</span> }));</code></pre>
 <h4 id="-">インストール</h4>

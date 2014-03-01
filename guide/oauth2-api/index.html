@@ -52,31 +52,103 @@
     <h3 id="oauth-2-0">OAuth 2.0</h3>
 <p>OAuth 2.0 は <a href="http://tools.ietf.org/html/rfc6749">RFC 6749</a> に策定された、ユーザーのアクセス権限を外部のアプリケーションに付与するための枠組みです。権限付与が許可されると、アプリケーションは認証情報としてトークンを利用することになります。
 この仕組みを使うと、2つの観点で安全性が高まります：</p>
+<blockquote class="original">
+OAuth 2.0 (formally specified by <a href="http://tools.ietf.org/html/rfc6749">RFC 6749</a>)
+provides an authorization framework which allows users to authorize access to
+third-party applications.  When authorized, the application is issued a token to
+use as an authentication credential.  This has two primary security benefits:
+</blockquote>
+
 <ol>
 <li>アプリケーションはユーザーIDとパスワードを保存する必要がありません</li>
 <li>トークンで付与される権限は限定的です（たとえば、読み込み権限のみ付与ということもできるでしょう）</li>
 </ol>
+<blockquote class="original">
+  1. The application does not need to store the user&#39;s username and password.
+  2. The token can have a restricted scope (for example: read-only access).
+</blockquote>
+
 <p>これらの利点は Web アプリケーションの安全性の保証する上でも重要な要素です。
 このような OAuth 2.0 は API の認証に広く使われている標準です。</p>
+<blockquote class="original">
+These benefits are particularly important for ensuring the security of web
+applications, making OAuth 2.0 the predominant standard for API authentication.
+</blockquote>
+
 <p>OAuth 2.0 によって API のエンドポイントを保護するためには、3つのステップを踏む必要があります。</p>
+<blockquote class="original">
+When using OAuth 2.0 to protect API endpoints, there are three distinct steps
+that must be performed:
+</blockquote>
+
 <ol>
 <li>アプリケーションは、ユーザーに保護されたリソースへのアクセス許可をリクエストします</li>
 <li>ユーザーに許可されると、アプリケーションにトークンが発行されます</li>
 <li>アプリケーションはトークンを使って、保護されたリソースにアクセスします</li>
 </ol>
+<blockquote class="original">
+  1. The application requests permission from the user for access to protected
+     resources.
+  2. A token is issued to the application, if permission is granted by the user.
+  3. The application authenticates using the token to access protected
+     resources.
+</blockquote>
+
 <h4 id="-">トークンの発行</h4>
 <p>Passport の姉妹プロジェクトである <a href="https://github.com/jaredhanson/oauth2orize">OAuth2orize</a> は、 OAuth 2.0 の権限付与サーバー実装のためのツールキットです。</p>
+<blockquote class="original">
+<a href="https://github.com/jaredhanson/oauth2orize">OAuth2orize</a>, a sibling project to
+Passport, provides a toolkit for implementing OAuth 2.0 authorization servers.
+</blockquote>
+
 <p>権限付与プロセスでは、アプリケーションとユーザーのリクエスト、ユーザーの許可、ユーザーが意思決定できる程度の詳細情報の提供などの複雑な手続きをとらなければなりません。</p>
+<blockquote class="original">
+The authorization process is a complex sequence that involves authenticating
+both the requesting application and the user, as well as prompting the user for
+permission, ensuring that enough detail is provided for the user to make an
+informed decision.
+</blockquote>
+
 <p>加えて、アプリケーションのアクセスできる範囲をどの程度で制限するかという判断は実装者ごとに異なります。</p>
+<blockquote class="original">
+Additionally, it is up to the implementor to determine what limits can be placed
+on the application regarding scope of access, as well as subsequently enforcing
+those limits.
+</blockquote>
+
 <p>OAuth2orize は、実装を決定するようなことはしてくれません。
 しかし、OAuth 2.0 を利用するサービスにおけるセキュリティの懸念事項を理解するために、OAuth2orize を利用することを強く勧めます。</p>
+<blockquote class="original">
+As a toolkit, OAuth2orize does not attempt to make implementation decisions.
+This guide does not cover these issues, but does highly recommend that
+services deploying OAuth 2.0 have a complete understanding of the security
+considerations involved.
+</blockquote>
+
 <h4 id="-">認証トークン</h4>
 <p>OAuth 2.0 が提供する枠組みは、発行されるトークンの種類を任意に拡張できます。
 しかし、実際には広く使われていますトークンの種類は限られています。</p>
+<blockquote class="original">
+OAuth 2.0 provides a framework, in which an arbitrarily extensible set of token
+types can be issued.  In practice, only specific token types have gained
+widespread use.
+</blockquote>
+
 <h4 id="bearer-">Bearer トークン</h4>
 <p>Bearer トークンは OAuth 2.0 で最も議論されているトークンの種類です。
 多くの実装では、発行できるトークンは bearer トークンのみとされています。</p>
+<blockquote class="original">
+Bearer tokens are the most widely issued type of token in OAuth 2.0.  So much
+so, in fact, that many implementations assume that bearer tokens are the only
+type of token issued.
+</blockquote>
+
 <p>Bearer トークンの認証には <a href="https://github.com/jaredhanson/passport-http-bearer">passport-http-bearer</a> モジュールを使ってください。</p>
+<blockquote class="original">
+Bearer tokens can be authenticated using the <a href="https://github.com/jaredhanson/passport-http-bearer">passport-http-bearer</a>
+module.
+</blockquote>
+
 <h5 id="-">インストール</h5>
 <pre><code class="undefinedbash">$ npm install passport-http-bearer</code></pre>
 <h5 id="configuration">Configuration</h5>
@@ -92,6 +164,13 @@
 <p>Bearer トークンの検証用コールバック内では、<code>token</code> 引数が利用できます。
 また、<code>done</code> の実行時に <code>info</code> を指定すると、<code>req.authInfo</code> をセットすることができます。
 これは、トークンの範囲通知やアクセス制御の確認のために使うことができます。</p>
+<blockquote class="original">
+The verify callback for bearer tokens accepts the <code>token</code> as an argument.
+When invoking <code>done</code>, optional <code>info</code> can be passed, which will be set by
+Passport at <code>req.authInfo</code>.  This is typically used to convey the scope of the
+token, and can be used when making access control checks.
+</blockquote>
+
 <h5 id="-">エンドポイントの保護</h5>
 <pre><code class="undefinedjavascript">app.get(<span class="string">'/api/me'</span>, 
   passport.authenticate(<span class="string">'bearer'</span>, { session: <span class="literal">false</span> }),
@@ -100,6 +179,10 @@
   });</code></pre>
 <p>ユーザーへ提供するAPI のエンドポイントを、 <code>bearer</code> トークンを使った認証で保護するには、<code>passport.authenticate()</code> に <code>bearer</code> ストラテジーを指定してください。
 なお、このような API にセッション管理は不要なことが多いため、無効にすることが出来ます。</p>
+<blockquote class="original">
+Specify <code>passport.authenticate()</code> with the <code>bearer</code> strategy to protect API
+endpoints.  Sessions are not typically needed by APIs, so they can be disabled.
+</blockquote>
   </div>
 </div>
       <div class="footer">

@@ -54,7 +54,15 @@
 <ol>
 <li>認証用ストラテジーの選択</li>
 <li>アプリケーションミドルウェア </li>
-<li>セッション管理(<em>省略可</em>)</li>
+<li><p>セッション管理(<em>省略可</em>)</p>
+<p><blockquote class="original">
+Three pieces need to be configured to use Passport for authentication:</p>
+</li>
+<li><p>Authentication strategies</p>
+</li>
+<li>Application middleware</li>
+<li>Sessions (<em>optional</em>)
+</blockquote></li>
 </ol>
 <h4 id="-">ストラテジーの設定</h4>
 <p>Passportは認証のために<em>ストラテジー</em>と呼ばれるものを認証に使用します。
@@ -62,6 +70,19 @@
 <p>Passportを用いて認証を行う前に、必ず1つ以上のストラテジーに関する設定が必要になります。</p>
 <p>ストラテジーやその設定は <code>use()</code> 関数にて提供されます。
 以下に、<code>LocalStrategy</code> でのユーザーID、パスワードを用いた認証の例を示します。</p>
+<blockquote class="original">
+Passport uses what are termed <em>strategies</em> to authenticate requests.  Strategies
+range from verifying a username and password, delegated authentication using <a href="http://oauth.net/">OAuth</a>
+or federated authentication using <a href="http://openid.net/">OpenID</a>.
+
+Before asking Passport to authenticate a request, the strategy (or strategies)
+used by an application must be configured.
+
+Strategies, and their configuration, are supplied via the <code>use()</code> function.  For
+example, the following uses the <code>LocalStrategy</code> for username/password
+authentication.
+</blockquote>
+
 <pre><code class="undefinedjavascript"><span class="keyword">var</span> passport = require(<span class="string">'passport'</span>)
   , LocalStrategy = require(<span class="string">'passport-local'</span>).Strategy;
 
@@ -86,14 +107,44 @@ passport.use(<span class="keyword">new</span> LocalStrategy(
 <p>認証がリクエストされると、Passportはリクエストに含まれる認証情報を解析します。
 上の例では、ユーザーIDとパスワードが認証情報として検証用コールバックの引数に指定されます。
 認証情報が正しい場合は、検証用コールバック内で <code>done</code> を実行する際に Passport に認証済のユーザー情報を返してください。</p>
+<blockquote class="original">
+This example introduces an important concept.  Strategies require what is known
+as a <em>verify callback</em>.  The purpose of a verify callback is to find the user
+that possesses a set of credentials.
+
+When Passport authenticates a request, it parses the credentials contained in
+the request.  It then invokes the verify callback with those credentials as
+arguments, in this case <code>username</code> and <code>password</code>.  If the credentials are
+valid, the verify callback invokes <code>done</code> to supply Passport with the user that
+authenticated.
+</blockquote>
+
 <pre><code class="undefinedjavascript"><span class="keyword">return</span> done(<span class="literal">null</span>, user);</code></pre>
 <p>上記の例において、パスワードが不正であるようといった認証情報の誤りがある場合は、<code>false</code> を引数に指定し <code>done</code> を実行します。
 これにより認証情報が失敗した、ということを Passport に通知します。</p>
+<blockquote class="original">
+If the credentials are not valid (for example, if the password is incorrect),
+<code>done</code> should be invoked with <code>false</code> instead of a user to indicate an
+authentication failure.
+</blockquote>
+
 <pre><code class="undefinedjavascript"><span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>);</code></pre>
 <p>認証が失敗した原因を詳細にメッセージとして通知することも可能です。
 この機能は、フラッシュメッセージとしてユーザーに再度認証を促す場合に役立ちます。</p>
+<blockquote class="original">
+An additional info message can be supplied to indicate the reason for the
+failure.  This is useful for displaying a flash message prompting the user to
+try again.
+</blockquote>
+
 <pre><code class="undefinedjavascript"><span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>, { message: <span class="string">'Incorrect password.'</span> });</code></pre>
 <p>最後に、認証中にデータベースが機能していないといった例外が発生した際は、Node の慣用的な表現にて error 情報を指定し <code>done</code> を実行することで通知可能です。</p>
+<blockquote class="original">
+Finally, if an exception occurred while verifying the credentials (for example,
+if the database is not available), <code>done</code> should be invoked with an error, in
+conventional Node style.
+</blockquote>
+
 <pre><code class="undefinedjavascript"><span class="keyword">return</span> done(err);</code></pre>
 <p>この2つのエラーがどのような場合に発生するのか、両者を明確に区別しておくことが重要です。
 後者はサーバ側での例外であり、この例外が発生した際には <code>err</code> に <code>null</code> 以外の値がセットされます。
@@ -102,6 +153,18 @@ passport.use(<span class="keyword">new</span> LocalStrategy(
 この場合は、<code>err</code> が <code>null</code> であることは保障され、詳細なメッセージを追加する目的で引数の最後のパラメータを使用する事が出来ます。</p>
 <p>このようにストラテジーに処理を委譲することで、検証用コールバックは、Passportとデータベースを疎に保ちます。
 これによりアプリケーションは、認証レイヤーでの様々な前提条件にとらわれず、ユーザー情報をどのように格納するか自由に選択できます。</p>
+<blockquote class="original">
+Note that it is important to distinguish the two failure cases that can occur.
+The latter is a server exception, in which <code>err</code> is set to a non-<code>null</code> value.
+Authentication failures are natural conditions, in which the server is operating
+normally.  Ensure that <code>err</code> remains <code>null</code>, and use the final argument to pass
+additional details.
+
+By delegating in this manner, the verify callback keeps Passport database
+agnostic.  Applications are free to choose how user information is stored,
+without any assumptions imposed by the authentication layer.
+</blockquote>
+
 <h4 id="-">ミドルウェアの設定</h4>
 <p><a href="http://senchalabs.github.com/connect/">Connect</a> or <a href="http://expressjs.com/">Express</a>を基盤にしたアプリケーションでは、<code>passport.initialize()</code> を用いて Passport の初期化を行うことが必要になります。
 アプリケーションでログイン後のセッション管理を行う場合には、<code>passport.session()</code> の記述も必要になります。</p>
@@ -122,6 +185,18 @@ passport.use(<span class="keyword">new</span> LocalStrategy(
 <p>この仕組みは、ユニークなクッキーによるセッション管理によって実現されています。
 ログイン後のリクエストそれぞれに認証情報を含むことはありません。
 セッションのサポートのために、パスポートは <code>user</code> インスタンスをシリアライズ/デシリアライズしてセッション情報として管理しています。</p>
+<blockquote class="original">
+In a typical web application, the credentials used to authenticate a user will
+only be transmitted during the login request.  If authentication succeeds, a
+session will be established and maintained via a cookie set in the user&#39;s
+browser.
+
+Each subsequent request will not contain credentials, but rather the unique
+cookie that identifies the session.  In order to support login sessions,
+Passport will serialize and deserialize <code>user</code> instances to and from the
+session.
+</blockquote>
+
 <pre><code class="undefinedjavascript">passport.serializeUser(<span class="function"><span class="keyword">function</span><span class="params">(user, done)</span> {</span>
   done(<span class="literal">null</span>, user.id);
 });
@@ -134,6 +209,16 @@ passport.deserializeUser(<span class="function"><span class="keyword">function</
 <p>この例では、<code>userID</code> をシリアライズしてセッションに埋め込み、データをコンパクトにしています。
 リクエストを受け取ると、IDからユーザーを特定し、<code>req.user</code> 内に格納します。</p>
 <p>上記のシリアライズ、デシリアライズ内の動作はアプリケーションによって定義されるため、アプリケーションでは認証レイヤーでの制限無しに、適切なデーターベースやオブジェクトマッパーを選択可能です。</p>
+<blockquote class="original">
+In this example, only the user ID is serialized to the session, keeping the
+amount of data stored within the session small.  When subsequent requests are
+received, this ID is used to find the user, which will be restored to
+<code>req.user</code>.
+
+The serialization and deserialization logic is supplied by the application,
+allowing the application to choose an appropriate database and/or object mapper,
+without imposition by the authentication layer.
+</blockquote>
   </div>
 </div>
       <div class="footer">

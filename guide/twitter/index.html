@@ -51,7 +51,17 @@
   <div class="span9 content">
     <h3 id="twitter">Twitter</h3>
 <p>ユーザーの Twitter アカウントを使ってログインするには、Twitter ストラテジーを使います。この認証には OAuth 1.0a を使っています。</p>
+<blockquote class="original">
+The Twitter strategy allows users to sign in to a web application using their
+Twitter account.  Internally, Twitter authentication works using OAuth 1.0a.
+</blockquote>
+
 <p>Twitter サポートは <a href="https://github.com/jaredhanson/passport-twitter">passport-twitter</a> によって実装されています。</p>
+<blockquote class="original">
+Support for Twitter is implemented by the <a href="https://github.com/jaredhanson/passport-twitter">passport-twitter</a>
+module.
+</blockquote>
+
 <h4 id="-">インストール</h4>
 <pre><code class="undefinedbash">$ npm install passport-twitter</code></pre>
 <h4 id="-">設定方法</h4>
@@ -59,6 +69,14 @@
 登録が終わると、アプリケーションにコンシューマーキーとコンシューマーシークレットが発行されます。
 アプリケーション側ではコールバックURLを実装しておいてください。
 このURLはアクセスが許可された後にユーザーがリダイレクトされるページを示す必要があります。</p>
+<blockquote class="original">
+In order to use Twitter authentication, you must first create an application at
+<a href="https://dev.twitter.com/">Twitter Developers</a>.  When created, an application is
+assigned a consumer key and consumer secret.  Your application must also
+implement a callback URL, to which Twitter will redirect users after they have
+approved access for your application.
+</blockquote>
+
 <pre><code class="undefinedjavascript"><span class="keyword">var</span> passport = require(<span class="string">'passport'</span>)
   , TwitterStrategy = require(<span class="string">'passport-twitter'</span>).Strategy;
 
@@ -76,6 +94,13 @@ passport.use(<span class="keyword">new</span> TwitterStrategy({
 ));</code></pre>
 <p>Twitter 認証のための検証用コールバック内では引数である <code>token</code> と <code>tokenSecret</code>、<code>profile</code> が利用できます。
 <code>profile</code> は Twitter 上のユーザープロフィール情報です（詳細は<a href="/www.passportjs.org/guide/profile/">ユーザープロフィール</a>を参照してください）。</p>
+<blockquote class="original">
+The verify callback for Twitter authentication accepts <code>token</code>, <code>tokenSecret</code>,
+and <code>profile</code> arguments.  <code>profile</code> will contain user profile information
+provided by Twitter; refer to <a href="/guide/profile/">User Profile</a> for additional
+information.
+</blockquote>
+
 <h4 id="-">ルーティング</h4>
 <p>Twitter 認証には2つのルーティングが必要です。
 最初のルーティングでは OAuth トランザクションを開始し、ユーザーを Twitter へリダイレクトさせます。
@@ -93,8 +118,18 @@ app.get(<span class="string">'/auth/twitter/callback'</span>,
   passport.authenticate(<span class="string">'twitter'</span>, { successRedirect: <span class="string">'/'</span>,
                                      failureRedirect: <span class="string">'/login'</span> }));</code></pre>
 <p><small>注意: このコールバックルーティングの URL は、ストラテジーの設定時に <code>callbackURL</code> オプションで指定されたものです。</small></p>
+<blockquote class="original">
+Note that the URL of the callback route matches that of the <code>callbackURL</code> option
+specified when configuring the strategy.
+</blockquote>
+
 <h4 id="-">リンク</h4>
 <p>Twitter を使った1-クリックサインインは、リンクやボタンによって実現できます。</p>
+<blockquote class="original">
+A link or button can be placed on a web page, allowing one-click sign in with
+Twitter.
+</blockquote>
+
 <pre><code class="undefinedxml"><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"/auth/twitter"</span>&gt;</span>Sign in with Twitter<span class="tag">&lt;/<span class="title">a</span>&gt;</span></code></pre>
   </div>
 </div>

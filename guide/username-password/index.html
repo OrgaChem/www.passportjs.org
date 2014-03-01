@@ -51,6 +51,13 @@
   <div class="span9 content">
     <h3 id="-id-">ユーザーID &amp; パスワード</h3>
 <p>多くの Web サイトの認証に、ユーザーID/パスワード認証が使われています。この認証メカニズムは <a href="https://github.com/jaredhanson/passport-local">passport-local</a> モジュールによって提供されています。</p>
+<blockquote class="original">
+The most widely used way for websites to authenticate users is via a username
+and password.  Support for this mechanism is provided by the <a href="https://github.com/jaredhanson/passport-local">passport-local</a>
+module.
+</blockquote>
+
+
 <h4 id="-">インストール</h4>
 <pre><code class="undefinedbash">$ npm install passport-local</code></pre>
 <h4 id="-">設定</h4>
@@ -72,8 +79,18 @@ passport.use(<span class="keyword">new</span> LocalStrategy(
   }
 ));</code></pre>
 <p>ローカルの認証に検証用コールバックには、アプリケーションのログインフォームによって送信されてきた <code>username</code> と <code>password</code> が引数として与えられています。</p>
+<blockquote class="original">
+The verify callback for local authentication accepts <code>username</code> and <code>password</code>
+arguments, which are submitted to the application via a login form.
+</blockquote>
+
 <h4 id="-">フォーム</h4>
 <p>ユーザーは Web ページ上のフォームから認証情報を入力できます。</p>
+<blockquote class="original">
+A form is placed on a web page, allowing the user to enter their credentials and
+log in.
+</blockquote>
+
 <pre><code class="undefinedxml"><span class="tag">&lt;<span class="title">form</span> <span class="attribute">action</span>=<span class="value">"/login"</span> <span class="attribute">method</span>=<span class="value">"post"</span>&gt;</span>
     <span class="tag">&lt;<span class="title">div</span>&gt;</span>
         <span class="tag">&lt;<span class="title">label</span>&gt;</span>ユーザーID：<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
@@ -90,15 +107,32 @@ passport.use(<span class="keyword">new</span> LocalStrategy(
 <h4 id="-">ルート</h4>
 <p>ログインフォームの内容は <code>POST</code> メソッドでサーバーに送信されます。
 <code>local</code> ストラテジーでログイン要求を処理するためには、<code>authenticate()</code> を使います。</p>
+<blockquote class="original">
+The login form is submitted to the server via the <code>POST</code> method.  Using
+<code>authenticate()</code> with the <code>local</code> strategy will handle the login request.
+</blockquote>
+
 <pre><code class="undefinedjavascript">app.post(<span class="string">'/login'</span>,
   passport.authenticate(<span class="string">'local'</span>, { successRedirect: <span class="string">'/'</span>,
                                    failureRedirect: <span class="string">'/login'</span>,
                                    failureFlash: <span class="literal">true</span> })
 );</code></pre>
 <p>検証用コールバック内で指定した <code>message</code> オプションで <code>error</code> メッセージなどをフラッシュメッセージとして表示するには、<code>failureFlash</code> オプションを <code>true</code> にしてください。</p>
+<blockquote class="original">
+Setting the <code>failureFlash</code> option to <code>true</code> instructs Passport to flash an
+<code>error</code> message using the <code>message</code> option set by the verify callback above.
+This is helpful when prompting the user to try again.
+</blockquote>
+
 <h4 id="-">パラメーター</h4>
 <p><code>LocalStrategy</code> は認証情報を <code>username</code> と <code>password</code> の2つのパラメータ名で確認しています。
 別のフィールド名を使っている場合は、確認するパラメータ名を変更してください。</p>
+<blockquote class="original">
+By default, <code>LocalStrategy</code> expects to find credentials in parameters named
+<code>username</code> and <code>password</code>.  If your site prefers to name these fields
+differently, options are available to change the defaults.
+</blockquote>
+
 <pre><code>passport.use(new LocalStrategy({
     usernameField: <span class="string">'email'</span>,
     passwordField: <span class="string">'passwd'</span>
