@@ -8,7 +8,7 @@ title: '設定'
 Passportを認証に用いるためには、以下の3つの項目を設定する必要があります:
 
 <blockquote class="original">
-	Three pieces need to be configured to use Passport for authentication:
+Three pieces need to be configured to use Passport for authentication:
 </blockquote>
  
  1. 認証用ストラテジーの選択
@@ -24,7 +24,7 @@ Passportを認証に用いるためには、以下の3つの項目を設定す�
 #### ストラテジーの設定
 
 Passportは認証のために_ストラテジー_と呼ばれるものを認証に使用します。
-ストラテジーは、ユーザーIDとパスワード用いた検証や、[OAuth](http://oauth.net/)を用いた権限委譲、分散認証システムである[OpenID](http://openid.net/)を用いた認証に対応しています。
+ストラテジーは、ユーザーIDとパスワードを用いた検証や、[OAuth](http://oauth.net/)を用いた権限付与、[OpenID](http://openid.net/)を用いた分散認証を実装しています。
 
 <blockquote class="original">
 Passport uses what are termed _strategies_ to authenticate requests.  Strategies
@@ -32,7 +32,7 @@ range from verifying a username and password, delegated authentication using [OA
 or federated authentication using [OpenID](http://openid.net/).
 </blockquote>
 
-Passportを用いて認証を行う前に、必ず1つ以上のストラテジーに関する設定が必要になります。
+認証を行う前に、1つ以上のストラテジーに関する設定が必要です。
 
 <blockquote class="original">
 Before asking Passport to authenticate a request, the strategy (or strategies)
@@ -57,10 +57,10 @@ passport.use(new LocalStrategy(
     User.findOne({ username: username }, function (err, user) {
       if (err) { return done(err); }
       if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
+        return done(null, false, { message: 'ユーザーIDが正しくありません。' });
       }
       if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
+        return done(null, false, { message: 'パスワードが正しくありません。' });
       }
       return done(null, user);
     });
@@ -72,7 +72,7 @@ passport.use(new LocalStrategy(
 
 この例では重要なコンセプトを説明します。
 ストラテジーは_検証用コールバック_(_verify callback_)と呼ばれるものを必要とします。
-検証用コールバックの目的は、認証情報を照合し、ユーザーを特定することです。
+このコールバックの目的は、認証情報を照合し、ユーザーを特定することです。
 
 <blockquote class="original">
 This example introduces an important concept.  Strategies require what is known
@@ -82,7 +82,7 @@ that possesses a set of credentials.
 
 認証がリクエストされると、Passportはリクエストに含まれる認証情報を解析します。
 上の例では、ユーザーIDとパスワードが認証情報として検証用コールバックの引数に指定されます。
-認証情報が正しい場合は、検証用コールバック内で `done` を実行する際に Passport に認証済のユーザー情報を返してください。
+認証情報が正しい場合は、検証用コールバック内で `done` に認証済のユーザー情報を与えて実行してください。
 
 <blockquote class="original">
 When Passport authenticates a request, it parses the credentials contained in
@@ -96,7 +96,7 @@ authenticated.
 return done(null, user);
 ```
 
-上記の例において、パスワードが不正であるようといった認証情報の誤りがある場合は、`false` を引数に指定し `done` を実行します。
+上記の例において、パスワードが不正であるというような認証情報の誤りがある場合は、`done` に `false` を与えて実行してください。
 これにより認証情報が失敗した、ということを Passport に通知します。
 
 <blockquote class="original">
@@ -119,7 +119,7 @@ try again.
 </blockquote>
 
 ```javascript
-return done(null, false, { message: 'Incorrect password.' });
+return done(null, false, { message: 'パスワードが正しくありません。' });
 ```
 
 最後に、認証中にデータベースが機能していないといった例外が発生した際は、Node の慣用的な表現にて error 情報を指定し `done` を実行することで通知可能です。
@@ -159,7 +159,7 @@ without any assumptions imposed by the authentication layer.
 
 #### ミドルウェアの設定
 
-[Connect](http://senchalabs.github.com/connect/) or [Express](http://expressjs.com/)を基盤にしたアプリケーションでは、`passport.initialize()` を用いて Passport の初期化を行うことが必要になります。
+[Connect](http://senchalabs.github.com/connect/) もしくは [Express](http://expressjs.com/) を基盤にしたアプリケーションでは、`passport.initialize()` を用いて Passport の初期化を行うことが必要になります。
 アプリケーションでログイン後のセッション管理を行う場合には、`passport.session()` の記述も必要になります。
 
 <blockquote class="original">
@@ -204,7 +204,7 @@ browser.
 </blockquote>
 
 この仕組みは、ユニークなクッキーによるセッション管理によって実現されています。
-ログイン後のリクエストそれぞれに認証情報を含むことはありません。
+そのため、ログイン後のリクエストそれぞれに認証情報を含むことはありません。
 セッションのサポートのために、パスポートは `user` インスタンスをシリアライズ/デシリアライズしてセッション情報として管理しています。
 
 <blockquote class="original">
@@ -226,7 +226,7 @@ passport.deserializeUser(function(id, done) {
 });
 ```
 
-この例では、`userID` をシリアライズしてセッションに埋め込み、データをコンパクトにしています。
+この例では、ユーザーIDをシリアライズしてセッションに埋め込み、データをコンパクトにしています。
 リクエストを受け取ると、IDからユーザーを特定し、`req.user` 内に格納します。
 
 上記のシリアライズ、デシリアライズ内の動作はアプリケーションによって定義されるため、アプリケーションでは認証レイヤーでの制限無しに、適切なデーターベースやオブジェクトマッパーを選択可能です。
