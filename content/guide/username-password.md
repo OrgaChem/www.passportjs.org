@@ -7,6 +7,13 @@ title: 'ユーザーID & パスワード'
 
 多くの Web サイトの認証に、ユーザーID/パスワード認証が使われています。この認証メカニズムは [passport-local](https://github.com/jaredhanson/passport-local) モジュールによって提供されています。
 
+<blockquote class="original">
+The most widely used way for websites to authenticate users is via a username
+and password.  Support for this mechanism is provided by the [passport-local](https://github.com/jaredhanson/passport-local)
+module.
+</blockquote>
+
+
 #### インストール
 
 ```bash
@@ -36,6 +43,9 @@ passport.use(new LocalStrategy(
 ```
 
 ローカルの認証に検証用コールバックには、アプリケーションのログインフォームによって送信されてきた `username` と `password` が引数として与えられています。
+
+The verify callback for local authentication accepts `username` and `password`
+arguments, which are submitted to the application via a login form.
 
 #### フォーム
 
