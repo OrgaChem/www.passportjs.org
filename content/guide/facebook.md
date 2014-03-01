@@ -8,12 +8,14 @@ title: 'Facebook'
 ユーザーの Facebook アカウントを使ってログインするには、Facebook ストラテジーを使用します。
 この認証には、OAuth2.0 を使用しています。
 
-Facebook のサポートは [passport-facebook](https://github.com/jaredhanson/passport-facebook) によって実装されています。
-
 <blockquote class="original">
 The Facebook strategy allows users to log in to a web application using their
 Facebook account.  Internally, Facebook authentication works using OAuth 2.0.
+</blockquote>
 
+Facebook のサポートは [passport-facebook](https://github.com/jaredhanson/passport-facebook) によって実装されています。
+
+<blockquote class="original">
 Support for Facebook is implemented by the [passport-facebook](https://github.com/jaredhanson/passport-facebook)
 module.
 </blockquote>
