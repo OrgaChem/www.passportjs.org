@@ -143,7 +143,7 @@ passport.use(new OpenIDStrategy({
 ));
 ```
 
-プロフィール交換が有効になれば、検証用コールバックの引数に `profile` が追加されます。
+プロフィール取得が有効になれば、検証用コールバックの引数に `profile` が追加されます。
 `profile` には OpenID プロバイダーが提供したユーザーのプロフィール情報がセットされています(詳細は[ユーザープロフィール](/www.passportjs.org/guide/profile/)を参照してください) 。
 
 <blockquote class="original">
