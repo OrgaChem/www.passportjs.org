@@ -6,8 +6,8 @@ title: '認証'
 ### 認証
 
 `passport.authenticate()` に使いたい認証ストラテジーを指定して呼び出すことで、認証をリクエストできます。
-
-`authenticate()`によって返される関数は [Connect](http://www.senchalabs.org/connect/) 標準に準拠しているので、[Express](http://expressjs.com/) アプリケーションのルーティングミドルウェアとして簡単に利用できます。
+`authenticate()`のシグネチャは標準的な [Connect](http://www.senchalabs.org/connect/) ミドルウェアに対応しています。
+そのため、[Express](http://expressjs.com/) アプリケーションのルーティングミドルウェアとして簡単に利用できます。
 
 <blockquote class="original">
 Authenticating requests is as simple as calling `passport.authenticate()` and
@@ -21,14 +21,14 @@ applications.
 app.post('/login',
   passport.authenticate('local'),
   function(req, res) {
-	// 認証に施工すると、この関数が呼び出される。
-	// 認証されたユーザーは `req.user` に含まれている。
+    // 認証に施工すると、この関数が呼び出される。
+    // 認証されたユーザーは `req.user` に含まれている。
     res.redirect('/users/' + req.user.username);
   });
 ```
 
-Passport は、認証に失敗したとき `401 Unauthorized` ステータスを返し、その他のルーティングハンドラーは実行しません。
-認証に成功したときは、次のハンドラーを実行し、`req.user` プロパティに認証されたユーザーをセットします。
+認証に失敗したときは、 `401 Unauthorized` ステータスが返され、`passport.authenticate()` の後に指定されているルーティングハンドラーは実行されません。
+認証に成功したときは、このハンドラーが実行され、認証されたユーザーは引数の `req.user` プロパティにセットされます。
 
 <blockquote class="original">
 By default, if authentication fails, Passport will respond with a
@@ -37,7 +37,7 @@ invoked.  If authentication succeeds, the next handler will be invoked and the
 `req.user` property will be set to the authenticated user.
 </blockquote>
 
-<small>注意: ストラテジーはルーティングされる前に設定されていなければなりません。
+<small>注意: ストラテジーは設定後に利用しなければなりません。
 詳細は[設定](/www.passportjs.org/guide/configure/)の章で確認できます。</small>
 
 <blockquote class="original">
@@ -71,7 +71,7 @@ another attempt.
 
 #### フラッシュメッセージ
 
-リダイレクトの後で、ステータス情報を表示するためのフラッシュメッセージを表示することがよくあります。
+リダイレクトの後で、認証結果を表示するためにフラッシュメッセージを表示することがよくあります。
 
 <blockquote class="original">
 Redirects are often combined with flash messages in order to display status
@@ -86,8 +86,8 @@ app.post('/login',
 );
 ```
 
-`failureFlash` オプションを `true` にセットすると、Passport はストラテジーの検証用のコールバックが生成したメッセージを `error` メッセージとして表示します。
-この方法を使うと、検証用のコールバックは認証が失敗した理由について正確に判断することができます。
+`failureFlash` オプションを `true` にセットすると、Passport はストラテジーの検証用コールバックが生成したメッセージを `error` メッセージとして表示します。
+この方法を使うと、検証用コールバックは認証が失敗した理由について正確な情報を得ることができます。
 これは多くの場合にもっとも優れたアプローチです。
 
 <blockquote class="original">
@@ -97,7 +97,7 @@ any.  This is often the best approach, because the verify callback can make the
 most accurate determination of why authentication failed.
 </blockquote>
 
-あるいは、フラッシュメッセージを任意に指定することもできます。
+あるいは、任意のフラッシュメッセージを指定することもできます。
 
 <blockquote class="original">
 Alternatively, the flash message can be set specifically.
@@ -129,10 +129,10 @@ provided this functionality, however it was removed from Express 3.x.  Use of
 recommended to provide this functionality when using Express 3.x.
 </blockquote>
 
-#### セッションを無効化
+#### セッションの無効化
 
 認証が成功した際、Passport は継続的なログインセッションを確立します。
-これはユーザーがブラウザから Web アプリケーションにアクセスするといったシナリオで役に立ちます。
+これはブラウザから Web アプリケーションにアクセスするといったシナリオで役に立ちます。
 しかし、それ以外の場合はセッションのサポートは必要ありません。
 たとえば、API サーバーはリクエスト毎に認証情報を要求するのが一般的です。
 このような場合では `seeeion` オプションを `false` にすることでセッションサポートを無効にできます。
@@ -186,8 +186,9 @@ handler, rather than being used as route middleware.  This gives the callback
 access to the `req` and `res` objects through closure.
 </blockquote>
 
-もし認証が失敗したときは、 `user` は `false` にセットされます。
-例外が発生したときは `err` がセットされます。また、ストラテジーの検証用コールバックに追加で情報を渡すときには `into` パラメータを利用できます（省略可能）。
+もし認証が失敗したとき `user` は `false` にセットされます。
+例外が発生したときは `err` がセットされます。
+また、ストラテジーの検証用コールバックに追加で情報を渡すときには `into` パラメータを利用できます（省略可能）。
 
 <blockquote class="original">
 If authentication failed, `user` will be set to `false`.  If an exception
@@ -195,8 +196,8 @@ occurred, `err` will be set.  An optional `info` argument will be passed,
 containing additional details provided by the strategy's verify callback.
 </blockquote>
 
-このコールバックには必要な認証結果が引数として渡されます。
-ただし、カスタムコールバックを使うときは、アプリケーションセッション確立（`req.login()`を呼び出すことによる）およびレスポンスの送信をおこなう必要があります。
+このコールバックには認証結果が引数として渡されます。
+ただし、カスタムコールバックを使うときは、アプリケーションセッション確立（`req.login()`を呼び出すことによる）およびレスポンスを返す必要があります。
 
 <blockquote class="original">
 The callback can use the arguments supplied to handle the authentication result
