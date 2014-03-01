@@ -8,23 +8,27 @@ title: 'Basic認証 & Digest認証'
 HTTPの認証フレームワークを規定すると共に、[RFC 2617](http://tools.ietf.org/html/rfc2617) には、Basic認証、Digest認証の枠組みが策定されています。
 これらの2つの枠組みは、ユーザーIDとパスワードをユーザー認証のために使用し、またAPIのエンドポイントを保護するためにも使用されます。
 
-<small>注意: このようなユーザーIDとパスワードに依存する認証は安全性に問題があります。
-特に信頼性が求められるクライアントサーバ間の通信には使用しないでください。
-このような状況では、[OAuth 2.0](/www.passportjs.org/guide/oauth2-api/)のようなフレームワークが推奨されています。</small>
-
-Basic認証とDigest認証は、[passport-http](https://github.com/jaredhanson/passport-http)モジュールで提供されています。
-
 <blockquote class="original">
 Along with defining HTTP's authentication framework, [RFC 2617](http://tools.ietf.org/html/rfc2617)
 also defined the Basic and Digest authentications schemes.  These two schemes
 both use usernames and passwords as credentials to authenticate users, and are
 often used to protect API endpoints.
+</blockquote>
 
+<small>注意: このようなユーザーIDとパスワードに依存する認証は安全性に問題があります。
+特に信頼性が求められるクライアントサーバ間の通信には使用しないでください。
+このような状況では、[OAuth 2.0](/www.passportjs.org/guide/oauth2-api/)のようなフレームワークが推奨されています。</small>
+
+<blockquote class="original">
 It should be noted that relying on username and password creditials can have
 adverse security impacts, especially in scenarios where there is not a high
 degree of trust between the server and client.  In these situations, it is
 recommended to use an authorization framework such as [OAuth 2.0](/guide/oauth2-api/).
+</blockquote>
 
+Basic認証とDigest認証は、[passport-http](https://github.com/jaredhanson/passport-http)モジュールで提供されています。
+
+<blockquote class="original">
 Support for Basic and Digest schemes is provided by the [passport-http](https://github.com/jaredhanson/passport-http)
 module.
 </blockquote>
@@ -118,21 +122,25 @@ passport.use(new DigestStrategy({ qop: 'auth' },
 
 上記のDigest認証では2つのコールバックが引数に指定していますが、2つ目は省略可能です。
 
+<blockquote class="original">
+The Digest strategy utilizes two callbacks, the second of which is optional.
+</blockquote>
+
 １つ目のコールバック（シークレットコールバックと呼ばれるもの）は、ユーザーIDと `done` を引数にとります。
 `done` には、ユーザーIDとパスワード（平文）を指定してください。
 指定されたユーザーID、パスワードからハッシュ値が計算されサーバからリクエストされるものと合致するか検証されます。
+
+<blockquote class="original">
+The first callback, known as the "secret callback" accepts the username and
+calls `done` supplying a user and the corresponding secret password.  The
+password is used to compute a hash, and authentication fails if it does not
+match that contained in the request.
+</blockquote>
 
 2つ目のコールバックは、検証用コールバックであり、リプレイアタック等の脅威を避けるために
 サーバから受け取るランダムな文字列（nonce）の検証が可能です。
 
 <blockquote class="original">
-The Digest strategy utilizes two callbacks, the second of which is optional.
-
-The first callback, known as the "secret callback" accepts the username and
-calls `done` supplying a user and the corresponding secret password.  The
-password is used to compute a hash, and authentication fails if it does not
-match that contained in the request.
-
 The second "validate callback" accepts nonce related params, which can be
 checked to avoid replay attacks.
 </blockquote>
