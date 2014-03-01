@@ -8,32 +8,40 @@ title: 'OAuth APIs'
 [OAuth](http://oauth.net/) は [RFC 5849](http://tools.ietf.org/html/rfc5849) で策定された、外部のアプリケーションがユーザーのデータへのアクセス権を獲得できるようにする枠組みです。
 この枠組みでは、ユーザーはアプリケーションにパスワードを供与する必要がありません。
 
+<blockquote class="original">
+[OAuth](http://oauth.net/) (formally specified by [RFC 5849](http://tools.ietf.org/html/rfc5849))
+provides a means for users to grant third-party applications access to their
+data without exposing their password to those applications.
+</blockquote>
+
 このプロトコルを利用すれば、Web アプリケーションのセキュリティを改善することができます。
 たとえば、パスワードを外部のサービスに供与することによるリスクを避けることができます。
 
+<blockquote class="original">
+The protocol greatly improves the security of web applications, in particular,
+and OAuth has been important in bringing attention to the potential dangers of
+exposing passwords to external services.
+</blockquote>
+
 OAuth 1.0 は未だに広く使われていますが、改良版である [OAuth 2.0](/www.passportjs.org/guide/oauth2-api/) への切り替えが推奨されています。
 
+<blockquote class="original">
+While OAuth 1.0 is still widely used, it has been superseded by [OAuth 2.0](/guide/oauth2-api/).
+It is recommended to base new implementations on OAuth 2.0.
+</blockquote>
+
 OAuth によって API のエンドポイントを保護するためには、3つのステップを踏む必要があります。
+
+<blockquote class="original">
+When using OAuth to protect API endpoints, there are three distinct steps that
+that must be performed:
+</blockquote>
 
   1. アプリケーションは、ユーザーに保護されたリソースへのアクセス許可をリクエストします
   2. ユーザーに許可されると、アプリケーションにトークンが発行されます
   3. アプリケーションはトークンを使って、保護されたリソースにアクセスします
 
 <blockquote class="original">
-[OAuth](http://oauth.net/) (formally specified by [RFC 5849](http://tools.ietf.org/html/rfc5849))
-provides a means for users to grant third-party applications access to their
-data without exposing their password to those applications.
-
-The protocol greatly improves the security of web applications, in particular,
-and OAuth has been important in bringing attention to the potential dangers of
-exposing passwords to external services.
-
-While OAuth 1.0 is still widely used, it has been superseded by [OAuth 2.0](/guide/oauth2-api/).
-It is recommended to base new implementations on OAuth 2.0.
-
-When using OAuth to protect API endpoints, there are three distinct steps that
-that must be performed:
-
   1. The application requests permission from the user for access to protected
      resources.
   2. A token is issued to the application, if permission is granted by the user.
@@ -46,28 +54,34 @@ that must be performed:
 Passportの姉妹プロジェクトである[OAuthorize](https://github.com/jaredhanson/oauthorize)は、
 OAuth認証を行うためのToolKitです。
 
+<blockquote class="original">
+[OAuthorize](https://github.com/jaredhanson/oauthorize), a sibling project to
+Passport, provides a tookit for implementing OAuth service providers.
+</blockquote>
+
 権限付与プロセスでは、アプリケーションとユーザーのリクエスト、ユーザーの許可、
 ユーザーが意思決定できる程度の詳細情報の提供などの複雑な手続きをとらなければなりません。
 
+<blockquote class="original">
+The authorization process is a complex sequence that involves authenticating
+both the requesting application and the user, as well as prompting the user for
+permission, ensuring that enough detail is provided for the user to make an
+informed decision.
+</blockquote>
+
 加えて、アプリケーションのアクセスできる範囲をどの程度で制限するかという判断は実装者ごとに異なります。
+
+<blockquote class="original">
+Additionally, it is up to the implementor to determine what limits can be placed
+on the application regarding scope of access, as well as subsequently enforcing
+those limits.
+</blockquote>
 
 そしてツールキットであるOAuthorizeは実装を決定してくれるものではありません。
 このガイドはこれらの問題を解決するものではありませんが、セキュリティに関する
 懸念事項を理解するためにも、OAuthを使用することを強くオススメします。
 
 <blockquote class="original">
-[OAuthorize](https://github.com/jaredhanson/oauthorize), a sibling project to
-Passport, provides a tookit for implementing OAuth service providers.
-
-The authorization process is a complex sequence that involves authenticating
-both the requesting application and the user, as well as prompting the user for
-permission, ensuring that enough detail is provided for the user to make an
-informed decision.
-
-Additionally, it is up to the implementor to determine what limits can be placed
-on the application regarding scope of access, as well as subsequently enforcing
-those limits.
-
 As a toolkit, OAuthorize does not attempt to make implementation decisions.
 This guide does not cover these issues, but does highly recommended that
 services deploying OAuth have a complete understanding of the security
@@ -124,6 +138,12 @@ passport.use('token', new TokenStrategy(
 OAuthでは、アプリケーションが求める個人情報及びユーザー固有のトークンはどちらも証明書として
 エンコードされています。
 
+<blockquote class="original">
+In contrast to other strategies, there are two callbacks required by OAuth.  In
+OAuth, both an identifier for the requesting application and the user-specific
+token are encoded as credentials.
+</blockquote>
+
 １つ目のコールバックは、"コンシュマコールバック"として知られており、アプリケーションが作成した
 秘密情報を含んだリクエストを見つけ出すものです。
 ２つ目は、"トークンコールバック"と呼ばれており、ユーザー及びトークン、さらに対応するシークレットを
@@ -131,22 +151,20 @@ OAuthでは、アプリケーションが求める個人情報及びユーザー
 コンシューマ及びトークンコールバックによって提供されるシークレットは証明書の作成のために用いられ、
 リクエストの証明書と異なっていた場合には認証失敗となります。
 
-最後に、オプションとして"検証用コールバック"があります。
-このコールバックは、リクエスト中のタイムスタンプや、名前を確認することにより
-リプレイアタックの脅威を防ぐためによく使われます。
-
 <blockquote class="original">
-In contrast to other strategies, there are two callbacks required by OAuth.  In
-OAuth, both an identifier for the requesting application and the user-specific
-token are encoded as credentials.
-
 The first callback is known as the "consumer callback", and is used to find the
 application making the request, including the secret assigned to it.  The second
 callback is the "token callback", which is used to indentify the user as well as
 the token's corresponding secret.  The secrets supplied by the consumer and
 token callbacks are used to compute a signature, and authentication fails if it
 does not match the request signature.
+</blockquote>
 
+最後に、オプションとして"検証用コールバック"があります。
+このコールバックは、リクエスト中のタイムスタンプや、名前を確認することにより
+リプレイアタックの脅威を防ぐためによく使われます。
+
+<blockquote class="original">
 A final "validate callback" is optional, which can be used to prevent replay
 attacks by checking the timestamp and nonce used in the request.
 </blockquote>
