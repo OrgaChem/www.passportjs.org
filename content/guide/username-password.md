@@ -31,10 +31,10 @@ passport.use(new LocalStrategy(
     User.findOne({ username: username }, function(err, user) {
       if (err) { return done(err); }
       if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
+        return done(null, false, { message: 'ユーザーIDが間違っています。' });
       }
       if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
+        return done(null, false, { message: 'パスワードが間違っています。' });
       }
       return done(null, user);
     });
@@ -42,7 +42,7 @@ passport.use(new LocalStrategy(
 ));
 ```
 
-ローカルの認証に検証用コールバックには、アプリケーションのログインフォームによって送信されてきた `username` と `password` が引数として与えられています。
+検証用コールバックには、アプリケーションのログインフォームによって送信されてきた `username` と `password` が引数として与えられています。
 
 <blockquote class="original">
 The verify callback for local authentication accepts `username` and `password`
@@ -69,12 +69,12 @@ log in.
         <input type="password" name="password"/>
     </div>
     <div>
-        <input type="submit" value="Log In"/>
+        <input type="submit" value="ログイン"/>
     </div>
 </form>
 ```
 
-#### ルート
+#### ルーティング
 
 ログインフォームの内容は `POST` メソッドでサーバーに送信されます。
 `local` ストラテジーでログイン要求を処理するためには、`authenticate()` を使います。
