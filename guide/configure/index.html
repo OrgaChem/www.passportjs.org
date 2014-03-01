@@ -51,33 +51,39 @@
   <div class="span9 content">
     <h3 id="-">設定</h3>
 <p>Passportを認証に用いるためには、以下の3つの項目を設定する必要があります:</p>
+<blockquote class="original">
+    Three pieces need to be configured to use Passport for authentication:
+</blockquote>
+
 <ol>
 <li>認証用ストラテジーの選択</li>
 <li>アプリケーションミドルウェア </li>
-<li><p>セッション管理(<em>省略可</em>)</p>
-<p><blockquote class="original">
-Three pieces need to be configured to use Passport for authentication:</p>
-</li>
-<li><p>Authentication strategies</p>
-</li>
-<li>Application middleware</li>
-<li>Sessions (<em>optional</em>)
-</blockquote></li>
+<li>セッション管理(<em>省略可</em>)</li>
 </ol>
+<blockquote class="original">
+ 1. Authentication strategies
+ 2. Application middleware
+ 3. Sessions (<em>optional</em>)
+</blockquote>
+
 <h4 id="-">ストラテジーの設定</h4>
 <p>Passportは認証のために<em>ストラテジー</em>と呼ばれるものを認証に使用します。
 ストラテジーは、ユーザーIDとパスワード用いた検証や、<a href="http://oauth.net/">OAuth</a>を用いた権限委譲、分散認証システムである<a href="http://openid.net/">OpenID</a>を用いた認証に対応しています。</p>
-<p>Passportを用いて認証を行う前に、必ず1つ以上のストラテジーに関する設定が必要になります。</p>
-<p>ストラテジーやその設定は <code>use()</code> 関数にて提供されます。
-以下に、<code>LocalStrategy</code> でのユーザーID、パスワードを用いた認証の例を示します。</p>
 <blockquote class="original">
 Passport uses what are termed <em>strategies</em> to authenticate requests.  Strategies
 range from verifying a username and password, delegated authentication using <a href="http://oauth.net/">OAuth</a>
 or federated authentication using <a href="http://openid.net/">OpenID</a>.
+</blockquote>
 
+<p>Passportを用いて認証を行う前に、必ず1つ以上のストラテジーに関する設定が必要になります。</p>
+<blockquote class="original">
 Before asking Passport to authenticate a request, the strategy (or strategies)
 used by an application must be configured.
+</blockquote>
 
+<p>ストラテジーやその設定は <code>use()</code> 関数にて提供されます。
+以下に、<code>LocalStrategy</code> でのユーザーID、パスワードを用いた認証の例を示します。</p>
+<blockquote class="original">
 Strategies, and their configuration, are supplied via the <code>use()</code> function.  For
 example, the following uses the <code>LocalStrategy</code> for username/password
 authentication.
@@ -104,14 +110,16 @@ passport.use(<span class="keyword">new</span> LocalStrategy(
 <p>この例では重要なコンセプトを説明します。
 ストラテジーは<em>検証用コールバック</em>(<em>verify callback</em>)と呼ばれるものを必要とします。
 検証用コールバックの目的は、認証情報を照合し、ユーザーを特定することです。</p>
-<p>認証がリクエストされると、Passportはリクエストに含まれる認証情報を解析します。
-上の例では、ユーザーIDとパスワードが認証情報として検証用コールバックの引数に指定されます。
-認証情報が正しい場合は、検証用コールバック内で <code>done</code> を実行する際に Passport に認証済のユーザー情報を返してください。</p>
 <blockquote class="original">
 This example introduces an important concept.  Strategies require what is known
 as a <em>verify callback</em>.  The purpose of a verify callback is to find the user
 that possesses a set of credentials.
+</blockquote>
 
+<p>認証がリクエストされると、Passportはリクエストに含まれる認証情報を解析します。
+上の例では、ユーザーIDとパスワードが認証情報として検証用コールバックの引数に指定されます。
+認証情報が正しい場合は、検証用コールバック内で <code>done</code> を実行する際に Passport に認証済のユーザー情報を返してください。</p>
+<blockquote class="original">
 When Passport authenticates a request, it parses the credentials contained in
 the request.  It then invokes the verify callback with those credentials as
 arguments, in this case <code>username</code> and <code>password</code>.  If the credentials are
@@ -151,15 +159,17 @@ conventional Node style.
 認証時の例外は、認証に失敗したことによるものですから、正常な動作により引き起こされる例外です。
 この点はサーバ側の例外と明確に異なっています。
 この場合は、<code>err</code> が <code>null</code> であることは保障され、詳細なメッセージを追加する目的で引数の最後のパラメータを使用する事が出来ます。</p>
-<p>このようにストラテジーに処理を委譲することで、検証用コールバックは、Passportとデータベースを疎に保ちます。
-これによりアプリケーションは、認証レイヤーでの様々な前提条件にとらわれず、ユーザー情報をどのように格納するか自由に選択できます。</p>
 <blockquote class="original">
 Note that it is important to distinguish the two failure cases that can occur.
 The latter is a server exception, in which <code>err</code> is set to a non-<code>null</code> value.
 Authentication failures are natural conditions, in which the server is operating
 normally.  Ensure that <code>err</code> remains <code>null</code>, and use the final argument to pass
 additional details.
+</blockquote>
 
+<p>このようにストラテジーに処理を委譲することで、検証用コールバックは、Passportとデータベースを疎に保ちます。
+これによりアプリケーションは、認証レイヤーでの様々な前提条件にとらわれず、ユーザー情報をどのように格納するか自由に選択できます。</p>
+<blockquote class="original">
 By delegating in this manner, the verify callback keeps Passport database
 agnostic.  Applications are free to choose how user information is stored,
 without any assumptions imposed by the authentication layer.
@@ -168,6 +178,13 @@ without any assumptions imposed by the authentication layer.
 <h4 id="-">ミドルウェアの設定</h4>
 <p><a href="http://senchalabs.github.com/connect/">Connect</a> or <a href="http://expressjs.com/">Express</a>を基盤にしたアプリケーションでは、<code>passport.initialize()</code> を用いて Passport の初期化を行うことが必要になります。
 アプリケーションでログイン後のセッション管理を行う場合には、<code>passport.session()</code> の記述も必要になります。</p>
+<blockquote class="original">
+In a <a href="http://senchalabs.github.com/connect/">Connect</a> or
+<a href="http://expressjs.com/">Express</a>-based application, <code>passport.initialize()</code>
+middleware is required to initialize Passport.  If your application uses
+persistent login sessions, <code>passport.session()</code> middleware must also be used.
+</blockquote>
+
 <pre><code class="undefinedjavascript">app.configure(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   app.use(express.static(<span class="string">'public'</span>));
   app.use(express.cookieParser());
@@ -179,18 +196,27 @@ without any assumptions imposed by the authentication layer.
 });</code></pre>
 <p>セッションのサポートはほとんどのアプリケーションで推奨されていますが、オプションで省略することができます。
 セッションのサポート機能を有効にする場合は、正しい順番でログインセッションを処理できるように、<code>passport.session()</code> <em>の前に</em> <code>express.session()</code> を記述してください。</p>
+<blockquote class="original">
+Note that enabling session support is entirely optional, though it is
+recommended for most applications.  If enabled, be sure to use <code>express.session()</code>
+<em>before</em>  <code>passport.session()</code> to ensure that the login session is restored in
+the correct order.
+</blockquote>
+
 <h4 id="-">セッション管理に関する設定</h4>
 <p>現在Web上にあるほとんどのアプリケーションは、都度認証を行うのではなく、認証情報をログインリクエストのときのみ送信しています。
 そして、認証が成功した場合は、ブラウザ上のクッキーを利用することでセッションを確立・維持する作りになっています。</p>
-<p>この仕組みは、ユニークなクッキーによるセッション管理によって実現されています。
-ログイン後のリクエストそれぞれに認証情報を含むことはありません。
-セッションのサポートのために、パスポートは <code>user</code> インスタンスをシリアライズ/デシリアライズしてセッション情報として管理しています。</p>
 <blockquote class="original">
 In a typical web application, the credentials used to authenticate a user will
 only be transmitted during the login request.  If authentication succeeds, a
 session will be established and maintained via a cookie set in the user&#39;s
 browser.
+</blockquote>
 
+<p>この仕組みは、ユニークなクッキーによるセッション管理によって実現されています。
+ログイン後のリクエストそれぞれに認証情報を含むことはありません。
+セッションのサポートのために、パスポートは <code>user</code> インスタンスをシリアライズ/デシリアライズしてセッション情報として管理しています。</p>
+<blockquote class="original">
 Each subsequent request will not contain credentials, but rather the unique
 cookie that identifies the session.  In order to support login sessions,
 Passport will serialize and deserialize <code>user</code> instances to and from the
