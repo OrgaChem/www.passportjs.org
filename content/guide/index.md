@@ -35,7 +35,7 @@ require token-based credentials to protect access.
 </blockquote>
 
 Passport はアプリケーション毎に、それぞれ適した認証があることを踏まえてつくられています。
-_アプリケーションへの認証機能の組み込みは、ストラテジー_と呼ばれる独立した認証メカニズムのモジュールを選ぶだけで実現できます。
+アプリケーションへの認証機能の組み込みは、_ストラテジー_と呼ばれる独立した認証メカニズムのモジュールを選ぶだけで実現できます。
 
 <blockquote class="original">
 Passport recognizes that each application has unique authentication
