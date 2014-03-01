@@ -23,7 +23,7 @@ application.
 モダンな Web アプリケーションは多くの認証形態を採用しています。
 これまで、ユーザーはユーザーIDとパスワードでログインしてきました。
 しかし、いまどきは[Facebook](https://www.facebook.com/) や [Twitter](https://twitter.com/) などのソーシャルネットワーキングと連携し、 [OAuth](http://oauth.net/) を使ったシングルサインオンをおこなう手法が一般的に普及してきています。
-これらの API を公開しているサービスでは、アクセスを保護するためにトークンベースの認証情報を必要としています。
+これらのサービスでは公開するAPIへのアクセスを保護するために、トークンベースの認証情報を必要としています。
 
 <blockquote class="original">
 In modern web applications, authentication can take a variety of forms.
