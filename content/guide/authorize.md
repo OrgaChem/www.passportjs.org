@@ -8,23 +8,27 @@ title: '権限付与'
 アプリケーションが複数のサードパーティからの情報を必要とする場合がよくあります。
 このようなとき、アプリケーションはユーザーに Facebook や Twitter などのアカウントとの“連携”を要求することになるでしょう。
 
+<blockquote class="original">
+An application may need to incorporate information from multiple third-party
+services.  In this case, the application will request the user to "connect", for
+example, both their Facebook and Twitter accounts.
+</blockquote>
+
 これは、ユーザーがすでにアプリケーションから認証されていて、かつサードパーティのアカウントからの許可や連携のみが必要な状況です。
 このような認証や権限付与の場合にも Passport を使うことができます。
+
+<blockquote class="original">
+When this occurs, a user will already be authenticated with the application, and
+any subsequent third-party accounts merely need to be authorized and associated
+with the user.  Because authentication and authorization in this situation are
+similar, Passport provides a means to accommodate both.
+</blockquote>
 
 権限付与は `passport.authorize()` の呼び出しによって動作します。
 権限付与の申請が承諾されれば、ストラテジーの検証用コールバックの `req.account` に結果がセットされます。
 ログインセッションや `req.user` に影響は及びません。
 
 <blockquote class="original">
-An application may need to incorporate information from multiple third-party
-services.  In this case, the application will request the user to "connect", for
-example, both their Facebook and Twitter accounts.
-
-When this occurs, a user will already be authenticated with the application, and
-any subsequent third-party accounts merely need to be authorized and associated
-with the user.  Because authentication and authorization in this situation are
-similar, Passport provides a means to accommodate both.
-
 Authorization is performed by calling `passport.authorize()`.  If authorization
 is granted, the result provided by the strategy's verify callback will be
 assigned to `req.account`.  The existing login session and `req.user` will be
@@ -110,13 +114,15 @@ associate the account with the authenticated user.
 
 このアプローチのデメリットは2つのストラテジーのインスタンスが必要なことです。
 
+<blockquote class="original">
+One downside to the approach described above is that it requires two instances
+of the same strategy and supporting routes.
+</blockquote>
+
 これを避けるためには `passReqToCallback` オプションを `true` にセットしてください。
 このオプションが有効になると、 *第一*引数として `req` が検証用コールバックに渡されるようになります。
 
 <blockquote class="original">
-One downside to the approach described above is that it requires two instances
-of the same strategy and supporting routes.
-
 To avoid this, set the strategy's `passReqToCallback` option to `true`.  With
 this option enabled, `req` will be passed as the *first* argument to the verify
 callback.
