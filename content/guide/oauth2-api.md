@@ -5,7 +5,7 @@ title: 'OAuth 2.0 API'
 
 ### OAuth 2.0
 
-OAuth 2.0 は [RFC 6749](http://tools.ietf.org/html/rfc6749) に策定された、ユーザーのアクセス権限を外部のアプリケーションに付与するための枠組みです。権限付与が許可されると、アプリケーションは認証情報としてトークンを利用することになります。
+OAuth 2.0 は [RFC 6749](http://tools.ietf.org/html/rfc6749)で策定された、ユーザーのアクセス権限を外部のアプリケーションに付与するための枠組みです。権限付与が許可されると、アプリケーションは認証情報としてトークンを利用することになります。
 この仕組みを使うと、2つの観点で安全性が高まります：
 
 <blockquote class="original">
@@ -38,7 +38,7 @@ When using OAuth 2.0 to protect API endpoints, there are three distinct steps
 that must be performed:
 </blockquote>
 
-  1. アプリケーションは、ユーザーに保護されたリソースへのアクセス許可をリクエストします
+  1. アプリケーションは、保護されたリソースへのアクセス許可をユーザーにリクエストします
   2. ユーザーに許可されると、アプリケーションにトークンが発行されます
   3. アプリケーションはトークンを使って、保護されたリソースにアクセスします
 
@@ -77,7 +77,7 @@ those limits.
 </blockquote>
 
 OAuth2orize は、実装を決定するようなことはしてくれません。
-しかし、OAuth 2.0 を利用するサービスにおけるセキュリティの懸念事項を理解するために、OAuth2orize を利用することを強く勧めます。
+このガイドはこれらの問題点をカバーするものではありませんが、OAuth2.0での認証を提供しているサービスではセキュリティに関する問題意識を持つことを強く推奨しています。
 
 <blockquote class="original">
 As a toolkit, OAuth2orize does not attempt to make implementation decisions.
@@ -89,7 +89,7 @@ considerations involved.
 #### 認証トークン
 
 OAuth 2.0 が提供する枠組みは、発行されるトークンの種類を任意に拡張できます。
-しかし、実際には広く使われていますトークンの種類は限られています。
+しかし、実際には広く使われてるトークンの種類は限られています。
 
 <blockquote class="original">
 OAuth 2.0 provides a framework, in which an arbitrarily extensible set of token
@@ -121,7 +121,7 @@ module.
 $ npm install passport-http-bearer
 ```
 
-##### Configuration
+##### 設定
 
 ```javascript
 passport.use(new BearerStrategy(
