@@ -47,11 +47,7 @@ semantics.
 </blockquote>
 
 幸運にも、Passport は OAuth との複雑なやり取りからアプリケーションを守る作りとなっています。
-多くの場合、特定のプロバイダーには対応のストラテジーを用いることで一般的なOAuthストラテジーの役割をかわりに果たす
-ことが可能です。この方法により、設定の煩わしさや、特定のプロバイダーの奇抜な実装を包括した
-認証が可能です。
-
-[Facebook](/www.passportjs.org/guide/facebook/)、 [Twitter](/www.passportjs.org/guide/twitter/)、
+多くの場合、プロバイダー毎に専用のストラテジーが用意されています。このストラテジーを、下記のような汎用的なOAuthストラテジーのかわりとして用いることができますこの方法により、設定を簡略化でき、さらに特定のプロバイダーの奇抜な実装にも対応した認証が可能です。[Facebook](/www.passportjs.org/guide/facebook/)、 [Twitter](/www.passportjs.org/guide/twitter/)、
 それ以外にも様々なプロバイダー([providers](/www.passportjs.org/guide/providers/))に対応しています。
 
 <blockquote class="original">
@@ -78,7 +74,7 @@ $ npm install passport-oauth
 
 ### OAuth 1.0
 
-OAuth 1.0 は、権限移譲型の認証用ストラテジーであり、認証にはいくつかのステップがあります。
+OAuth 1.0 は、移譲型の認証用ストラテジーであり、認証にはいくつかのステップがあります。
 まず１つ目に、リクエストトークンを得る必要があります。
 次に、ユーザーをサービス・プロバイダーへ認証を行うためにリダイレクトさせます。
 最後に、承認が得られた後、アプリケーションへとユーザーをリダイレクトさせ、リクエストトークンと
@@ -96,9 +92,9 @@ can be exchanged for an access token.  The application requesting access, known
 as a _consumer_, is identified by a consumer key and consumer secret.
 </blockquote>
 
-#### Configuration
+#### 設定
 
-一般的な OAuth 認証では、コンシューマキー及びシークレット、また、ユーザーに提供する
+一般的な OAuth 認証では、コンシューマキー及びコンシューマシークレット、また、ユーザーに提供する
 APIのエンドポイントを設定によって明示します。
 
 <blockquote class="original">
@@ -126,10 +122,10 @@ passport.use('provider', new OAuthStrategy({
 ));
 ```
 
-OAuth認証に基づくストラテジーのための検証用コールバックは、`token`、`tokenSecret`、
-また、`profile`、`argumentes`を提供します。`token` はアクセストークンであり、`tokenSecret` は
-アクセストークンに紐づくシークレットです。`profile` にはサービスプロバイダーによって提供される
-ユーザー情報が格納されています。詳しくは、[User Profile](/www.passportjs.org/guide/profile/)を御覧ください。
+OAuth認証に基づくストラテジーのための検証用コールバックの引数では、`token`、`tokenSecret`、
+また、`profile`が利用できます。`token` はアクセストークンであり、`tokenSecret` は
+アクセストークンに紐づくコンシューマシークレットです。`profile` にはサービスプロバイダーによって提供される
+ユーザー情報が格納されています。詳しくは、[User Profile](/www.passportjs.org/guide/profile/)を参照してください。
 
 <blockquote class="original">
 The verify callback for OAuth-based strategies accepts `token`, `tokenSecret`,
@@ -177,17 +173,17 @@ authentication process when clicked.
 </blockquote>
 
 ```xml
-<a href="/auth/provider">Log In with OAuth Provider</a>
+<a href="/auth/provider">OAuth 1.0 でログイン</a>
 ```
 
 ### OAuth 2.0
 
-OAuth 2.0 は、OAuth 1.0 の正式な後継者であり、短所を補うように設計されています。
+OAuth 2.0 は、OAuth 1.0 の正式な後継であり、短所を補うように設計されています。
 認証フローにおいて、本質的な部分に違いはありません。
 ユーザーはまず始めにサービスプロバイダーへと認証のためにリダイレクトされます。
-その後、承認が得られた後アクセストークンと交換可能なコードと共にアプリケーションへと
+承認が得られた後、アクセストークンと交換可能なコードと共にアプリケーションへと
 再びリダイレクトされます。
-サービスプロバイダーへのアクセスを要求するアプリケーションは、それぞれID及びシークレットによって
+サービスプロバイダーへのアクセスを要求するアプリケーションは、それぞれクライアントID及びクライアントシークレットによって
 特定されます。
 
 <blockquote class="original">
@@ -203,7 +199,7 @@ secret.
 #### 設定
 
 一般的なOAuth 2.0 ストラテジーでは、クライアントID及びクライントシークレット、また、
-ユーザーへ提供するエンドポイントを設定により明示します。
+ユーザーへ提供するエンドポイントを設定します。
 
 <blockquote class="original">
 When using the generic OAuth 2.0 strategy, the client ID, client secret, and
@@ -229,8 +225,8 @@ passport.use('provider', new OAuth2Strategy({
 ));
 ```
 
-OAuth 2.0 に基づくストラテジーの為の検証用コールバックでは、`accessToken`、`refreshToken`、
-また、`profile`が提供されます。`refreshToken` は新しいアクセストークンを取得するために使用され、
+OAuth 2.0 に基づくストラテジーの為の検証用コールバックの引数では、`accessToken`、`refreshToken`、
+また、`profile`が利用できます。`refreshToken` は新しいアクセストークンを取得するために使用され、
 プロバイダーによってリフレッシュトークンが提供されない場合は、`undefined` となります。
 `profile` はサービスプロバイダーによって提供されるユーザー情報が格納されています。
 詳しくは、[User Profile](/www.passportjs.org/guide/profile/)を参照してください。
@@ -285,7 +281,7 @@ app.get('/auth/provider',
 );
 ```
 
-複数のスコープをアレイとして指定することも可能です。
+複数のスコープを配列として指定することも可能です。
 
 <blockquote class="original">
 Multiple scopes can be specified as an array.
@@ -315,5 +311,5 @@ authentication process when clicked.
 </blockquote>
 
 ```xml
-<a href="/auth/provider">Log In with OAuth 2.0 Provider</a>
+<a href="/auth/provider">OAuth 2.0 でログイン</a>
 ```
