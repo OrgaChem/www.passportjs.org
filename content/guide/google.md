@@ -78,7 +78,7 @@ arguments.  `profile` will contain user profile information provided by Google;
 refer to [User Profile](/www.passportjs.org/guide/profile/) for additional information.
 </blockquote>
 
-#### Routes
+#### ルーティング
 
 Google 認証には２つのルーティングが必要です。
 最初のルーティングではユーザーを Google へリダイレクトさせます。
@@ -121,5 +121,5 @@ Google.
 </blockquote>
 
 ```xml
-<a href="/auth/google">Sign In with Google</a>
+<a href="/auth/google">Google でサインイン</a>
 ```
