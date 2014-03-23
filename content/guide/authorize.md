@@ -112,7 +112,7 @@ associate the account with the authenticated user.
 
 ### 検証用コールバック内での連携
 
-このアプローチのデメリットは2つのストラテジーのインスタンスが必要なことです。
+上記のアプローチのデメリットは2つのストラテジーのインスタンスが必要なことです。
 
 <blockquote class="original">
 One downside to the approach described above is that it requires two instances
