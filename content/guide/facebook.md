@@ -146,5 +146,5 @@ Facebook.
 </blockquote>
 
 ```xml
-<a href="/auth/facebook">Login with Facebook</a>
+<a href="/auth/facebook">Facebook でログイン</a>
 ```
