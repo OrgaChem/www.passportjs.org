@@ -30,7 +30,7 @@ $ npm install passport-twitter
 Twitter 認証を使う前に [Twitter Developers](https://dev.twitter.com/) でアプリケーションを登録しておく必要があります。
 登録が終わると、アプリケーションにコンシューマーキーとコンシューマーシークレットが発行されます。
 アプリケーション側ではコールバックURLを実装しておいてください。
-このURLはアクセスが許可された後にユーザーがリダイレクトされるページを示す必要があります。
+このURLではアクセスが許可された後にユーザーがリダイレクトされるページを示す必要があります。
 
 <blockquote class="original">
 In order to use Twitter authentication, you must first create an application at
@@ -106,5 +106,5 @@ Twitter.
 </blockquote>
 
 ```xml
-<a href="/auth/twitter">Sign in with Twitter</a>
+<a href="/auth/twitter">Twitter でサインイン</a>
 ```
