@@ -50,12 +50,10 @@
   </div>
   <div class="span9 content">
     <h3 id="-">ログアウト</h3>
-<p>Passport は <code>req</code> 中に <code>logout()</code> メソッドを提供しています。
-(logOutという関数としてエイリアスが貼られています。)
+<p>Passport は <code>req</code> 中に <code>logout()</code> メソッドを提供しています(<code>logOut()</code>という関数としてエイリアスが貼られています)。
 このメソッドは、ログインセッションの終了が必要なすべてのルートハンドラで
 呼び出すことが可能です。
-<code>logout()</code> メソッドを実行することで、<code>req.user</code> プロパティを削除し、ログインセッションをクリアにします。
-(ログインセッションが無い場合でも呼び出すことは可能です)</p>
+<code>logout()</code> メソッドを実行することで、<code>req.user</code> プロパティを削除し、ログインセッションをクリアにします（ログインセッションが無い場合でも呼び出すことは可能です)。</p>
 <blockquote class="original">
 Passport exposes a <code>logout()</code> function on <code>req</code> (also aliased as <code>logOut()</code>)
 that can be called from any route handler which needs to terminate a login

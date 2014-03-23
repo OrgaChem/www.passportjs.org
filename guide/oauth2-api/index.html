@@ -50,7 +50,7 @@
   </div>
   <div class="span9 content">
     <h3 id="oauth-2-0">OAuth 2.0</h3>
-<p>OAuth 2.0 は <a href="http://tools.ietf.org/html/rfc6749">RFC 6749</a> に策定された、ユーザーのアクセス権限を外部のアプリケーションに付与するための枠組みです。権限付与が許可されると、アプリケーションは認証情報としてトークンを利用することになります。
+<p>OAuth 2.0 は <a href="http://tools.ietf.org/html/rfc6749">RFC 6749</a>で策定された、ユーザーのアクセス権限を外部のアプリケーションに付与するための枠組みです。権限付与が許可されると、アプリケーションは認証情報としてトークンを利用することになります。
 この仕組みを使うと、2つの観点で安全性が高まります：</p>
 <blockquote class="original">
 OAuth 2.0 (formally specified by <a href="http://tools.ietf.org/html/rfc6749">RFC 6749</a>)
@@ -82,7 +82,7 @@ that must be performed:
 </blockquote>
 
 <ol>
-<li>アプリケーションは、ユーザーに保護されたリソースへのアクセス許可をリクエストします</li>
+<li>アプリケーションは、保護されたリソースへのアクセス許可をユーザーにリクエストします</li>
 <li>ユーザーに許可されると、アプリケーションにトークンが発行されます</li>
 <li>アプリケーションはトークンを使って、保護されたリソースにアクセスします</li>
 </ol>
@@ -117,7 +117,7 @@ those limits.
 </blockquote>
 
 <p>OAuth2orize は、実装を決定するようなことはしてくれません。
-しかし、OAuth 2.0 を利用するサービスにおけるセキュリティの懸念事項を理解するために、OAuth2orize を利用することを強く勧めます。</p>
+このガイドはこれらの問題点をカバーするものではありませんが、OAuth2.0での認証を提供しているサービスではセキュリティに関する問題意識を持つことを強く推奨しています。</p>
 <blockquote class="original">
 As a toolkit, OAuth2orize does not attempt to make implementation decisions.
 This guide does not cover these issues, but does highly recommend that
@@ -127,7 +127,7 @@ considerations involved.
 
 <h4 id="-">認証トークン</h4>
 <p>OAuth 2.0 が提供する枠組みは、発行されるトークンの種類を任意に拡張できます。
-しかし、実際には広く使われていますトークンの種類は限られています。</p>
+しかし、実際には広く使われてるトークンの種類は限られています。</p>
 <blockquote class="original">
 OAuth 2.0 provides a framework, in which an arbitrarily extensible set of token
 types can be issued.  In practice, only specific token types have gained
@@ -151,7 +151,7 @@ module.
 
 <h5 id="-">インストール</h5>
 <pre><code class="undefinedbash">$ npm install passport-http-bearer</code></pre>
-<h5 id="configuration">Configuration</h5>
+<h5 id="-">設定</h5>
 <pre><code class="undefinedjavascript">passport.use(<span class="keyword">new</span> BearerStrategy(
   <span class="function"><span class="keyword">function</span><span class="params">(token, done)</span> {</span>
     User.findOne({ token: token }, <span class="function"><span class="keyword">function</span> <span class="params">(err, user)</span> {</span>
