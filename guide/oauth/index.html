@@ -88,10 +88,7 @@ semantics.
 </blockquote>
 
 <p>幸運にも、Passport は OAuth との複雑なやり取りからアプリケーションを守る作りとなっています。
-多くの場合、特定のプロバイダーには対応のストラテジーを用いることで一般的なOAuthストラテジーの役割をかわりに果たす
-ことが可能です。この方法により、設定の煩わしさや、特定のプロバイダーの奇抜な実装を包括した
-認証が可能です。</p>
-<p><a href="/www.passportjs.org/guide/facebook/">Facebook</a>、 <a href="/www.passportjs.org/guide/twitter/">Twitter</a>、
+多くの場合、プロバイダー毎に専用のストラテジーが用意されています。このストラテジーを、下記のような汎用的なOAuthストラテジーのかわりとして用いることができますこの方法により、設定を簡略化でき、さらに特定のプロバイダーの奇抜な実装にも対応した認証が可能です。<a href="/www.passportjs.org/guide/facebook/">Facebook</a>、 <a href="/www.passportjs.org/guide/twitter/">Twitter</a>、
 それ以外にも様々なプロバイダー(<a href="/www.passportjs.org/guide/providers/">providers</a>)に対応しています。</p>
 <blockquote class="original">
 Thankfully, Passport shields an application from the complexities of dealing
@@ -111,7 +108,7 @@ module.
 <h4 id="-">インストール</h4>
 <pre><code class="undefinedbash">$ npm install passport-oauth</code></pre>
 <h3 id="oauth-1-0">OAuth 1.0</h3>
-<p>OAuth 1.0 は、権限移譲型の認証用ストラテジーであり、認証にはいくつかのステップがあります。
+<p>OAuth 1.0 は、移譲型の認証用ストラテジーであり、認証にはいくつかのステップがあります。
 まず１つ目に、リクエストトークンを得る必要があります。
 次に、ユーザーをサービス・プロバイダーへ認証を行うためにリダイレクトさせます。
 最後に、承認が得られた後、アプリケーションへとユーザーをリダイレクトさせ、リクエストトークンと
@@ -127,8 +124,8 @@ can be exchanged for an access token.  The application requesting access, known
 as a <em>consumer</em>, is identified by a consumer key and consumer secret.
 </blockquote>
 
-<h4 id="configuration">Configuration</h4>
-<p>一般的な OAuth 認証では、コンシューマキー及びシークレット、また、ユーザーに提供する
+<h4 id="-">設定</h4>
+<p>一般的な OAuth 認証では、コンシューマキー及びコンシューマシークレット、また、ユーザーに提供する
 APIのエンドポイントを設定によって明示します。</p>
 <blockquote class="original">
 When using the generic OAuth strategy, the key, secret, and endpoints are
@@ -152,10 +149,10 @@ passport.use(<span class="string">'provider'</span>, <span class="keyword">new</
     });
   }
 ));</code></pre>
-<p>OAuth認証に基づくストラテジーのための検証用コールバックは、<code>token</code>、<code>tokenSecret</code>、
-また、<code>profile</code>、<code>argumentes</code>を提供します。<code>token</code> はアクセストークンであり、<code>tokenSecret</code> は
-アクセストークンに紐づくシークレットです。<code>profile</code> にはサービスプロバイダーによって提供される
-ユーザー情報が格納されています。詳しくは、<a href="/www.passportjs.org/guide/profile/">User Profile</a>を御覧ください。</p>
+<p>OAuth認証に基づくストラテジーのための検証用コールバックの引数では、<code>token</code>、<code>tokenSecret</code>、
+また、<code>profile</code>が利用できます。<code>token</code> はアクセストークンであり、<code>tokenSecret</code> は
+アクセストークンに紐づくコンシューマシークレットです。<code>profile</code> にはサービスプロバイダーによって提供される
+ユーザー情報が格納されています。詳しくは、<a href="/www.passportjs.org/guide/profile/">User Profile</a>を参照してください。</p>
 <blockquote class="original">
 The verify callback for OAuth-based strategies accepts <code>token</code>, <code>tokenSecret</code>,
 and <code>profile</code> arguments.  <code>token</code> is the access token and <code>tokenSecret</code> is its
@@ -194,14 +191,14 @@ A link or button can be placed on a web page, which will start the
 authentication process when clicked.
 </blockquote>
 
-<pre><code class="undefinedxml"><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"/auth/provider"</span>&gt;</span>Log In with OAuth Provider<span class="tag">&lt;/<span class="title">a</span>&gt;</span></code></pre>
+<pre><code class="undefinedxml"><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"/auth/provider"</span>&gt;</span>OAuth 1.0 でログイン<span class="tag">&lt;/<span class="title">a</span>&gt;</span></code></pre>
 <h3 id="oauth-2-0">OAuth 2.0</h3>
-<p>OAuth 2.0 は、OAuth 1.0 の正式な後継者であり、短所を補うように設計されています。
+<p>OAuth 2.0 は、OAuth 1.0 の正式な後継であり、短所を補うように設計されています。
 認証フローにおいて、本質的な部分に違いはありません。
 ユーザーはまず始めにサービスプロバイダーへと認証のためにリダイレクトされます。
-その後、承認が得られた後アクセストークンと交換可能なコードと共にアプリケーションへと
+承認が得られた後、アクセストークンと交換可能なコードと共にアプリケーションへと
 再びリダイレクトされます。
-サービスプロバイダーへのアクセスを要求するアプリケーションは、それぞれID及びシークレットによって
+サービスプロバイダーへのアクセスを要求するアプリケーションは、それぞれクライアントID及びクライアントシークレットによって
 特定されます。</p>
 <blockquote class="original">
 OAuth 2.0 is the successor to OAuth 1.0, and is designed to overcome perceived
@@ -215,7 +212,7 @@ secret.
 
 <h4 id="-">設定</h4>
 <p>一般的なOAuth 2.0 ストラテジーでは、クライアントID及びクライントシークレット、また、
-ユーザーへ提供するエンドポイントを設定により明示します。</p>
+ユーザーへ提供するエンドポイントを設定します。</p>
 <blockquote class="original">
 When using the generic OAuth 2.0 strategy, the client ID, client secret, and
 endpoints are specified as options.
@@ -237,8 +234,8 @@ passport.use(<span class="string">'provider'</span>, <span class="keyword">new</
     });
   }
 ));</code></pre>
-<p>OAuth 2.0 に基づくストラテジーの為の検証用コールバックでは、<code>accessToken</code>、<code>refreshToken</code>、
-また、<code>profile</code>が提供されます。<code>refreshToken</code> は新しいアクセストークンを取得するために使用され、
+<p>OAuth 2.0 に基づくストラテジーの為の検証用コールバックの引数では、<code>accessToken</code>、<code>refreshToken</code>、
+また、<code>profile</code>が利用できます。<code>refreshToken</code> は新しいアクセストークンを取得するために使用され、
 プロバイダーによってリフレッシュトークンが提供されない場合は、<code>undefined</code> となります。
 <code>profile</code> はサービスプロバイダーによって提供されるユーザー情報が格納されています。
 詳しくは、<a href="/www.passportjs.org/guide/profile/">User Profile</a>を参照してください。</p>
@@ -282,7 +279,7 @@ scope option.
 <pre><code class="undefinedjavascript">app.get(<span class="string">'/auth/provider'</span>,
   passport.authenticate(<span class="string">'provider'</span>, { scope: <span class="string">'email'</span> })
 );</code></pre>
-<p>複数のスコープをアレイとして指定することも可能です。</p>
+<p>複数のスコープを配列として指定することも可能です。</p>
 <blockquote class="original">
 Multiple scopes can be specified as an array.
 </blockquote>
@@ -304,7 +301,7 @@ A link or button can be placed on a web page, which will start the
 authentication process when clicked.
 </blockquote>
 
-<pre><code class="undefinedxml"><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"/auth/provider"</span>&gt;</span>Log In with OAuth 2.0 Provider<span class="tag">&lt;/<span class="title">a</span>&gt;</span></code></pre>
+<pre><code class="undefinedxml"><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"/auth/provider"</span>&gt;</span>OAuth 2.0 でログイン<span class="tag">&lt;/<span class="title">a</span>&gt;</span></code></pre>
   </div>
 </div>
       <div class="footer">

@@ -50,8 +50,8 @@
   </div>
   <div class="span9 content">
     <h3 id="basic-digest-">Basic認証 &amp; Digest認証</h3>
-<p>HTTPの認証フレームワークを規定すると共に、<a href="http://tools.ietf.org/html/rfc2617">RFC 2617</a> には、Basic認証、Digest認証の枠組みが策定されています。
-これらの2つの枠組みは、ユーザーIDとパスワードをユーザー認証のために使用し、またAPIのエンドポイントを保護するためにも使用されます。</p>
+<p><a href="http://tools.ietf.org/html/rfc2617">RFC 2617</a>には、HTTPの認証フレームワークを規定すると共に、Basic認証、Digest認証の枠組みが策定されています。
+これらの2つの枠組みは、ユーザーIDとパスワードによって認証を行い、またユーザーへ提供するAPIのエンドポイントを保護するためにも使用されます。</p>
 <blockquote class="original">
 Along with defining HTTP&#39;s authentication framework, <a href="http://tools.ietf.org/html/rfc2617">RFC 2617</a>
 also defined the Basic and Digest authentications schemes.  These two schemes
@@ -61,7 +61,7 @@ often used to protect API endpoints.
 
 <p><small>注意: このようなユーザーIDとパスワードに依存する認証は安全性に問題があります。
 特に信頼性が求められるクライアントサーバ間の通信には使用しないでください。
-このような状況では、<a href="/www.passportjs.org/guide/oauth2-api/">OAuth 2.0</a>のようなフレームワークが推奨されています。</small></p>
+このようなケースでは、<a href="/www.passportjs.org/guide/oauth2-api/">OAuth 2.0</a>のようなフレームワークが推奨されています。</small></p>
 <blockquote class="original">
 It should be noted that relying on username and password creditials can have
 adverse security impacts, especially in scenarios where there is not a high
@@ -97,7 +97,7 @@ implementing this scheme.
     });
   }
 ));</code></pre>
-<p>Basic認証のための検証用コールバックは、ユーザーIDとパスワードの引数を受け動作します。</p>
+<p>Basic認証のための検証用コールバックでは引数として、<code>username</code>と<code>password</code>を利用できます。</p>
 <blockquote class="original">
 The verify callback for Basic authentication accepts <code>username</code> and <code>password</code>
 arguments.
@@ -110,7 +110,7 @@ arguments.
   <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> {</span>
     res.json(req.user);
   });</code></pre>
-<p><code>basic</code> をストラテジーに指定し  <code>passport.authenticate()</code> を使用することでAPIエンドポイントを保護することができます。
+<p><code>basic</code> をストラテジーに指定し<code>passport.authenticate()</code>を使用することでユーザーへ提供するAPIのエンドポイントを保護することができます。
 APIの利用にセッション管理は必要ないことが多いので、セッションの無効化も可能です。</p>
 <blockquote class="original">
 Specify <code>passport.authenticate()</code> with the <code>basic</code> strategy to protect API
@@ -136,11 +136,11 @@ avoid sending the password in the clear.
     });
   },
   <span class="function"><span class="keyword">function</span><span class="params">(params, done)</span> {</span>
-    <span class="comment">// validate nonces as necessary</span>
+    <span class="comment">// 必要であればnonceの検証をしてください</span>
     done(<span class="literal">null</span>, <span class="literal">true</span>)
   }
 ));</code></pre>
-<p>上記のDigest認証では2つのコールバックが引数に指定していますが、2つ目は省略可能です。</p>
+<p>上記のDigest認証では2つのコールバックが引数に指定されていますが、2つ目は省略可能です。</p>
 <blockquote class="original">
 The Digest strategy utilizes two callbacks, the second of which is optional.
 </blockquote>
@@ -162,7 +162,7 @@ The second &quot;validate callback&quot; accepts nonce related params, which can
 checked to avoid replay attacks.
 </blockquote>
 
-<h4 id="protect-endpoints">Protect Endpoints</h4>
+<h4 id="-api-">ユーザーへ提供するAPIのエンドポイント保護</h4>
 <pre><code class="undefinedjavascript">app.get(<span class="string">'/api/me'</span>, 
   passport.authenticate(<span class="string">'digest'</span>, { session: <span class="literal">false</span> }),
   <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> {</span>

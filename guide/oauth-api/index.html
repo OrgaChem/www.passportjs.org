@@ -72,14 +72,14 @@ While OAuth 1.0 is still widely used, it has been superseded by <a href="/guide/
 It is recommended to base new implementations on OAuth 2.0.
 </blockquote>
 
-<p>OAuth によって API のエンドポイントを保護するためには、3つのステップを踏む必要があります。</p>
+<p>OAuth によってユーザーへ提供する API のエンドポイントを保護するためには、3つのステップを踏む必要があります。</p>
 <blockquote class="original">
 When using OAuth to protect API endpoints, there are three distinct steps that
 that must be performed:
 </blockquote>
 
 <ol>
-<li>アプリケーションは、ユーザーに保護されたリソースへのアクセス許可をリクエストします</li>
+<li>アプリケーションは、保護されたリソースへのアクセス許可をユーザーにリクエストします</li>
 <li>ユーザーに許可されると、アプリケーションにトークンが発行されます</li>
 <li>アプリケーションはトークンを使って、保護されたリソースにアクセスします</li>
 </ol>
@@ -93,7 +93,7 @@ that must be performed:
 
 <h4 id="-">トークンの発行</h4>
 <p>Passportの姉妹プロジェクトである<a href="https://github.com/jaredhanson/oauthorize">OAuthorize</a>は、
-OAuth認証を行うためのToolKitです。</p>
+OAuthサービスプロバイダーを実装するためのツールキットです。</p>
 <blockquote class="original">
 <a href="https://github.com/jaredhanson/oauthorize">OAuthorize</a>, a sibling project to
 Passport, provides a tookit for implementing OAuth service providers.
@@ -116,8 +116,7 @@ those limits.
 </blockquote>
 
 <p>そしてツールキットであるOAuthorizeは実装を決定してくれるものではありません。
-このガイドはこれらの問題を解決するものではありませんが、セキュリティに関する
-懸念事項を理解するためにも、OAuthを使用することを強くオススメします。</p>
+このガイドはこれらの問題をすべてカバーできるものではありませんが、OAuthでの認証を提供しているサービスではセキュリティに関する問題意識を持つことを強く推奨しています。</p>
 <blockquote class="original">
 As a toolkit, OAuthorize does not attempt to make implementation decisions.
 This guide does not cover these issues, but does highly recommended that
@@ -170,7 +169,7 @@ OAuth, both an identifier for the requesting application and the user-specific
 token are encoded as credentials.
 </blockquote>
 
-<p>１つ目のコールバックは、&quot;コンシュマコールバック&quot;として知られており、アプリケーションが作成した
+<p>１つ目のコールバックは、&quot;コンシューマコールバック&quot;として知られており、アプリケーションが作成した
 秘密情報を含んだリクエストを見つけ出すものです。
 ２つ目は、&quot;トークンコールバック&quot;と呼ばれており、ユーザー及びトークン、さらに対応するシークレットを
 特定するためのものです。
@@ -186,7 +185,7 @@ does not match the request signature.
 </blockquote>
 
 <p>最後に、オプションとして&quot;検証用コールバック&quot;があります。
-このコールバックは、リクエスト中のタイムスタンプや、名前を確認することにより
+このコールバックは、リクエスト中のタイムスタンプや名前を確認することにより
 リプレイアタックの脅威を防ぐためによく使われます。</p>
 <blockquote class="original">
 A final &quot;validate callback&quot; is optional, which can be used to prevent replay
