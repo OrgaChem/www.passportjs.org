@@ -3,7 +3,7 @@ layout: 'guide'
 title: 'Log In'
 ---
 
-### Log In
+### ログイン
 
 Passport はログインセッションを確立するための `login()` 関数を `req` のメソッドとして
 用意しています。( `lonIn()` としてエイリアスも貼られています。)
