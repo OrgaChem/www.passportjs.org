@@ -5,8 +5,8 @@ title: 'Basic認証 & Digest認証'
 
 ### Basic認証 & Digest認証
 
-HTTPの認証フレームワークを規定すると共に、[RFC 2617](http://tools.ietf.org/html/rfc2617) には、Basic認証、Digest認証の枠組みが策定されています。
-これらの2つの枠組みは、ユーザーIDとパスワードをユーザー認証のために使用し、またAPIのエンドポイントを保護するためにも使用されます。
+[RFC 2617](http://tools.ietf.org/html/rfc2617)には、HTTPの認証フレームワークを規定すると共に、Basic認証、Digest認証の枠組みが策定されています。
+これらの2つの枠組みは、ユーザーIDとパスワードによって認証を行い、またユーザーへ提供するAPIのエンドポイントを保護するためにも使用されます。
 
 <blockquote class="original">
 Along with defining HTTP's authentication framework, [RFC 2617](http://tools.ietf.org/html/rfc2617)
@@ -17,7 +17,7 @@ often used to protect API endpoints.
 
 <small>注意: このようなユーザーIDとパスワードに依存する認証は安全性に問題があります。
 特に信頼性が求められるクライアントサーバ間の通信には使用しないでください。
-このような状況では、[OAuth 2.0](/www.passportjs.org/guide/oauth2-api/)のようなフレームワークが推奨されています。</small>
+このようなケースでは、[OAuth 2.0](/www.passportjs.org/guide/oauth2-api/)のようなフレームワークが推奨されています。</small>
 
 <blockquote class="original">
 It should be noted that relying on username and password creditials can have
@@ -65,7 +65,7 @@ passport.use(new BasicStrategy(
 ));
 ```
 
-Basic認証のための検証用コールバックは、ユーザーIDとパスワードの引数を受け動作します。
+Basic認証のための検証用コールバックでは引数として、`username`と`password`を利用できます。
 
 <blockquote class="original">
 The verify callback for Basic authentication accepts `username` and `password`
@@ -83,7 +83,7 @@ app.get('/api/me',
   });
 ```
 
-`basic` をストラテジーに指定し  `passport.authenticate()` を使用することでAPIエンドポイントを保護することができます。
+`basic` をストラテジーに指定し`passport.authenticate()`を使用することでユーザーへ提供するAPIのエンドポイントを保護することができます。
 APIの利用にセッション管理は必要ないことが多いので、セッションの無効化も可能です。
 
 <blockquote class="original">
@@ -114,13 +114,13 @@ passport.use(new DigestStrategy({ qop: 'auth' },
     });
   },
   function(params, done) {
-    // validate nonces as necessary
+    // 必要であればnonceの検証をしてください
     done(null, true)
   }
 ));
 ```
 
-上記のDigest認証では2つのコールバックが引数に指定していますが、2つ目は省略可能です。
+上記のDigest認証では2つのコールバックが引数に指定されていますが、2つ目は省略可能です。
 
 <blockquote class="original">
 The Digest strategy utilizes two callbacks, the second of which is optional.
@@ -145,7 +145,7 @@ The second "validate callback" accepts nonce related params, which can be
 checked to avoid replay attacks.
 </blockquote>
 
-#### Protect Endpoints
+#### ユーザーへ提供するAPIのエンドポイント保護
 
 ```javascript
 app.get('/api/me', 
