@@ -30,14 +30,14 @@ While OAuth 1.0 is still widely used, it has been superseded by [OAuth 2.0](/gui
 It is recommended to base new implementations on OAuth 2.0.
 </blockquote>
 
-OAuth によって API のエンドポイントを保護するためには、3つのステップを踏む必要があります。
+OAuth によってユーザーへ提供する API のエンドポイントを保護するためには、3つのステップを踏む必要があります。
 
 <blockquote class="original">
 When using OAuth to protect API endpoints, there are three distinct steps that
 that must be performed:
 </blockquote>
 
-  1. アプリケーションは、ユーザーに保護されたリソースへのアクセス許可をリクエストします
+  1. アプリケーションは、保護されたリソースへのアクセス許可をユーザーにリクエストします
   2. ユーザーに許可されると、アプリケーションにトークンが発行されます
   3. アプリケーションはトークンを使って、保護されたリソースにアクセスします
 
@@ -52,7 +52,7 @@ that must be performed:
 #### トークンの発行
 
 Passportの姉妹プロジェクトである[OAuthorize](https://github.com/jaredhanson/oauthorize)は、
-OAuth認証を行うためのToolKitです。
+OAuthサービスプロバイダーを実装するためのツールキットです。
 
 <blockquote class="original">
 [OAuthorize](https://github.com/jaredhanson/oauthorize), a sibling project to
@@ -78,8 +78,7 @@ those limits.
 </blockquote>
 
 そしてツールキットであるOAuthorizeは実装を決定してくれるものではありません。
-このガイドはこれらの問題を解決するものではありませんが、セキュリティに関する
-懸念事項を理解するためにも、OAuthを使用することを強くオススメします。
+このガイドはこれらの問題をすべてカバーできるものではありませんが、OAuthでの認証を提供しているサービスではセキュリティに関する問題意識を持つことを強く推奨しています。
 
 <blockquote class="original">
 As a toolkit, OAuthorize does not attempt to make implementation decisions.
@@ -144,7 +143,7 @@ OAuth, both an identifier for the requesting application and the user-specific
 token are encoded as credentials.
 </blockquote>
 
-１つ目のコールバックは、"コンシュマコールバック"として知られており、アプリケーションが作成した
+１つ目のコールバックは、"コンシューマコールバック"として知られており、アプリケーションが作成した
 秘密情報を含んだリクエストを見つけ出すものです。
 ２つ目は、"トークンコールバック"と呼ばれており、ユーザー及びトークン、さらに対応するシークレットを
 特定するためのものです。
@@ -161,7 +160,7 @@ does not match the request signature.
 </blockquote>
 
 最後に、オプションとして"検証用コールバック"があります。
-このコールバックは、リクエスト中のタイムスタンプや、名前を確認することにより
+このコールバックは、リクエスト中のタイムスタンプや名前を確認することにより
 リプレイアタックの脅威を防ぐためによく使われます。
 
 <blockquote class="original">
