@@ -21,7 +21,7 @@ applications.
 app.post('/login',
   passport.authenticate('local'),
   function(req, res) {
-    // 認証に施工すると、この関数が呼び出される。
+    // 認証に成功すると、この関数が呼び出される。
     // 認証されたユーザーは `req.user` に含まれている。
     res.redirect('/users/' + req.user.username);
   });
