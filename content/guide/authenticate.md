@@ -135,7 +135,7 @@ recommended to provide this functionality when using Express 3.x.
 これはブラウザから Web アプリケーションにアクセスするといったシナリオで役に立ちます。
 しかし、それ以外の場合はセッションのサポートは必要ありません。
 たとえば、API サーバーはリクエスト毎に認証情報を要求するのが一般的です。
-このような場合では `seeeion` オプションを `false` にすることでセッションサポートを無効にできます。
+このような場合では `session` オプションを `false` にすることでセッションサポートを無効にできます。
 
 <blockquote class="original">
 After successful authentication, Passport will establish a persistent login
